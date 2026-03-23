@@ -2,7 +2,6 @@ import { db } from "@/db";
 import { qrTokens, games, players, submissions } from "@/db/schema";
 import { eq, like, and, desc } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
-import crypto from "crypto";
 
 export const dynamic = 'force-dynamic';
 
@@ -44,7 +43,7 @@ export default async function TokensAdmin(
 
     const newTokens = Array.from({ length: count }).map(() => ({
       id: crypto.randomUUID(),
-      token: `${prefix}-${crypto.randomBytes(4).toString("hex")}`,
+      token: `${prefix}-${Array.from(crypto.getRandomValues(new Uint8Array(4))).map(b => b.toString(16).padStart(2, '0')).join('')}`,
       gameId: gId,
       isUsed: false,
       createdAt: Date.now()

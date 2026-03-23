@@ -4,7 +4,6 @@ import { db } from "@/db";
 import { games, missions, qrTokens, players, submissions } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
-import crypto from "crypto";
 
 export async function updateGame(id: string, data: any) {
   await db.update(games).set(data).where(eq(games.id, id)).run();
@@ -33,7 +32,7 @@ export async function deleteMission(id: string) {
 export async function generateQrTokens(gameId: string, count: number, prefix: string) {
   const newTokens = Array.from({ length: count }).map((_, i) => ({
     id: crypto.randomUUID(),
-    token: `${prefix}-${crypto.randomBytes(4).toString("hex")}`,
+    token: `${prefix}-${Array.from(crypto.getRandomValues(new Uint8Array(4))).map(b => b.toString(16).padStart(2, '0')).join('')}`,
     gameId,
     isUsed: false,
     createdAt: Date.now()

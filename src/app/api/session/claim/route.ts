@@ -3,7 +3,6 @@ import { db } from "@/db";
 import { qrTokens, players } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { cookies } from "next/headers";
-import crypto from "crypto";
 
 export async function POST(req: NextRequest) {
   try {

@@ -1,8 +1,7 @@
 import { db } from "@/db";
-import { missions, games } from "@/db/schema";
-import { eq, and } from "drizzle-orm";
+import { games, missions } from "@/db/schema";
+import { and, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
-import crypto from "crypto";
 
 export const dynamic = 'force-dynamic';
 
@@ -10,7 +9,7 @@ export default async function MissionsAdmin(props: { searchParams?: Promise<{ ga
   const searchParams = await props.searchParams;
   const gameFilter = searchParams?.gameFilter || "";
   const allGames = await db.select().from(games).all();
-  
+
   const conditions = [];
   if (gameFilter) conditions.push(eq(missions.gameId, gameFilter));
 
@@ -28,7 +27,7 @@ export default async function MissionsAdmin(props: { searchParams?: Promise<{ ga
     const question = formData.get("question") as string;
     const answer = formData.get("answer") as string;
     const hint = formData.get("hint") as string;
-    
+
     if (!gameId) return;
 
     await db.insert(missions).values({
@@ -71,7 +70,7 @@ export default async function MissionsAdmin(props: { searchParams?: Promise<{ ga
           <button type="submit" className="bg-emerald-500 text-black font-bold py-2 rounded sm:col-span-2 hover:bg-emerald-400">Add Mission</button>
         </form>
       </div>
-      
+
       <div className="bg-slate-900 border border-slate-800 p-6 rounded-xl flex flex-col gap-4">
         <h2 className="text-xl font-bold mb-2">Filter Missions</h2>
         <form className="flex gap-4">
@@ -100,7 +99,7 @@ export default async function MissionsAdmin(props: { searchParams?: Promise<{ ga
                 <p className="text-sm text-slate-400"><strong>Q:</strong> {m.riddleQuestion}</p>
                 <p className="text-sm text-emerald-400"><strong>A:</strong> {m.answer}</p>
               </div>
-              
+
               <form action={handleDelete}>
                 <input type="hidden" name="id" value={m.id} />
                 <button type="submit" className="bg-red-500/20 text-red-400 px-4 py-2 rounded hover:bg-red-500/30 text-sm font-bold">
