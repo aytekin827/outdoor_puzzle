@@ -1,14 +1,14 @@
 name = "outdoor-puzzle"
 compatibility_date = "2024-11-20"
-pages_build_output_dir = ".next"
+main = ".open-next/worker/index.mjs"
+compatibility_flags = ["nodejs_compat"]
 
-[env.production]
-# DB binding for D1
+[assets]
+directory = ".open-next/assets"
+binding = "ASSETS"
+
+# Use your existing DB binding for D1
 [[d1_databases]]
 binding = "DB"
 database_name = "outdoor_puzzle"
 database_id = "99bc2714-eac9-44cc-92d0-ae12cdb69ae9"
-
-[observations]
-# Optional: real-time logs in dash
-# log_push = true
