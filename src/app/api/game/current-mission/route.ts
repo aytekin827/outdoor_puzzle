@@ -13,15 +13,15 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const playerResult = db.select().from(players).where(eq(players.id, playerId)).all();
+    const playerResult = await db.select().from(players).where(eq(players.id, playerId)).all();
     if (playerResult.length === 0) return NextResponse.json({ error: "Player not found" }, { status: 404 });
     const player = playerResult[0];
 
     // Find all missions for this game to determine total and current
-    const gameMissions = db.select().from(missions).where(eq(missions.gameId, player.gameId)).orderBy(missions.orderIndex).all();
+    const gameMissions = await db.select().from(missions).where(eq(missions.gameId, player.gameId)).orderBy(missions.orderIndex).all();
     
     // Find submissions to know what is completed
-    const playerSubmissions = db.select().from(submissions)
+    const playerSubmissions = await db.select().from(submissions)
       .where(and(eq(submissions.playerId, playerId), eq(submissions.isCorrect, true)))
       .all();
       

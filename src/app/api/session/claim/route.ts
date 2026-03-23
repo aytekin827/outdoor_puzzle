@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Missing token or nickname" }, { status: 400 });
     }
 
-    const qrTokenResult = db.select().from(qrTokens).where(eq(qrTokens.token, token)).all();
+    const qrTokenResult = await db.select().from(qrTokens).where(eq(qrTokens.token, token)).all();
     if (qrTokenResult.length === 0) {
       return NextResponse.json({ error: "Invalid token" }, { status: 404 });
     }
@@ -25,14 +25,14 @@ export async function POST(req: NextRequest) {
     }
 
     // Mark as used
-    db.update(qrTokens)
+    await db.update(qrTokens)
       .set({ isUsed: true, usedAt: Date.now() })
       .where(eq(qrTokens.id, qrToken.id))
       .run();
 
     // Create player
     const playerId = crypto.randomUUID();
-    db.insert(players).values({
+    await db.insert(players).values({
       id: playerId,
       gameId: qrToken.gameId,
       qrTokenId: qrToken.id,
