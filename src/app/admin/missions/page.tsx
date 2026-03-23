@@ -9,12 +9,12 @@ export const dynamic = 'force-dynamic';
 export default async function MissionsAdmin(props: { searchParams?: Promise<{ gameFilter?: string }> }) {
   const searchParams = await props.searchParams;
   const gameFilter = searchParams?.gameFilter || "";
-  const allGames = db.select().from(games).all();
+  const allGames = await db.select().from(games).all();
   
   const conditions = [];
   if (gameFilter) conditions.push(eq(missions.gameId, gameFilter));
 
-  const filteredMissions = db.select().from(missions)
+  const filteredMissions = await db.select().from(missions)
     .where(conditions.length > 0 ? and(...conditions) : undefined)
     .orderBy(missions.orderIndex)
     .all();

@@ -20,7 +20,7 @@ export default async function TokensAdmin(
   const statusFilter = searchParams?.statusFilter || "";
   const searchTerm = searchParams?.search || "";
 
-  const allGames = db.select().from(games).all();
+  const allGames = await db.select().from(games).all();
   
   // Construct conditions
   const conditions = [];
@@ -29,7 +29,7 @@ export default async function TokensAdmin(
   if (statusFilter === "avail") conditions.push(eq(qrTokens.isUsed, false));
   if (searchTerm) conditions.push(like(qrTokens.token, `%${searchTerm}%`));
 
-  const filteredTokens = db.select().from(qrTokens)
+  const filteredTokens = await db.select().from(qrTokens)
     .where(conditions.length > 0 ? and(...conditions) : undefined)
     .orderBy(desc(qrTokens.createdAt))
     .all();
@@ -64,19 +64,19 @@ export default async function TokensAdmin(
     "use server";
     const tid = formData.get("id") as string;
     // 1. Find players associated with this token
-    const associatedPlayers = db.select().from(players).where(eq(players.qrTokenId, tid)).all();
+    const associatedPlayers = await db.select().from(players).where(eq(players.qrTokenId, tid)).all();
     const pids = associatedPlayers.map(p => p.id);
     
     // 2. Delete submissions for those players
     if (pids.length > 0) {
       for (const pid of pids) {
-        db.delete(submissions).where(eq(submissions.playerId, pid)).run();
+        await db.delete(submissions).where(eq(submissions.playerId, pid)).run();
       }
       // 3. Delete players
-      db.delete(players).where(eq(players.qrTokenId, tid)).run();
+      await db.delete(players).where(eq(players.qrTokenId, tid)).run();
     }
     // 4. Finally delete token
-    db.delete(qrTokens).where(eq(qrTokens.id, tid)).run();
+    await db.delete(qrTokens).where(eq(qrTokens.id, tid)).run();
     revalidatePath("/admin/tokens");
   }
 

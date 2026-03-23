@@ -45,7 +45,7 @@ export async function generateQrTokens(gameId: string, count: number, prefix: st
 
 export async function deleteQrToken(id: string) {
   // Clear players first
-  const associatedPlayers = db.select().from(players).where(eq(players.qrTokenId, id)).all();
+  const associatedPlayers = await db.select().from(players).where(eq(players.qrTokenId, id)).all();
   for (const p of associatedPlayers) {
     await db.delete(submissions).where(eq(submissions.playerId, p.id)).run();
   }

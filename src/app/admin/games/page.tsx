@@ -7,7 +7,7 @@ import crypto from "crypto";
 export const dynamic = 'force-dynamic';
 
 export default async function GamesAdmin() {
-  const allGames = db.select().from(games).all();
+  const allGames = await db.select().from(games).all();
 
   async function handleUpdate(formData: FormData) {
     "use server";

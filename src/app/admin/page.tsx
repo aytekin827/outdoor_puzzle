@@ -5,9 +5,9 @@ import { Users, QrCode, Gamepad2, CheckCircle } from "lucide-react";
 export const dynamic = 'force-dynamic'; // Prevent caching for dashboard
 
 export default async function AdminDashboard() {
-  const allGames = db.select().from(games).all();
-  const allPlayers = db.select().from(players).all();
-  const allTokens = db.select().from(qrTokens).all();
+  const allGames = await db.select().from(games).all();
+  const allPlayers = await db.select().from(players).all();
+  const allTokens = await db.select().from(qrTokens).all();
   
   const usedTokens = allTokens.filter(t => t.isUsed).length;
   const activePlayers = allPlayers.filter(p => p.status === 'playing').length;

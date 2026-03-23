@@ -15,19 +15,19 @@ export default async function PlayersAdmin(
   const statusFilter = searchParams?.statusFilter || "";
   const searchTerm = searchParams?.search || "";
 
-  const allGames = db.select().from(games).all();
+  const allGames = await db.select().from(games).all();
   
   const conditions = [];
   if (gameFilter) conditions.push(eq(players.gameId, gameFilter));
   if (statusFilter) conditions.push(eq(players.status, statusFilter));
   if (searchTerm) conditions.push(like(players.nickname, `%${searchTerm}%`));
 
-  const filteredPlayers = db.select().from(players)
+  const filteredPlayers = await db.select().from(players)
     .where(conditions.length > 0 ? and(...conditions) : undefined)
     .orderBy(desc(players.startedAt))
     .all();
 
-  const allSubmissions = db.select().from(submissions).all();
+  const allSubmissions = await db.select().from(submissions).all();
 
   async function handleDelete(formData: FormData) {
     "use server";
