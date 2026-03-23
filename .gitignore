@@ -39,3 +39,31 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# SQLite / Database
+sqlite.db
+sqlite.db-journal
+sqlite.db-shm
+sqlite.db-wal
+
+# Cloudflare / D1 / Wrangler
+.wrangler/
+
+# Drizzle (Optional: ignore if only using push, but keep if using migrator)
+# drizzle/
+
+# OS/IDEs
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# AI Artifacts
+.gemini/
+.brain/
+.agents/
+.agent/
+_agents/
+_agent/
+*.log
