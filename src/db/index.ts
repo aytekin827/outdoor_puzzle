@@ -1,16 +1,35 @@
 import { drizzle as drizzleD1, type DrizzleD1Database } from 'drizzle-orm/d1';
 import * as schema from './schema';
+import { getCloudflareContext } from '@opennextjs/cloudflare';
 
 // This is a helper for local development v.s. production on Cloudflare
 // In Cloudflare Workers/Pages context, we get the 'DB' binding.
 
 export function getDb(context?: any) {
-  // Try to find D1 binding from context or process.env
+  let dbBinding: any = undefined;
+
+  // 1. Try to find D1 binding from process.env
   if (typeof process !== 'undefined' && (process.env as any).DB) {
-    return drizzleD1((process.env as any).DB, { schema });
+    dbBinding = (process.env as any).DB;
   }
 
-  // Fallback to local sqlite for regular 'npm run dev' or migrations
+  // 2. Try to find D1 binding via OpenNext Cloudflare Context
+  if (!dbBinding) {
+    try {
+      const cfContext = getCloudflareContext();
+      if (cfContext?.env?.DB) {
+        dbBinding = cfContext.env.DB;
+      }
+    } catch (e) {
+      // Ignored: outside cloudflare request scope
+    }
+  }
+
+  if (dbBinding) {
+    return drizzleD1(dbBinding, { schema });
+  }
+
+  // 3. Fallback to local sqlite for regular 'npm run dev' or migrations
   if (typeof window === 'undefined') {
     try {
       // Standard CommonJS require for Node.js fallback (hidden from bundler to avoid Windows EPERM / symlink issues)
@@ -26,5 +45,15 @@ export function getDb(context?: any) {
   }
 }
 
-// Export a default instance typed as D1 to satisfy TypeScript
-export const db = getDb() as unknown as DrizzleD1Database<typeof schema>;
+// Export as a Proxy to lazily resolve the Cloudflare D1 context inside request handlers,
+// since getCloudflareContext() will fail if called at module-load/global time.
+export const db = new Proxy({} as DrizzleD1Database<typeof schema>, {
+  get(target, prop) {
+    const database = getDb();
+    if (!database) {
+      throw new Error("D1 Database binding is missing! Ensure you are calling this within a request context.");
+    }
+    const value = (database as any)[prop];
+    return typeof value === "function" ? value.bind(database) : value;
+  }
+});
