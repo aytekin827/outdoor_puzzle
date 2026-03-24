@@ -13,14 +13,9 @@ export function getDb(context?: any) {
   // Fallback to local sqlite for regular 'npm run dev' or migrations
   if (typeof window === 'undefined') {
     try {
-      // Dynamic require to prevent Next.js Edge runtime from statically analyzing 'better-sqlite3' and 'fs'
-      const sqliteModuleName = 'better-sqlite3';
-      const drizzleModuleName = 'drizzle-orm/better-sqlite3';
-      
-      // @ts-ignore
-      const Database = typeof __non_webpack_require__ !== 'undefined' ? __non_webpack_require__(sqliteModuleName) : require(sqliteModuleName);
-      // @ts-ignore
-      const { drizzle } = typeof __non_webpack_require__ !== 'undefined' ? __non_webpack_require__(drizzleModuleName) : require(drizzleModuleName);
+      // Standard CommonJS require for Node.js fallback (runs only locally since OpenNext bypasses this)
+      const Database = require('better-sqlite3');
+      const { drizzle } = require('drizzle-orm/better-sqlite3');
       
       const sqlite = new Database('sqlite.db');
       sqlite.pragma('foreign_keys = ON');

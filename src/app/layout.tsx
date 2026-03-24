@@ -4,7 +4,7 @@ import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const runtime = 'edge';
+
 
 export const metadata: Metadata = {
   title: "야외방탈출 미션",
