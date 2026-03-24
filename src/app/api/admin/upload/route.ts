@@ -1,13 +1,13 @@
-import { NextResponse } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
+import { NextResponse } from "next/server";
 
-export const runtime = "edge";
+export const runtime = "nodejs";
 
 export async function POST(req: Request) {
   try {
     const formData = await req.formData();
     const file = formData.get("file") as File | null;
-    
+
     if (!file) {
       return NextResponse.json({ error: "No file provided" }, { status: 400 });
     }
@@ -29,18 +29,18 @@ export async function POST(req: Request) {
       });
       // To serve this, you could point to an R2 public domain or an asset proxy
       // Assuming a public URL or an API asset proxy route. We will return a proxy route format.
-      return NextResponse.json({ 
-        url: `/api/assets/${key}`, 
-        success: true 
+      return NextResponse.json({
+        url: `/api/assets/${key}`,
+        success: true
       });
     }
 
     // Local fallback: Since this is standard Next.js, writing to public dir natively isn't reliable on edge runtime.
     // If not in Cloudflare, we spoof it for local testing
     console.warn("R2 STORAGE binding missing. Returning mock URL for local testing.");
-    return NextResponse.json({ 
-      url: `/mock-upload-${file.name}`, 
-      success: true 
+    return NextResponse.json({
+      url: `/mock-upload-${file.name}`,
+      success: true
     });
 
   } catch (error) {
