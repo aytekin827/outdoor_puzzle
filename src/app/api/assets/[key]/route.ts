@@ -1,7 +1,7 @@
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { NextRequest, NextResponse } from "next/server";
 
-export const runtime = "notejs";
+export const runtime = "nodejs";
 
 export async function GET(req: NextRequest, { params }: { params: Promise<{ key: string }> }) {
   try {
