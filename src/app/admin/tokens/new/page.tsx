@@ -4,6 +4,8 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, RefreshCw } from "lucide-react";
 
+export const dynamic = 'force-dynamic';
+
 export default async function NewTokenPage() {
   const allGames = await db.select().from(games).all();
 

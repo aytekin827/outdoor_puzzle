@@ -4,7 +4,10 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
-export default async function NewMissionPage({ searchParams }: { searchParams: { gameId?: string } }) {
+export const dynamic = 'force-dynamic';
+
+export default async function NewMissionPage({ searchParams }: { searchParams: Promise<{ gameId?: string }> }) {
+  const { gameId } = await searchParams;
   const allGames = await db.select().from(games).all();
 
   async function handleCreate(formData: FormData) {
@@ -48,7 +51,7 @@ export default async function NewMissionPage({ searchParams }: { searchParams: {
         <form action={handleCreate} className="p-6 grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div className="flex flex-col gap-2 sm:col-span-2">
             <label className="text-sm font-semibold text-slate-400">Attached Game</label>
-            <select name="gameId" defaultValue={searchParams.gameId || ""} required className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white focus:border-primary focus:outline-none transition-colors">
+            <select name="gameId" defaultValue={gameId || ""} required className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white focus:border-primary focus:outline-none transition-colors">
               <option value="" disabled>Select a Game</option>
               {allGames.map(g => <option key={g.id} value={g.id}>{g.title}</option>)}
             </select>
