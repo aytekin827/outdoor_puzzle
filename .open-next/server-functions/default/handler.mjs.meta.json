@@ -3644,57 +3644,57 @@
       "format": "cjs"
     },
     ".open-next/server-functions/default/.next/server/app/admin/page_client-reference-manifest.js": {
-      "bytes": 7264,
+      "bytes": 7242,
       "imports": [],
       "format": "cjs"
     },
     ".open-next/server-functions/default/.next/server/app/play/[token]/page_client-reference-manifest.js": {
-      "bytes": 7208,
+      "bytes": 7213,
+      "imports": [],
+      "format": "cjs"
+    },
+    ".open-next/server-functions/default/.next/server/app/admin/upload/page_client-reference-manifest.js": {
+      "bytes": 8455,
       "imports": [],
       "format": "cjs"
     },
     ".open-next/server-functions/default/.next/server/app/admin/tokens/page_client-reference-manifest.js": {
-      "bytes": 7271,
+      "bytes": 9447,
       "imports": [],
       "format": "cjs"
     },
     ".open-next/server-functions/default/.next/server/app/admin/players/page_client-reference-manifest.js": {
-      "bytes": 7272,
-      "imports": [],
-      "format": "cjs"
-    },
-    ".open-next/server-functions/default/.next/server/app/admin/login/page_client-reference-manifest.js": {
-      "bytes": 8490,
-      "imports": [],
-      "format": "cjs"
-    },
-    ".open-next/server-functions/default/.next/server/app/admin/games/page_client-reference-manifest.js": {
-      "bytes": 7270,
+      "bytes": 8491,
       "imports": [],
       "format": "cjs"
     },
     ".open-next/server-functions/default/.next/server/app/admin/missions/page_client-reference-manifest.js": {
-      "bytes": 7273,
+      "bytes": 9468,
+      "imports": [],
+      "format": "cjs"
+    },
+    ".open-next/server-functions/default/.next/server/app/admin/login/page_client-reference-manifest.js": {
+      "bytes": 8446,
+      "imports": [],
+      "format": "cjs"
+    },
+    ".open-next/server-functions/default/.next/server/app/admin/games/page_client-reference-manifest.js": {
+      "bytes": 9441,
       "imports": [],
       "format": "cjs"
     },
     ".open-next/server-functions/default/.next/server/app/play/[token]/start/page_client-reference-manifest.js": {
-      "bytes": 7238,
+      "bytes": 7243,
       "imports": [],
       "format": "cjs"
     },
     ".open-next/server-functions/default/.next/server/app/play/[token]/prologue/page_client-reference-manifest.js": {
-      "bytes": 7253,
-      "imports": [],
-      "format": "cjs"
-    },
-    ".open-next/server-functions/default/.next/server/app/play/[token]/complete/page_client-reference-manifest.js": {
-      "bytes": 7207,
+      "bytes": 7258,
       "imports": [],
       "format": "cjs"
     },
     ".open-next/server-functions/default/.next/server/app/play/[token]/mission/page_client-reference-manifest.js": {
-      "bytes": 7248,
+      "bytes": 7253,
       "imports": [],
       "format": "cjs"
     },
@@ -3708,13 +3708,18 @@
       "imports": [],
       "format": "cjs"
     },
-    ".open-next/server-functions/default/.next/server/app/api/game/start/route_client-reference-manifest.js": {
-      "bytes": 319,
+    ".open-next/server-functions/default/.next/server/app/play/[token]/complete/page_client-reference-manifest.js": {
+      "bytes": 7207,
       "imports": [],
       "format": "cjs"
     },
     ".open-next/server-functions/default/.next/server/app/api/game/result/route_client-reference-manifest.js": {
       "bytes": 320,
+      "imports": [],
+      "format": "cjs"
+    },
+    ".open-next/server-functions/default/.next/server/app/api/game/start/route_client-reference-manifest.js": {
+      "bytes": 319,
       "imports": [],
       "format": "cjs"
     },
@@ -3733,13 +3738,48 @@
       "imports": [],
       "format": "cjs"
     },
+    ".open-next/server-functions/default/.next/server/app/admin/tokens/new/page_client-reference-manifest.js": {
+      "bytes": 8352,
+      "imports": [],
+      "format": "cjs"
+    },
+    ".open-next/server-functions/default/.next/server/app/admin/missions/new/page_client-reference-manifest.js": {
+      "bytes": 8358,
+      "imports": [],
+      "format": "cjs"
+    },
+    ".open-next/server-functions/default/.next/server/app/admin/games/new/page_client-reference-manifest.js": {
+      "bytes": 8349,
+      "imports": [],
+      "format": "cjs"
+    },
     ".open-next/server-functions/default/.next/server/app/api/game/by-token/[token]/route_client-reference-manifest.js": {
       "bytes": 330,
       "imports": [],
       "format": "cjs"
     },
+    ".open-next/server-functions/default/.next/server/app/admin/tokens/[token_id]/detail/page_client-reference-manifest.js": {
+      "bytes": 8394,
+      "imports": [],
+      "format": "cjs"
+    },
+    ".open-next/server-functions/default/.next/server/app/admin/players/[player_id]/detail/page_client-reference-manifest.js": {
+      "bytes": 8400,
+      "imports": [],
+      "format": "cjs"
+    },
+    ".open-next/server-functions/default/.next/server/app/admin/missions/[mission_id]/detail/page_client-reference-manifest.js": {
+      "bytes": 8406,
+      "imports": [],
+      "format": "cjs"
+    },
+    ".open-next/server-functions/default/.next/server/app/admin/games/[game_id]/detail/page_client-reference-manifest.js": {
+      "bytes": 8388,
+      "imports": [],
+      "format": "cjs"
+    },
     ".open-next/server-functions/default/node_modules/next/dist/server/load-manifest.external.js": {
-      "bytes": 40004,
+      "bytes": 56586,
       "imports": [
         {
           "path": "path",
@@ -3787,6 +3827,11 @@
           "original": "D:\\JMJ\\private_works\\outdoor_puzzle_antigravity\\.open-next\\server-functions\\default\\.next\\server\\app\\play\\[token]\\page_client-reference-manifest.js"
         },
         {
+          "path": ".open-next/server-functions/default/.next/server/app/admin/upload/page_client-reference-manifest.js",
+          "kind": "require-call",
+          "original": "D:\\JMJ\\private_works\\outdoor_puzzle_antigravity\\.open-next\\server-functions\\default\\.next\\server\\app\\admin\\upload\\page_client-reference-manifest.js"
+        },
+        {
           "path": ".open-next/server-functions/default/.next/server/app/admin/tokens/page_client-reference-manifest.js",
           "kind": "require-call",
           "original": "D:\\JMJ\\private_works\\outdoor_puzzle_antigravity\\.open-next\\server-functions\\default\\.next\\server\\app\\admin\\tokens\\page_client-reference-manifest.js"
@@ -3795,6 +3840,11 @@
           "path": ".open-next/server-functions/default/.next/server/app/admin/players/page_client-reference-manifest.js",
           "kind": "require-call",
           "original": "D:\\JMJ\\private_works\\outdoor_puzzle_antigravity\\.open-next\\server-functions\\default\\.next\\server\\app\\admin\\players\\page_client-reference-manifest.js"
+        },
+        {
+          "path": ".open-next/server-functions/default/.next/server/app/admin/missions/page_client-reference-manifest.js",
+          "kind": "require-call",
+          "original": "D:\\JMJ\\private_works\\outdoor_puzzle_antigravity\\.open-next\\server-functions\\default\\.next\\server\\app\\admin\\missions\\page_client-reference-manifest.js"
         },
         {
           "path": ".open-next/server-functions/default/.next/server/app/admin/login/page_client-reference-manifest.js",
@@ -3807,11 +3857,6 @@
           "original": "D:\\JMJ\\private_works\\outdoor_puzzle_antigravity\\.open-next\\server-functions\\default\\.next\\server\\app\\admin\\games\\page_client-reference-manifest.js"
         },
         {
-          "path": ".open-next/server-functions/default/.next/server/app/admin/missions/page_client-reference-manifest.js",
-          "kind": "require-call",
-          "original": "D:\\JMJ\\private_works\\outdoor_puzzle_antigravity\\.open-next\\server-functions\\default\\.next\\server\\app\\admin\\missions\\page_client-reference-manifest.js"
-        },
-        {
           "path": ".open-next/server-functions/default/.next/server/app/play/[token]/start/page_client-reference-manifest.js",
           "kind": "require-call",
           "original": "D:\\JMJ\\private_works\\outdoor_puzzle_antigravity\\.open-next\\server-functions\\default\\.next\\server\\app\\play\\[token]\\start\\page_client-reference-manifest.js"
@@ -3820,11 +3865,6 @@
           "path": ".open-next/server-functions/default/.next/server/app/play/[token]/prologue/page_client-reference-manifest.js",
           "kind": "require-call",
           "original": "D:\\JMJ\\private_works\\outdoor_puzzle_antigravity\\.open-next\\server-functions\\default\\.next\\server\\app\\play\\[token]\\prologue\\page_client-reference-manifest.js"
-        },
-        {
-          "path": ".open-next/server-functions/default/.next/server/app/play/[token]/complete/page_client-reference-manifest.js",
-          "kind": "require-call",
-          "original": "D:\\JMJ\\private_works\\outdoor_puzzle_antigravity\\.open-next\\server-functions\\default\\.next\\server\\app\\play\\[token]\\complete\\page_client-reference-manifest.js"
         },
         {
           "path": ".open-next/server-functions/default/.next/server/app/play/[token]/mission/page_client-reference-manifest.js",
@@ -3842,14 +3882,19 @@
           "original": "D:\\JMJ\\private_works\\outdoor_puzzle_antigravity\\.open-next\\server-functions\\default\\.next\\server\\app\\api\\game\\submit-answer\\route_client-reference-manifest.js"
         },
         {
-          "path": ".open-next/server-functions/default/.next/server/app/api/game/start/route_client-reference-manifest.js",
+          "path": ".open-next/server-functions/default/.next/server/app/play/[token]/complete/page_client-reference-manifest.js",
           "kind": "require-call",
-          "original": "D:\\JMJ\\private_works\\outdoor_puzzle_antigravity\\.open-next\\server-functions\\default\\.next\\server\\app\\api\\game\\start\\route_client-reference-manifest.js"
+          "original": "D:\\JMJ\\private_works\\outdoor_puzzle_antigravity\\.open-next\\server-functions\\default\\.next\\server\\app\\play\\[token]\\complete\\page_client-reference-manifest.js"
         },
         {
           "path": ".open-next/server-functions/default/.next/server/app/api/game/result/route_client-reference-manifest.js",
           "kind": "require-call",
           "original": "D:\\JMJ\\private_works\\outdoor_puzzle_antigravity\\.open-next\\server-functions\\default\\.next\\server\\app\\api\\game\\result\\route_client-reference-manifest.js"
+        },
+        {
+          "path": ".open-next/server-functions/default/.next/server/app/api/game/start/route_client-reference-manifest.js",
+          "kind": "require-call",
+          "original": "D:\\JMJ\\private_works\\outdoor_puzzle_antigravity\\.open-next\\server-functions\\default\\.next\\server\\app\\api\\game\\start\\route_client-reference-manifest.js"
         },
         {
           "path": ".open-next/server-functions/default/.next/server/app/api/game/current-mission/route_client-reference-manifest.js",
@@ -3867,9 +3912,44 @@
           "original": "D:\\JMJ\\private_works\\outdoor_puzzle_antigravity\\.open-next\\server-functions\\default\\.next\\server\\app\\api\\admin\\login\\route_client-reference-manifest.js"
         },
         {
+          "path": ".open-next/server-functions/default/.next/server/app/admin/tokens/new/page_client-reference-manifest.js",
+          "kind": "require-call",
+          "original": "D:\\JMJ\\private_works\\outdoor_puzzle_antigravity\\.open-next\\server-functions\\default\\.next\\server\\app\\admin\\tokens\\new\\page_client-reference-manifest.js"
+        },
+        {
+          "path": ".open-next/server-functions/default/.next/server/app/admin/missions/new/page_client-reference-manifest.js",
+          "kind": "require-call",
+          "original": "D:\\JMJ\\private_works\\outdoor_puzzle_antigravity\\.open-next\\server-functions\\default\\.next\\server\\app\\admin\\missions\\new\\page_client-reference-manifest.js"
+        },
+        {
+          "path": ".open-next/server-functions/default/.next/server/app/admin/games/new/page_client-reference-manifest.js",
+          "kind": "require-call",
+          "original": "D:\\JMJ\\private_works\\outdoor_puzzle_antigravity\\.open-next\\server-functions\\default\\.next\\server\\app\\admin\\games\\new\\page_client-reference-manifest.js"
+        },
+        {
           "path": ".open-next/server-functions/default/.next/server/app/api/game/by-token/[token]/route_client-reference-manifest.js",
           "kind": "require-call",
           "original": "D:\\JMJ\\private_works\\outdoor_puzzle_antigravity\\.open-next\\server-functions\\default\\.next\\server\\app\\api\\game\\by-token\\[token]\\route_client-reference-manifest.js"
+        },
+        {
+          "path": ".open-next/server-functions/default/.next/server/app/admin/tokens/[token_id]/detail/page_client-reference-manifest.js",
+          "kind": "require-call",
+          "original": "D:\\JMJ\\private_works\\outdoor_puzzle_antigravity\\.open-next\\server-functions\\default\\.next\\server\\app\\admin\\tokens\\[token_id]\\detail\\page_client-reference-manifest.js"
+        },
+        {
+          "path": ".open-next/server-functions/default/.next/server/app/admin/players/[player_id]/detail/page_client-reference-manifest.js",
+          "kind": "require-call",
+          "original": "D:\\JMJ\\private_works\\outdoor_puzzle_antigravity\\.open-next\\server-functions\\default\\.next\\server\\app\\admin\\players\\[player_id]\\detail\\page_client-reference-manifest.js"
+        },
+        {
+          "path": ".open-next/server-functions/default/.next/server/app/admin/missions/[mission_id]/detail/page_client-reference-manifest.js",
+          "kind": "require-call",
+          "original": "D:\\JMJ\\private_works\\outdoor_puzzle_antigravity\\.open-next\\server-functions\\default\\.next\\server\\app\\admin\\missions\\[mission_id]\\detail\\page_client-reference-manifest.js"
+        },
+        {
+          "path": ".open-next/server-functions/default/.next/server/app/admin/games/[game_id]/detail/page_client-reference-manifest.js",
+          "kind": "require-call",
+          "original": "D:\\JMJ\\private_works\\outdoor_puzzle_antigravity\\.open-next\\server-functions\\default\\.next\\server\\app\\admin\\games\\[game_id]\\detail\\page_client-reference-manifest.js"
         }
       ],
       "format": "cjs"
@@ -3916,7 +3996,7 @@
       "format": "cjs"
     },
     ".open-next/server-functions/default/.next/server/app/_global-error/page.js": {
-      "bytes": 775,
+      "bytes": 715,
       "imports": [
         {
           "path": ".open-next/server-functions/default/.next/server/chunks/ssr/[turbopack]_runtime.js",
@@ -3927,7 +4007,7 @@
       "format": "cjs"
     },
     ".open-next/server-functions/default/.next/server/app/_not-found/page.js": {
-      "bytes": 1003,
+      "bytes": 943,
       "imports": [
         {
           "path": ".open-next/server-functions/default/.next/server/chunks/ssr/[turbopack]_runtime.js",
@@ -3937,8 +4017,30 @@
       ],
       "format": "cjs"
     },
+    ".open-next/server-functions/default/.next/server/app/admin/games/[game_id]/detail/page.js": {
+      "bytes": 1250,
+      "imports": [
+        {
+          "path": ".open-next/server-functions/default/.next/server/chunks/ssr/[turbopack]_runtime.js",
+          "kind": "require-call",
+          "original": "../../../../../chunks/ssr/[turbopack]_runtime.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    ".open-next/server-functions/default/.next/server/app/admin/games/new/page.js": {
+      "bytes": 1183,
+      "imports": [
+        {
+          "path": ".open-next/server-functions/default/.next/server/chunks/ssr/[turbopack]_runtime.js",
+          "kind": "require-call",
+          "original": "../../../../chunks/ssr/[turbopack]_runtime.js"
+        }
+      ],
+      "format": "cjs"
+    },
     ".open-next/server-functions/default/.next/server/app/admin/games/page.js": {
-      "bytes": 1231,
+      "bytes": 1163,
       "imports": [
         {
           "path": ".open-next/server-functions/default/.next/server/chunks/ssr/[turbopack]_runtime.js",
@@ -3949,6 +4051,39 @@
       "format": "cjs"
     },
     ".open-next/server-functions/default/.next/server/app/admin/login/page.js": {
+      "bytes": 1109,
+      "imports": [
+        {
+          "path": ".open-next/server-functions/default/.next/server/chunks/ssr/[turbopack]_runtime.js",
+          "kind": "require-call",
+          "original": "../../../chunks/ssr/[turbopack]_runtime.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    ".open-next/server-functions/default/.next/server/app/admin/missions/[mission_id]/detail/page.js": {
+      "bytes": 1256,
+      "imports": [
+        {
+          "path": ".open-next/server-functions/default/.next/server/chunks/ssr/[turbopack]_runtime.js",
+          "kind": "require-call",
+          "original": "../../../../../chunks/ssr/[turbopack]_runtime.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    ".open-next/server-functions/default/.next/server/app/admin/missions/new/page.js": {
+      "bytes": 1186,
+      "imports": [
+        {
+          "path": ".open-next/server-functions/default/.next/server/chunks/ssr/[turbopack]_runtime.js",
+          "kind": "require-call",
+          "original": "../../../../chunks/ssr/[turbopack]_runtime.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    ".open-next/server-functions/default/.next/server/app/admin/missions/page.js": {
       "bytes": 1169,
       "imports": [
         {
@@ -3959,19 +4094,8 @@
       ],
       "format": "cjs"
     },
-    ".open-next/server-functions/default/.next/server/app/admin/missions/page.js": {
-      "bytes": 1234,
-      "imports": [
-        {
-          "path": ".open-next/server-functions/default/.next/server/chunks/ssr/[turbopack]_runtime.js",
-          "kind": "require-call",
-          "original": "../../../chunks/ssr/[turbopack]_runtime.js"
-        }
-      ],
-      "format": "cjs"
-    },
     ".open-next/server-functions/default/.next/server/app/admin/page.js": {
-      "bytes": 1208,
+      "bytes": 1148,
       "imports": [
         {
           "path": ".open-next/server-functions/default/.next/server/chunks/ssr/[turbopack]_runtime.js",
@@ -3981,8 +4105,19 @@
       ],
       "format": "cjs"
     },
+    ".open-next/server-functions/default/.next/server/app/admin/players/[player_id]/detail/page.js": {
+      "bytes": 1254,
+      "imports": [
+        {
+          "path": ".open-next/server-functions/default/.next/server/chunks/ssr/[turbopack]_runtime.js",
+          "kind": "require-call",
+          "original": "../../../../../chunks/ssr/[turbopack]_runtime.js"
+        }
+      ],
+      "format": "cjs"
+    },
     ".open-next/server-functions/default/.next/server/app/admin/players/page.js": {
-      "bytes": 1233,
+      "bytes": 1167,
       "imports": [
         {
           "path": ".open-next/server-functions/default/.next/server/chunks/ssr/[turbopack]_runtime.js",
@@ -3992,8 +4127,41 @@
       ],
       "format": "cjs"
     },
+    ".open-next/server-functions/default/.next/server/app/admin/tokens/[token_id]/detail/page.js": {
+      "bytes": 1252,
+      "imports": [
+        {
+          "path": ".open-next/server-functions/default/.next/server/chunks/ssr/[turbopack]_runtime.js",
+          "kind": "require-call",
+          "original": "../../../../../chunks/ssr/[turbopack]_runtime.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    ".open-next/server-functions/default/.next/server/app/admin/tokens/new/page.js": {
+      "bytes": 1184,
+      "imports": [
+        {
+          "path": ".open-next/server-functions/default/.next/server/chunks/ssr/[turbopack]_runtime.js",
+          "kind": "require-call",
+          "original": "../../../../chunks/ssr/[turbopack]_runtime.js"
+        }
+      ],
+      "format": "cjs"
+    },
     ".open-next/server-functions/default/.next/server/app/admin/tokens/page.js": {
-      "bytes": 1232,
+      "bytes": 1165,
+      "imports": [
+        {
+          "path": ".open-next/server-functions/default/.next/server/chunks/ssr/[turbopack]_runtime.js",
+          "kind": "require-call",
+          "original": "../../../chunks/ssr/[turbopack]_runtime.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    ".open-next/server-functions/default/.next/server/app/admin/upload/page.js": {
+      "bytes": 1111,
       "imports": [
         {
           "path": ".open-next/server-functions/default/.next/server/chunks/ssr/[turbopack]_runtime.js",
@@ -4144,7 +4312,7 @@
       "format": "cjs"
     },
     ".open-next/server-functions/default/.next/server/app/page.js": {
-      "bytes": 1076,
+      "bytes": 1016,
       "imports": [
         {
           "path": ".open-next/server-functions/default/.next/server/chunks/ssr/[turbopack]_runtime.js",
@@ -4155,7 +4323,7 @@
       "format": "cjs"
     },
     ".open-next/server-functions/default/.next/server/app/play/[token]/complete/page.js": {
-      "bytes": 1191,
+      "bytes": 1131,
       "imports": [
         {
           "path": ".open-next/server-functions/default/.next/server/chunks/ssr/[turbopack]_runtime.js",
@@ -4166,7 +4334,7 @@
       "format": "cjs"
     },
     ".open-next/server-functions/default/.next/server/app/play/[token]/mission/page.js": {
-      "bytes": 1189,
+      "bytes": 1129,
       "imports": [
         {
           "path": ".open-next/server-functions/default/.next/server/chunks/ssr/[turbopack]_runtime.js",
@@ -4177,7 +4345,7 @@
       "format": "cjs"
     },
     ".open-next/server-functions/default/.next/server/app/play/[token]/page.js": {
-      "bytes": 1170,
+      "bytes": 1110,
       "imports": [
         {
           "path": ".open-next/server-functions/default/.next/server/chunks/ssr/[turbopack]_runtime.js",
@@ -4188,7 +4356,7 @@
       "format": "cjs"
     },
     ".open-next/server-functions/default/.next/server/app/play/[token]/prologue/page.js": {
-      "bytes": 1189,
+      "bytes": 1129,
       "imports": [
         {
           "path": ".open-next/server-functions/default/.next/server/chunks/ssr/[turbopack]_runtime.js",
@@ -4199,7 +4367,7 @@
       "format": "cjs"
     },
     ".open-next/server-functions/default/.next/server/app/play/[token]/start/page.js": {
-      "bytes": 1185,
+      "bytes": 1125,
       "imports": [
         {
           "path": ".open-next/server-functions/default/.next/server/chunks/ssr/[turbopack]_runtime.js",
@@ -4210,7 +4378,7 @@
       "format": "cjs"
     },
     ".open-next/server-functions/default/node_modules/next/dist/server/require.js": {
-      "bytes": 9958,
+      "bytes": 12107,
       "imports": [
         {
           "path": "path",
@@ -4268,6 +4436,16 @@
           "original": "D:\\JMJ\\private_works\\outdoor_puzzle_antigravity\\.open-next\\server-functions\\default\\.next\\server\\app\\_not-found\\page.js"
         },
         {
+          "path": ".open-next/server-functions/default/.next/server/app/admin/games/[game_id]/detail/page.js",
+          "kind": "require-call",
+          "original": "D:\\JMJ\\private_works\\outdoor_puzzle_antigravity\\.open-next\\server-functions\\default\\.next\\server\\app\\admin\\games\\[game_id]\\detail\\page.js"
+        },
+        {
+          "path": ".open-next/server-functions/default/.next/server/app/admin/games/new/page.js",
+          "kind": "require-call",
+          "original": "D:\\JMJ\\private_works\\outdoor_puzzle_antigravity\\.open-next\\server-functions\\default\\.next\\server\\app\\admin\\games\\new\\page.js"
+        },
+        {
           "path": ".open-next/server-functions/default/.next/server/app/admin/games/page.js",
           "kind": "require-call",
           "original": "D:\\JMJ\\private_works\\outdoor_puzzle_antigravity\\.open-next\\server-functions\\default\\.next\\server\\app\\admin\\games\\page.js"
@@ -4276,6 +4454,16 @@
           "path": ".open-next/server-functions/default/.next/server/app/admin/login/page.js",
           "kind": "require-call",
           "original": "D:\\JMJ\\private_works\\outdoor_puzzle_antigravity\\.open-next\\server-functions\\default\\.next\\server\\app\\admin\\login\\page.js"
+        },
+        {
+          "path": ".open-next/server-functions/default/.next/server/app/admin/missions/[mission_id]/detail/page.js",
+          "kind": "require-call",
+          "original": "D:\\JMJ\\private_works\\outdoor_puzzle_antigravity\\.open-next\\server-functions\\default\\.next\\server\\app\\admin\\missions\\[mission_id]\\detail\\page.js"
+        },
+        {
+          "path": ".open-next/server-functions/default/.next/server/app/admin/missions/new/page.js",
+          "kind": "require-call",
+          "original": "D:\\JMJ\\private_works\\outdoor_puzzle_antigravity\\.open-next\\server-functions\\default\\.next\\server\\app\\admin\\missions\\new\\page.js"
         },
         {
           "path": ".open-next/server-functions/default/.next/server/app/admin/missions/page.js",
@@ -4288,14 +4476,34 @@
           "original": "D:\\JMJ\\private_works\\outdoor_puzzle_antigravity\\.open-next\\server-functions\\default\\.next\\server\\app\\admin\\page.js"
         },
         {
+          "path": ".open-next/server-functions/default/.next/server/app/admin/players/[player_id]/detail/page.js",
+          "kind": "require-call",
+          "original": "D:\\JMJ\\private_works\\outdoor_puzzle_antigravity\\.open-next\\server-functions\\default\\.next\\server\\app\\admin\\players\\[player_id]\\detail\\page.js"
+        },
+        {
           "path": ".open-next/server-functions/default/.next/server/app/admin/players/page.js",
           "kind": "require-call",
           "original": "D:\\JMJ\\private_works\\outdoor_puzzle_antigravity\\.open-next\\server-functions\\default\\.next\\server\\app\\admin\\players\\page.js"
         },
         {
+          "path": ".open-next/server-functions/default/.next/server/app/admin/tokens/[token_id]/detail/page.js",
+          "kind": "require-call",
+          "original": "D:\\JMJ\\private_works\\outdoor_puzzle_antigravity\\.open-next\\server-functions\\default\\.next\\server\\app\\admin\\tokens\\[token_id]\\detail\\page.js"
+        },
+        {
+          "path": ".open-next/server-functions/default/.next/server/app/admin/tokens/new/page.js",
+          "kind": "require-call",
+          "original": "D:\\JMJ\\private_works\\outdoor_puzzle_antigravity\\.open-next\\server-functions\\default\\.next\\server\\app\\admin\\tokens\\new\\page.js"
+        },
+        {
           "path": ".open-next/server-functions/default/.next/server/app/admin/tokens/page.js",
           "kind": "require-call",
           "original": "D:\\JMJ\\private_works\\outdoor_puzzle_antigravity\\.open-next\\server-functions\\default\\.next\\server\\app\\admin\\tokens\\page.js"
+        },
+        {
+          "path": ".open-next/server-functions/default/.next/server/app/admin/upload/page.js",
+          "kind": "require-call",
+          "original": "D:\\JMJ\\private_works\\outdoor_puzzle_antigravity\\.open-next\\server-functions\\default\\.next\\server\\app\\admin\\upload\\page.js"
         },
         {
           "path": ".open-next/server-functions/default/.next/server/app/api/admin/login/route.js",
@@ -5923,12 +6131,12 @@
       "format": "cjs"
     },
     ".open-next/server-functions/default/open-next.config.mjs": {
-      "bytes": 6897,
+      "bytes": 616,
       "imports": [],
       "format": "esm"
     },
     ".open-next/server-functions/default/index.mjs": {
-      "bytes": 88020,
+      "bytes": 94689,
       "imports": [
         {
           "path": "node:module",
@@ -7142,37 +7350,37 @@
           "bytesInOutput": 5688
         },
         ".open-next/server-functions/default/.next/server/app/admin/page_client-reference-manifest.js": {
-          "bytesInOutput": 6951
+          "bytesInOutput": 6929
         },
         ".open-next/server-functions/default/.next/server/app/play/[token]/page_client-reference-manifest.js": {
-          "bytesInOutput": 6902
+          "bytesInOutput": 6907
+        },
+        ".open-next/server-functions/default/.next/server/app/admin/upload/page_client-reference-manifest.js": {
+          "bytesInOutput": 8094
         },
         ".open-next/server-functions/default/.next/server/app/admin/tokens/page_client-reference-manifest.js": {
-          "bytesInOutput": 6965
+          "bytesInOutput": 9038
         },
         ".open-next/server-functions/default/.next/server/app/admin/players/page_client-reference-manifest.js": {
-          "bytesInOutput": 6967
-        },
-        ".open-next/server-functions/default/.next/server/app/admin/login/page_client-reference-manifest.js": {
-          "bytesInOutput": 8128
-        },
-        ".open-next/server-functions/default/.next/server/app/admin/games/page_client-reference-manifest.js": {
-          "bytesInOutput": 6963
+          "bytesInOutput": 8131
         },
         ".open-next/server-functions/default/.next/server/app/admin/missions/page_client-reference-manifest.js": {
-          "bytesInOutput": 6970
+          "bytesInOutput": 9061
+        },
+        ".open-next/server-functions/default/.next/server/app/admin/login/page_client-reference-manifest.js": {
+          "bytesInOutput": 8085
+        },
+        ".open-next/server-functions/default/.next/server/app/admin/games/page_client-reference-manifest.js": {
+          "bytesInOutput": 9032
         },
         ".open-next/server-functions/default/.next/server/app/play/[token]/start/page_client-reference-manifest.js": {
-          "bytesInOutput": 6939
+          "bytesInOutput": 6944
         },
         ".open-next/server-functions/default/.next/server/app/play/[token]/prologue/page_client-reference-manifest.js": {
-          "bytesInOutput": 6957
-        },
-        ".open-next/server-functions/default/.next/server/app/play/[token]/complete/page_client-reference-manifest.js": {
-          "bytesInOutput": 6911
+          "bytesInOutput": 6962
         },
         ".open-next/server-functions/default/.next/server/app/play/[token]/mission/page_client-reference-manifest.js": {
-          "bytesInOutput": 6951
+          "bytesInOutput": 6956
         },
         ".open-next/server-functions/default/.next/server/app/api/session/claim/route_client-reference-manifest.js": {
           "bytesInOutput": 475
@@ -7180,11 +7388,14 @@
         ".open-next/server-functions/default/.next/server/app/api/game/submit-answer/route_client-reference-manifest.js": {
           "bytesInOutput": 486
         },
-        ".open-next/server-functions/default/.next/server/app/api/game/start/route_client-reference-manifest.js": {
-          "bytesInOutput": 470
+        ".open-next/server-functions/default/.next/server/app/play/[token]/complete/page_client-reference-manifest.js": {
+          "bytesInOutput": 6911
         },
         ".open-next/server-functions/default/.next/server/app/api/game/result/route_client-reference-manifest.js": {
           "bytesInOutput": 472
+        },
+        ".open-next/server-functions/default/.next/server/app/api/game/start/route_client-reference-manifest.js": {
+          "bytesInOutput": 470
         },
         ".open-next/server-functions/default/.next/server/app/api/game/current-mission/route_client-reference-manifest.js": {
           "bytesInOutput": 490
@@ -7195,38 +7406,83 @@
         ".open-next/server-functions/default/.next/server/app/api/admin/login/route_client-reference-manifest.js": {
           "bytesInOutput": 472
         },
+        ".open-next/server-functions/default/.next/server/app/admin/tokens/new/page_client-reference-manifest.js": {
+          "bytesInOutput": 7996
+        },
+        ".open-next/server-functions/default/.next/server/app/admin/missions/new/page_client-reference-manifest.js": {
+          "bytesInOutput": 8004
+        },
+        ".open-next/server-functions/default/.next/server/app/admin/games/new/page_client-reference-manifest.js": {
+          "bytesInOutput": 7992
+        },
         ".open-next/server-functions/default/.next/server/app/api/game/by-token/[token]/route_client-reference-manifest.js": {
           "bytesInOutput": 492
         },
+        ".open-next/server-functions/default/.next/server/app/admin/tokens/[token_id]/detail/page_client-reference-manifest.js": {
+          "bytesInOutput": 8052
+        },
+        ".open-next/server-functions/default/.next/server/app/admin/players/[player_id]/detail/page_client-reference-manifest.js": {
+          "bytesInOutput": 8060
+        },
+        ".open-next/server-functions/default/.next/server/app/admin/missions/[mission_id]/detail/page_client-reference-manifest.js": {
+          "bytesInOutput": 8068
+        },
+        ".open-next/server-functions/default/.next/server/app/admin/games/[game_id]/detail/page_client-reference-manifest.js": {
+          "bytesInOutput": 8044
+        },
         ".open-next/server-functions/default/node_modules/next/dist/server/load-manifest.external.js": {
-          "bytesInOutput": 27758
+          "bytesInOutput": 39531
         },
         ".open-next/server-functions/default/.next/server/chunks/ssr/[turbopack]_runtime.js": {
           "bytesInOutput": 17217
         },
         ".open-next/server-functions/default/.next/server/app/_global-error/page.js": {
-          "bytesInOutput": 890
+          "bytesInOutput": 830
         },
         ".open-next/server-functions/default/.next/server/app/_not-found/page.js": {
-          "bytesInOutput": 1116
+          "bytesInOutput": 1056
+        },
+        ".open-next/server-functions/default/.next/server/app/admin/games/[game_id]/detail/page.js": {
+          "bytesInOutput": 1372
+        },
+        ".open-next/server-functions/default/.next/server/app/admin/games/new/page.js": {
+          "bytesInOutput": 1295
         },
         ".open-next/server-functions/default/.next/server/app/admin/games/page.js": {
-          "bytesInOutput": 1342
+          "bytesInOutput": 1274
         },
         ".open-next/server-functions/default/.next/server/app/admin/login/page.js": {
-          "bytesInOutput": 1280
+          "bytesInOutput": 1220
+        },
+        ".open-next/server-functions/default/.next/server/app/admin/missions/[mission_id]/detail/page.js": {
+          "bytesInOutput": 1384
+        },
+        ".open-next/server-functions/default/.next/server/app/admin/missions/new/page.js": {
+          "bytesInOutput": 1301
         },
         ".open-next/server-functions/default/.next/server/app/admin/missions/page.js": {
-          "bytesInOutput": 1348
+          "bytesInOutput": 1283
         },
         ".open-next/server-functions/default/.next/server/app/admin/page.js": {
-          "bytesInOutput": 1316
+          "bytesInOutput": 1257
+        },
+        ".open-next/server-functions/default/.next/server/app/admin/players/[player_id]/detail/page.js": {
+          "bytesInOutput": 1381
         },
         ".open-next/server-functions/default/.next/server/app/admin/players/page.js": {
-          "bytesInOutput": 1346
+          "bytesInOutput": 1281
+        },
+        ".open-next/server-functions/default/.next/server/app/admin/tokens/[token_id]/detail/page.js": {
+          "bytesInOutput": 1377
+        },
+        ".open-next/server-functions/default/.next/server/app/admin/tokens/new/page.js": {
+          "bytesInOutput": 1298
         },
         ".open-next/server-functions/default/.next/server/app/admin/tokens/page.js": {
-          "bytesInOutput": 1344
+          "bytesInOutput": 1278
+        },
+        ".open-next/server-functions/default/.next/server/app/admin/upload/page.js": {
+          "bytesInOutput": 1224
         },
         ".open-next/server-functions/default/.next/server/chunks/[turbopack]_runtime.js": {
           "bytesInOutput": 17169
@@ -7259,25 +7515,25 @@
           "bytesInOutput": 535
         },
         ".open-next/server-functions/default/.next/server/app/page.js": {
-          "bytesInOutput": 1181
+          "bytesInOutput": 1122
         },
         ".open-next/server-functions/default/.next/server/app/play/[token]/complete/page.js": {
-          "bytesInOutput": 1310
+          "bytesInOutput": 1250
         },
         ".open-next/server-functions/default/.next/server/app/play/[token]/mission/page.js": {
-          "bytesInOutput": 1307
+          "bytesInOutput": 1247
         },
         ".open-next/server-functions/default/.next/server/app/play/[token]/page.js": {
-          "bytesInOutput": 1283
+          "bytesInOutput": 1223
         },
         ".open-next/server-functions/default/.next/server/app/play/[token]/prologue/page.js": {
-          "bytesInOutput": 1308
+          "bytesInOutput": 1248
         },
         ".open-next/server-functions/default/.next/server/app/play/[token]/start/page.js": {
-          "bytesInOutput": 1301
+          "bytesInOutput": 1241
         },
         ".open-next/server-functions/default/node_modules/next/dist/server/require.js": {
-          "bytesInOutput": 5008
+          "bytesInOutput": 5849
         },
         ".open-next/server-functions/default/node_modules/next/dist/lib/interop-default.js": {
           "bytesInOutput": 363
@@ -7481,13 +7737,13 @@
           "bytesInOutput": 27788
         },
         ".open-next/server-functions/default/open-next.config.mjs": {
-          "bytesInOutput": 5136
+          "bytesInOutput": 633
         },
         ".open-next/server-functions/default/index.mjs": {
-          "bytesInOutput": 61923
+          "bytesInOutput": 67988
         }
       },
-      "bytes": 2124306
+      "bytes": 2219914
     }
   }
 }

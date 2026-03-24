@@ -23,6 +23,46 @@
   },
   "dynamicRoutes": [
     {
+      "page": "/admin/games/[game_id]/detail",
+      "regex": "^/admin/games/([^/]+?)/detail(?:/)?$",
+      "routeKeys": {
+        "nxtPgame_id": "nxtPgame_id"
+      },
+      "namedRegex": "^/admin/games/(?<nxtPgame_id>[^/]+?)/detail(?:/)?$"
+    },
+    {
+      "page": "/admin/missions/[mission_id]/detail",
+      "regex": "^/admin/missions/([^/]+?)/detail(?:/)?$",
+      "routeKeys": {
+        "nxtPmission_id": "nxtPmission_id"
+      },
+      "namedRegex": "^/admin/missions/(?<nxtPmission_id>[^/]+?)/detail(?:/)?$"
+    },
+    {
+      "page": "/admin/players/[player_id]/detail",
+      "regex": "^/admin/players/([^/]+?)/detail(?:/)?$",
+      "routeKeys": {
+        "nxtPplayer_id": "nxtPplayer_id"
+      },
+      "namedRegex": "^/admin/players/(?<nxtPplayer_id>[^/]+?)/detail(?:/)?$"
+    },
+    {
+      "page": "/admin/tokens/[token_id]/detail",
+      "regex": "^/admin/tokens/([^/]+?)/detail(?:/)?$",
+      "routeKeys": {
+        "nxtPtoken_id": "nxtPtoken_id"
+      },
+      "namedRegex": "^/admin/tokens/(?<nxtPtoken_id>[^/]+?)/detail(?:/)?$"
+    },
+    {
+      "page": "/api/assets/[key]",
+      "regex": "^/api/assets/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPkey": "nxtPkey"
+      },
+      "namedRegex": "^/api/assets/(?<nxtPkey>[^/]+?)(?:/)?$"
+    },
+    {
       "page": "/api/game/by-token/[token]",
       "regex": "^/api/game/by\\-token/([^/]+?)(?:/)?$",
       "routeKeys": {
@@ -103,6 +143,12 @@
       "namedRegex": "^/admin/games(?:/)?$"
     },
     {
+      "page": "/admin/games/new",
+      "regex": "^/admin/games/new(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/games/new(?:/)?$"
+    },
+    {
       "page": "/admin/login",
       "regex": "^/admin/login(?:/)?$",
       "routeKeys": {},
@@ -113,6 +159,12 @@
       "regex": "^/admin/missions(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/admin/missions(?:/)?$"
+    },
+    {
+      "page": "/admin/missions/new",
+      "regex": "^/admin/missions/new(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/missions/new(?:/)?$"
     },
     {
       "page": "/admin/players",
@@ -127,6 +179,18 @@
       "namedRegex": "^/admin/tokens(?:/)?$"
     },
     {
+      "page": "/admin/tokens/new",
+      "regex": "^/admin/tokens/new(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/tokens/new(?:/)?$"
+    },
+    {
+      "page": "/admin/upload",
+      "regex": "^/admin/upload(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/upload(?:/)?$"
+    },
+    {
       "page": "/api/admin/login",
       "regex": "^/api/admin/login(?:/)?$",
       "routeKeys": {},
@@ -137,6 +201,12 @@
       "regex": "^/api/admin/logout(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/api/admin/logout(?:/)?$"
+    },
+    {
+      "page": "/api/admin/upload",
+      "regex": "^/api/admin/upload(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/admin/upload(?:/)?$"
     },
     {
       "page": "/api/game/current-mission",

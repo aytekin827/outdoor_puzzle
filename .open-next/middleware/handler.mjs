@@ -704,23 +704,6 @@ var init_fetch = __esm({
   }
 });
 
-// .next/server/edge/chunks/node_modules_next_dist_esm_build_templates_edge-wrapper_0kvehva.js
-var require_node_modules_next_dist_esm_build_templates_edge_wrapper_0kvehva = __commonJS({
-  ".next/server/edge/chunks/node_modules_next_dist_esm_build_templates_edge-wrapper_0kvehva.js"() {
-    "use strict";
-    (globalThis.TURBOPACK || (globalThis.TURBOPACK = [])).push(["chunks/node_modules_next_dist_esm_build_templates_edge-wrapper_0kvehva.js", 35825, (e, t, l) => {
-      self._ENTRIES ||= {};
-      let h = Promise.resolve().then(() => e.i(58217));
-      h.catch(() => {
-      }), self._ENTRIES.middleware_middleware = new Proxy(h, { get(e2, t2) {
-        if ("then" === t2) return (t3, l3) => e2.then(t3, l3);
-        let l2 = (...l3) => e2.then((e3) => (0, e3[t2])(...l3));
-        return l2.then = (l3, h2) => e2.then((e3) => e3[t2]).then(l3, h2), l2;
-      } });
-    }]);
-  }
-});
-
 // node-built-in-modules:node:buffer
 var node_buffer_exports = {};
 import * as node_buffer_star from "node:buffer";
@@ -739,11 +722,32 @@ var init_node_async_hooks = __esm({
   }
 });
 
-// .next/server/edge/chunks/[root-of-the-server]__08ca2jv._.js
-var require_root_of_the_server_08ca2jv = __commonJS({
-  ".next/server/edge/chunks/[root-of-the-server]__08ca2jv._.js"() {
+// .next/server/edge/chunks/[root-of-the-server]__0zrx25l._.js
+var require_root_of_the_server_0zrx25l = __commonJS({
+  ".next/server/edge/chunks/[root-of-the-server]__0zrx25l._.js"() {
     "use strict";
-    (globalThis.TURBOPACK || (globalThis.TURBOPACK = [])).push(["chunks/[root-of-the-server]__08ca2jv._.js", 74398, (e, t, r) => {
+    (globalThis.TURBOPACK || (globalThis.TURBOPACK = [])).push(["chunks/[root-of-the-server]__0zrx25l._.js", 51615, (e, r, o) => {
+      r.exports = e.x("node:buffer", () => (init_node_buffer(), __toCommonJS(node_buffer_exports)));
+    }, 78500, (e, r, o) => {
+      r.exports = e.x("node:async_hooks", () => (init_node_async_hooks(), __toCommonJS(node_async_hooks_exports)));
+    }, 35825, (e, r, o) => {
+      self._ENTRIES ||= {};
+      let n = Promise.resolve().then(() => e.i(58217));
+      n.catch(() => {
+      }), self._ENTRIES.middleware_middleware = new Proxy(n, { get(e2, r2) {
+        if ("then" === r2) return (r3, o3) => e2.then(r3, o3);
+        let o2 = (...o3) => e2.then((e3) => (0, e3[r2])(...o3));
+        return o2.then = (o3, n2) => e2.then((e3) => e3[r2]).then(o3, n2), o2;
+      } });
+    }]);
+  }
+});
+
+// .next/server/edge/chunks/node_modules_next_dist_0drxi9a._.js
+var require_node_modules_next_dist_0drxi9a = __commonJS({
+  ".next/server/edge/chunks/node_modules_next_dist_0drxi9a._.js"() {
+    "use strict";
+    (globalThis.TURBOPACK || (globalThis.TURBOPACK = [])).push(["chunks/node_modules_next_dist_0drxi9a._.js", 74398, (e, t, r) => {
     }, 28042, (e, t, r) => {
       "use strict";
       var n = Object.defineProperty, i = Object.getOwnPropertyDescriptor, a = Object.getOwnPropertyNames, o = Object.prototype.hasOwnProperty, s = {}, l = { RequestCookies: () => g, ResponseCookies: () => v, parseCookie: () => d, parseSetCookie: () => h, stringifyCookie: () => c };
@@ -1995,10 +1999,6 @@ var require_root_of_the_server_08ca2jv = __commonJS({
           }
         }, t.exports = u;
       })();
-    }, 51615, (e, t, r) => {
-      t.exports = e.x("node:buffer", () => (init_node_buffer(), __toCommonJS(node_buffer_exports)));
-    }, 78500, (e, t, r) => {
-      t.exports = e.x("node:async_hooks", () => (init_node_async_hooks(), __toCommonJS(node_async_hooks_exports)));
     }, 25085, (e, t, r) => {
       "use strict";
       Object.defineProperty(r, "__esModule", { value: true });
@@ -4475,11 +4475,11 @@ Learn More: https://nextjs.org/docs/messages/node-module-in-edge-runtime`;
   }
 });
 
-// .next/server/edge/chunks/turbopack-node_modules_next_dist_esm_build_templates_edge-wrapper_0lcpsxv.js
-var require_turbopack_node_modules_next_dist_esm_build_templates_edge_wrapper_0lcpsxv = __commonJS({
-  ".next/server/edge/chunks/turbopack-node_modules_next_dist_esm_build_templates_edge-wrapper_0lcpsxv.js"() {
+// .next/server/edge/chunks/turbopack-node_modules_next_dist_esm_build_templates_edge-wrapper_0n3jsg7.js
+var require_turbopack_node_modules_next_dist_esm_build_templates_edge_wrapper_0n3jsg7 = __commonJS({
+  ".next/server/edge/chunks/turbopack-node_modules_next_dist_esm_build_templates_edge-wrapper_0n3jsg7.js"() {
     "use strict";
-    (globalThis.TURBOPACK || (globalThis.TURBOPACK = [])).push(["chunks/turbopack-node_modules_next_dist_esm_build_templates_edge-wrapper_0lcpsxv.js", { otherChunks: ["chunks/node_modules_next_dist_esm_build_templates_edge-wrapper_0kvehva.js", "chunks/[root-of-the-server]__08ca2jv._.js"], runtimeModuleIds: [35825] }]), (() => {
+    (globalThis.TURBOPACK || (globalThis.TURBOPACK = [])).push(["chunks/turbopack-node_modules_next_dist_esm_build_templates_edge-wrapper_0n3jsg7.js", { otherChunks: ["chunks/[root-of-the-server]__0zrx25l._.js", "chunks/node_modules_next_dist_0drxi9a._.js"], runtimeModuleIds: [35825] }]), (() => {
       let e;
       if (!Array.isArray(globalThis.TURBOPACK)) return;
       let t = ["NEXT_DEPLOYMENT_ID", "NEXT_CLIENT_ASSET_SUFFIX"];
@@ -4588,8 +4588,8 @@ var require_turbopack_node_modules_next_dist_esm_build_templates_edge_wrapper_0l
           throw r2.code = "MODULE_NOT_FOUND", r2;
         }, t2.import = async (e3) => await t2(e3), t2;
       };
-      let k = Symbol("turbopack queues"), j = Symbol("turbopack exports"), v = Symbol("turbopack error");
-      function C(e2) {
+      let k = Symbol("turbopack queues"), j = Symbol("turbopack exports"), C = Symbol("turbopack error");
+      function P(e2) {
         e2 && 1 !== e2.status && (e2.status = 1, e2.forEach((e3) => e3.queueCount--), e2.forEach((e3) => e3.queueCount-- ? e3.queueCount++ : e3()));
       }
       l.a = function(e2, t2) {
@@ -4606,16 +4606,16 @@ var require_turbopack_node_modules_next_dist_esm_build_templates_edge_wrapper_0l
               if (null != e4 && "object" == typeof e4 && "then" in e4 && "function" == typeof e4.then) {
                 let t4 = Object.assign([], { status: 0 }), r4 = { [j]: {}, [k]: (e5) => e5(t4) };
                 return e4.then((e5) => {
-                  r4[j] = e5, C(t4);
+                  r4[j] = e5, P(t4);
                 }, (e5) => {
-                  r4[v] = e5, C(t4);
+                  r4[C] = e5, P(t4);
                 }), r4;
               }
             }
             return { [j]: e4, [k]: () => {
             } };
           }), r3 = () => t3.map((e4) => {
-            if (e4[v]) throw e4[v];
+            if (e4[C]) throw e4[C];
             return e4[j];
           }), { promise: u3, resolve: l3 } = _(), i3 = Object.assign(() => l3(r3), { queueCount: 0 });
           function a3(e4) {
@@ -4623,10 +4623,10 @@ var require_turbopack_node_modules_next_dist_esm_build_templates_edge_wrapper_0l
           }
           return t3.map((e4) => e4[k](a3)), i3.queueCount ? u3 : r3();
         }, function(e3) {
-          e3 ? l2(a2[v] = e3) : u2(a2[j]), C(n2);
+          e3 ? l2(a2[C] = e3) : u2(a2[j]), P(n2);
         }), n2 && -1 === n2.status && (n2.status = 0);
       };
-      let P = function(e2) {
+      let v = function(e2) {
         let t2 = new URL(e2, "x:/"), r2 = {};
         for (let e3 in t2) r2[e3] = t2[e3];
         for (let t3 in r2.href = e2, r2.pathname = e2.replace(/[?#].*/, ""), r2.origin = r2.protocol = "", r2.toString = r2.toJSON = (...t4) => e2, r2) Object.defineProperty(this, t3, { enumerable: true, configurable: true, value: r2[t3] });
@@ -4634,7 +4634,7 @@ var require_turbopack_node_modules_next_dist_esm_build_templates_edge_wrapper_0l
       function E(e2, t2) {
         throw Error(`Invariant: ${t2(e2)}`);
       }
-      P.prototype = URL.prototype, l.U = P, l.z = function(e2) {
+      v.prototype = URL.prototype, l.U = v, l.z = function(e2) {
         throw Error("dynamic usage of require is not supported");
       }, l.g = globalThis;
       let U = u.prototype, x = /* @__PURE__ */ new Map();
@@ -4829,9 +4829,9 @@ var require_turbopack_node_modules_next_dist_esm_build_templates_edge_wrapper_0l
       }, loadChunkCached(e2, t2) {
         throw Error("chunk loading is not supported");
       }, async loadWebAssembly(e2, t2, r2, n2, o2) {
-        let u2 = await H(r2, n2);
+        let u2 = await z(r2, n2);
         return await WebAssembly.instantiate(u2, o2);
-      }, loadWebAssemblyModule: async (e2, t2, r2, n2) => H(r2, n2) };
+      }, loadWebAssemblyModule: async (e2, t2, r2, n2) => z(r2, n2) };
       let F = /* @__PURE__ */ new Set(), D = /* @__PURE__ */ new Map();
       function X(e2, t2) {
         for (let r2 of e2) !function(e3, t3) {
@@ -4843,7 +4843,7 @@ var require_turbopack_node_modules_next_dist_esm_build_templates_edge_wrapper_0l
           L(t3, n.Runtime, e3);
         }(t2, r2);
       }
-      async function H(e2, t2) {
+      async function z(e2, t2) {
         let r2;
         try {
           r2 = t2();
@@ -4852,8 +4852,8 @@ var require_turbopack_node_modules_next_dist_esm_build_templates_edge_wrapper_0l
         if (!r2) throw Error(`dynamically loading WebAssembly is not supported in this runtime as global was not injected for chunk '${e2}'`);
         return r2;
       }
-      let z = globalThis.TURBOPACK;
-      globalThis.TURBOPACK = { push: W }, z.forEach(W);
+      let H = globalThis.TURBOPACK;
+      globalThis.TURBOPACK = { push: W }, H.forEach(W);
     })();
   }
 });
@@ -4889,9 +4889,9 @@ var init_edgeFunctionHandler = __esm({
     globalThis._ENTRIES = {};
     globalThis.self = globalThis;
     globalThis._ROUTES = [{ "name": "middleware", "page": "/", "regex": ["^(?:\\/(_next\\/data\\/[^/]{1,}))?\\/admin(?:\\/((?:[^\\/#\\?]+?)(?:\\/(?:[^\\/#\\?]+?))*))?(\\\\.json)?[\\/#\\?]?$"] }];
-    require_node_modules_next_dist_esm_build_templates_edge_wrapper_0kvehva();
-    require_root_of_the_server_08ca2jv();
-    require_turbopack_node_modules_next_dist_esm_build_templates_edge_wrapper_0lcpsxv();
+    require_root_of_the_server_0zrx25l();
+    require_node_modules_next_dist_0drxi9a();
+    require_turbopack_node_modules_next_dist_esm_build_templates_edge_wrapper_0n3jsg7();
   }
 });
 
@@ -5043,13 +5043,13 @@ var NEXT_DIR = path.join(__dirname, ".next");
 var OPEN_NEXT_DIR = path.join(__dirname, ".open-next");
 debug({ NEXT_DIR, OPEN_NEXT_DIR });
 var NextConfig = { "env": {}, "webpack": null, "typescript": { "ignoreBuildErrors": false }, "typedRoutes": false, "distDir": ".next", "cleanDistDir": true, "assetPrefix": "", "cacheMaxMemorySize": 52428800, "configOrigin": "next.config.ts", "useFileSystemPublicRoutes": true, "generateEtags": true, "pageExtensions": ["tsx", "ts", "jsx", "js"], "poweredByHeader": true, "compress": true, "images": { "deviceSizes": [640, 750, 828, 1080, 1200, 1920, 2048, 3840], "imageSizes": [32, 48, 64, 96, 128, 256, 384], "path": "/_next/image", "loader": "default", "loaderFile": "", "domains": [], "disableStaticImages": false, "minimumCacheTTL": 14400, "formats": ["image/webp"], "maximumRedirects": 3, "maximumResponseBody": 5e7, "dangerouslyAllowLocalIP": false, "dangerouslyAllowSVG": false, "contentSecurityPolicy": "script-src 'none'; frame-src 'none'; sandbox;", "contentDispositionType": "attachment", "localPatterns": [{ "pathname": "**", "search": "" }], "remotePatterns": [], "qualities": [75], "unoptimized": false, "customCacheHandler": false }, "devIndicators": { "position": "bottom-left" }, "onDemandEntries": { "maxInactiveAge": 6e4, "pagesBufferLength": 5 }, "basePath": "", "sassOptions": {}, "trailingSlash": false, "i18n": null, "productionBrowserSourceMaps": false, "excludeDefaultMomentLocales": true, "reactProductionProfiling": false, "reactStrictMode": null, "reactMaxHeadersLength": 6e3, "httpAgentOptions": { "keepAlive": true }, "logging": { "serverFunctions": true, "browserToTerminal": "warn" }, "compiler": {}, "expireTime": 31536e3, "staticPageGenerationTimeout": 60, "output": "standalone", "modularizeImports": { "@mui/icons-material": { "transform": "@mui/icons-material/{{member}}" }, "lodash": { "transform": "lodash/{{member}}" } }, "outputFileTracingRoot": "D:\\JMJ\\private_works\\outdoor_puzzle_antigravity", "cacheComponents": false, "cacheLife": { "default": { "stale": 300, "revalidate": 900, "expire": 4294967294 }, "seconds": { "stale": 30, "revalidate": 1, "expire": 60 }, "minutes": { "stale": 300, "revalidate": 60, "expire": 3600 }, "hours": { "stale": 300, "revalidate": 3600, "expire": 86400 }, "days": { "stale": 300, "revalidate": 86400, "expire": 604800 }, "weeks": { "stale": 300, "revalidate": 604800, "expire": 2592e3 }, "max": { "stale": 300, "revalidate": 2592e3, "expire": 31536e3 } }, "cacheHandlers": {}, "experimental": { "appNewScrollHandler": false, "useSkewCookie": false, "cssChunking": true, "multiZoneDraftMode": false, "appNavFailHandling": false, "prerenderEarlyExit": true, "serverMinification": true, "linkNoTouchStart": false, "caseSensitiveRoutes": false, "cachedNavigations": false, "partialFallbacks": false, "dynamicOnHover": false, "varyParams": false, "prefetchInlining": false, "preloadEntriesOnStart": true, "clientRouterFilter": true, "clientRouterFilterRedirects": false, "fetchCacheKeyPrefix": "", "proxyPrefetch": "flexible", "optimisticClientCache": true, "manualClientBasePath": false, "cpus": 11, "memoryBasedWorkersCount": false, "imgOptConcurrency": null, "imgOptTimeoutInSeconds": 7, "imgOptMaxInputPixels": 268402689, "imgOptSequentialRead": null, "imgOptSkipMetadata": null, "isrFlushToDisk": true, "workerThreads": false, "optimizeCss": false, "nextScriptWorkers": false, "scrollRestoration": false, "externalDir": false, "disableOptimizedLoading": false, "gzipSize": true, "craCompat": false, "esmExternals": true, "fullySpecified": false, "swcTraceProfiling": false, "forceSwcTransforms": false, "largePageDataBytes": 128e3, "typedEnv": false, "parallelServerCompiles": false, "parallelServerBuildTraces": false, "ppr": false, "authInterrupts": false, "webpackMemoryOptimizations": false, "optimizeServerReact": true, "strictRouteTypes": false, "viewTransition": false, "removeUncaughtErrorAndRejectionListeners": false, "validateRSCRequestHeaders": false, "staleTimes": { "dynamic": 0, "static": 300 }, "reactDebugChannel": true, "serverComponentsHmrCache": true, "staticGenerationMaxConcurrency": 8, "staticGenerationMinPagesPerWorker": 25, "transitionIndicator": false, "gestureTransition": false, "inlineCss": false, "useCache": false, "globalNotFound": false, "browserDebugInfoInTerminal": "warn", "lockDistDir": true, "proxyClientMaxBodySize": 10485760, "hideLogsAfterAbort": false, "mcpServer": true, "turbopackFileSystemCacheForDev": true, "turbopackFileSystemCacheForBuild": false, "turbopackInferModuleSideEffects": true, "turbopackPluginRuntimeStrategy": "childProcesses", "optimizePackageImports": ["lucide-react", "date-fns", "lodash-es", "ramda", "antd", "react-bootstrap", "ahooks", "@ant-design/icons", "@headlessui/react", "@headlessui-float/react", "@heroicons/react/20/solid", "@heroicons/react/24/solid", "@heroicons/react/24/outline", "@visx/visx", "@tremor/react", "rxjs", "@mui/material", "@mui/icons-material", "recharts", "react-use", "effect", "@effect/schema", "@effect/platform", "@effect/platform-node", "@effect/platform-browser", "@effect/platform-bun", "@effect/sql", "@effect/sql-mssql", "@effect/sql-mysql2", "@effect/sql-pg", "@effect/sql-sqlite-node", "@effect/sql-sqlite-bun", "@effect/sql-sqlite-wasm", "@effect/sql-sqlite-react-native", "@effect/rpc", "@effect/rpc-http", "@effect/typeclass", "@effect/experimental", "@effect/opentelemetry", "@material-ui/core", "@material-ui/icons", "@tabler/icons-react", "mui-core", "react-icons/ai", "react-icons/bi", "react-icons/bs", "react-icons/cg", "react-icons/ci", "react-icons/di", "react-icons/fa", "react-icons/fa6", "react-icons/fc", "react-icons/fi", "react-icons/gi", "react-icons/go", "react-icons/gr", "react-icons/hi", "react-icons/hi2", "react-icons/im", "react-icons/io", "react-icons/io5", "react-icons/lia", "react-icons/lib", "react-icons/lu", "react-icons/md", "react-icons/pi", "react-icons/ri", "react-icons/rx", "react-icons/si", "react-icons/sl", "react-icons/tb", "react-icons/tfi", "react-icons/ti", "react-icons/vsc", "react-icons/wi"], "trustHostHeader": false, "isExperimentalCompile": false }, "htmlLimitedBots": "[\\w-]+-Google|Google-[\\w-]+|Chrome-Lighthouse|Slurp|DuckDuckBot|baiduspider|yandex|sogou|bitlybot|tumblr|vkShare|quora link preview|redditbot|ia_archiver|Bingbot|BingPreview|applebot|facebookexternalhit|facebookcatalog|Twitterbot|LinkedInBot|Slackbot|Discordbot|WhatsApp|SkypeUriPreview|Yeti|googleweblight", "bundlePagesRouterDependencies": false, "configFileName": "next.config.ts", "turbopack": { "root": "D:\\JMJ\\private_works\\outdoor_puzzle_antigravity" }, "distDirRoot": ".next" };
-var BuildId = "IgGix1dk07wVYLkjeZE0P";
-var RoutesManifest = { "basePath": "", "rewrites": { "beforeFiles": [], "afterFiles": [], "fallback": [] }, "redirects": [{ "source": "/:path+/", "destination": "/:path+", "internal": true, "priority": true, "statusCode": 308, "regex": "^(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))/$" }], "routes": { "static": [{ "page": "/", "regex": "^/(?:/)?$", "routeKeys": {}, "namedRegex": "^/(?:/)?$" }, { "page": "/_global-error", "regex": "^/_global\\-error(?:/)?$", "routeKeys": {}, "namedRegex": "^/_global\\-error(?:/)?$" }, { "page": "/_not-found", "regex": "^/_not\\-found(?:/)?$", "routeKeys": {}, "namedRegex": "^/_not\\-found(?:/)?$" }, { "page": "/admin", "regex": "^/admin(?:/)?$", "routeKeys": {}, "namedRegex": "^/admin(?:/)?$" }, { "page": "/admin/games", "regex": "^/admin/games(?:/)?$", "routeKeys": {}, "namedRegex": "^/admin/games(?:/)?$" }, { "page": "/admin/login", "regex": "^/admin/login(?:/)?$", "routeKeys": {}, "namedRegex": "^/admin/login(?:/)?$" }, { "page": "/admin/missions", "regex": "^/admin/missions(?:/)?$", "routeKeys": {}, "namedRegex": "^/admin/missions(?:/)?$" }, { "page": "/admin/players", "regex": "^/admin/players(?:/)?$", "routeKeys": {}, "namedRegex": "^/admin/players(?:/)?$" }, { "page": "/admin/tokens", "regex": "^/admin/tokens(?:/)?$", "routeKeys": {}, "namedRegex": "^/admin/tokens(?:/)?$" }, { "page": "/api/admin/login", "regex": "^/api/admin/login(?:/)?$", "routeKeys": {}, "namedRegex": "^/api/admin/login(?:/)?$" }, { "page": "/api/admin/logout", "regex": "^/api/admin/logout(?:/)?$", "routeKeys": {}, "namedRegex": "^/api/admin/logout(?:/)?$" }, { "page": "/api/game/current-mission", "regex": "^/api/game/current\\-mission(?:/)?$", "routeKeys": {}, "namedRegex": "^/api/game/current\\-mission(?:/)?$" }, { "page": "/api/game/result", "regex": "^/api/game/result(?:/)?$", "routeKeys": {}, "namedRegex": "^/api/game/result(?:/)?$" }, { "page": "/api/game/start", "regex": "^/api/game/start(?:/)?$", "routeKeys": {}, "namedRegex": "^/api/game/start(?:/)?$" }, { "page": "/api/game/submit-answer", "regex": "^/api/game/submit\\-answer(?:/)?$", "routeKeys": {}, "namedRegex": "^/api/game/submit\\-answer(?:/)?$" }, { "page": "/api/session/claim", "regex": "^/api/session/claim(?:/)?$", "routeKeys": {}, "namedRegex": "^/api/session/claim(?:/)?$" }, { "page": "/favicon.ico", "regex": "^/favicon\\.ico(?:/)?$", "routeKeys": {}, "namedRegex": "^/favicon\\.ico(?:/)?$" }], "dynamic": [{ "page": "/api/game/by-token/[token]", "regex": "^/api/game/by\\-token/([^/]+?)(?:/)?$", "routeKeys": { "nxtPtoken": "nxtPtoken" }, "namedRegex": "^/api/game/by\\-token/(?<nxtPtoken>[^/]+?)(?:/)?$" }, { "page": "/play/[token]", "regex": "^/play/([^/]+?)(?:/)?$", "routeKeys": { "nxtPtoken": "nxtPtoken" }, "namedRegex": "^/play/(?<nxtPtoken>[^/]+?)(?:/)?$" }, { "page": "/play/[token]/complete", "regex": "^/play/([^/]+?)/complete(?:/)?$", "routeKeys": { "nxtPtoken": "nxtPtoken" }, "namedRegex": "^/play/(?<nxtPtoken>[^/]+?)/complete(?:/)?$" }, { "page": "/play/[token]/mission", "regex": "^/play/([^/]+?)/mission(?:/)?$", "routeKeys": { "nxtPtoken": "nxtPtoken" }, "namedRegex": "^/play/(?<nxtPtoken>[^/]+?)/mission(?:/)?$" }, { "page": "/play/[token]/prologue", "regex": "^/play/([^/]+?)/prologue(?:/)?$", "routeKeys": { "nxtPtoken": "nxtPtoken" }, "namedRegex": "^/play/(?<nxtPtoken>[^/]+?)/prologue(?:/)?$" }, { "page": "/play/[token]/start", "regex": "^/play/([^/]+?)/start(?:/)?$", "routeKeys": { "nxtPtoken": "nxtPtoken" }, "namedRegex": "^/play/(?<nxtPtoken>[^/]+?)/start(?:/)?$" }], "data": { "static": [], "dynamic": [] } }, "locales": [] };
+var BuildId = "k4Xg1oi5aYD39jct9fU2w";
+var RoutesManifest = { "basePath": "", "rewrites": { "beforeFiles": [], "afterFiles": [], "fallback": [] }, "redirects": [{ "source": "/:path+/", "destination": "/:path+", "internal": true, "priority": true, "statusCode": 308, "regex": "^(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))/$" }], "routes": { "static": [{ "page": "/", "regex": "^/(?:/)?$", "routeKeys": {}, "namedRegex": "^/(?:/)?$" }, { "page": "/_global-error", "regex": "^/_global\\-error(?:/)?$", "routeKeys": {}, "namedRegex": "^/_global\\-error(?:/)?$" }, { "page": "/_not-found", "regex": "^/_not\\-found(?:/)?$", "routeKeys": {}, "namedRegex": "^/_not\\-found(?:/)?$" }, { "page": "/admin", "regex": "^/admin(?:/)?$", "routeKeys": {}, "namedRegex": "^/admin(?:/)?$" }, { "page": "/admin/games", "regex": "^/admin/games(?:/)?$", "routeKeys": {}, "namedRegex": "^/admin/games(?:/)?$" }, { "page": "/admin/games/new", "regex": "^/admin/games/new(?:/)?$", "routeKeys": {}, "namedRegex": "^/admin/games/new(?:/)?$" }, { "page": "/admin/login", "regex": "^/admin/login(?:/)?$", "routeKeys": {}, "namedRegex": "^/admin/login(?:/)?$" }, { "page": "/admin/missions", "regex": "^/admin/missions(?:/)?$", "routeKeys": {}, "namedRegex": "^/admin/missions(?:/)?$" }, { "page": "/admin/missions/new", "regex": "^/admin/missions/new(?:/)?$", "routeKeys": {}, "namedRegex": "^/admin/missions/new(?:/)?$" }, { "page": "/admin/players", "regex": "^/admin/players(?:/)?$", "routeKeys": {}, "namedRegex": "^/admin/players(?:/)?$" }, { "page": "/admin/tokens", "regex": "^/admin/tokens(?:/)?$", "routeKeys": {}, "namedRegex": "^/admin/tokens(?:/)?$" }, { "page": "/admin/tokens/new", "regex": "^/admin/tokens/new(?:/)?$", "routeKeys": {}, "namedRegex": "^/admin/tokens/new(?:/)?$" }, { "page": "/admin/upload", "regex": "^/admin/upload(?:/)?$", "routeKeys": {}, "namedRegex": "^/admin/upload(?:/)?$" }, { "page": "/api/admin/login", "regex": "^/api/admin/login(?:/)?$", "routeKeys": {}, "namedRegex": "^/api/admin/login(?:/)?$" }, { "page": "/api/admin/logout", "regex": "^/api/admin/logout(?:/)?$", "routeKeys": {}, "namedRegex": "^/api/admin/logout(?:/)?$" }, { "page": "/api/admin/upload", "regex": "^/api/admin/upload(?:/)?$", "routeKeys": {}, "namedRegex": "^/api/admin/upload(?:/)?$" }, { "page": "/api/game/current-mission", "regex": "^/api/game/current\\-mission(?:/)?$", "routeKeys": {}, "namedRegex": "^/api/game/current\\-mission(?:/)?$" }, { "page": "/api/game/result", "regex": "^/api/game/result(?:/)?$", "routeKeys": {}, "namedRegex": "^/api/game/result(?:/)?$" }, { "page": "/api/game/start", "regex": "^/api/game/start(?:/)?$", "routeKeys": {}, "namedRegex": "^/api/game/start(?:/)?$" }, { "page": "/api/game/submit-answer", "regex": "^/api/game/submit\\-answer(?:/)?$", "routeKeys": {}, "namedRegex": "^/api/game/submit\\-answer(?:/)?$" }, { "page": "/api/session/claim", "regex": "^/api/session/claim(?:/)?$", "routeKeys": {}, "namedRegex": "^/api/session/claim(?:/)?$" }, { "page": "/favicon.ico", "regex": "^/favicon\\.ico(?:/)?$", "routeKeys": {}, "namedRegex": "^/favicon\\.ico(?:/)?$" }], "dynamic": [{ "page": "/admin/games/[game_id]/detail", "regex": "^/admin/games/([^/]+?)/detail(?:/)?$", "routeKeys": { "nxtPgame_id": "nxtPgame_id" }, "namedRegex": "^/admin/games/(?<nxtPgame_id>[^/]+?)/detail(?:/)?$" }, { "page": "/admin/missions/[mission_id]/detail", "regex": "^/admin/missions/([^/]+?)/detail(?:/)?$", "routeKeys": { "nxtPmission_id": "nxtPmission_id" }, "namedRegex": "^/admin/missions/(?<nxtPmission_id>[^/]+?)/detail(?:/)?$" }, { "page": "/admin/players/[player_id]/detail", "regex": "^/admin/players/([^/]+?)/detail(?:/)?$", "routeKeys": { "nxtPplayer_id": "nxtPplayer_id" }, "namedRegex": "^/admin/players/(?<nxtPplayer_id>[^/]+?)/detail(?:/)?$" }, { "page": "/admin/tokens/[token_id]/detail", "regex": "^/admin/tokens/([^/]+?)/detail(?:/)?$", "routeKeys": { "nxtPtoken_id": "nxtPtoken_id" }, "namedRegex": "^/admin/tokens/(?<nxtPtoken_id>[^/]+?)/detail(?:/)?$" }, { "page": "/api/assets/[key]", "regex": "^/api/assets/([^/]+?)(?:/)?$", "routeKeys": { "nxtPkey": "nxtPkey" }, "namedRegex": "^/api/assets/(?<nxtPkey>[^/]+?)(?:/)?$" }, { "page": "/api/game/by-token/[token]", "regex": "^/api/game/by\\-token/([^/]+?)(?:/)?$", "routeKeys": { "nxtPtoken": "nxtPtoken" }, "namedRegex": "^/api/game/by\\-token/(?<nxtPtoken>[^/]+?)(?:/)?$" }, { "page": "/play/[token]", "regex": "^/play/([^/]+?)(?:/)?$", "routeKeys": { "nxtPtoken": "nxtPtoken" }, "namedRegex": "^/play/(?<nxtPtoken>[^/]+?)(?:/)?$" }, { "page": "/play/[token]/complete", "regex": "^/play/([^/]+?)/complete(?:/)?$", "routeKeys": { "nxtPtoken": "nxtPtoken" }, "namedRegex": "^/play/(?<nxtPtoken>[^/]+?)/complete(?:/)?$" }, { "page": "/play/[token]/mission", "regex": "^/play/([^/]+?)/mission(?:/)?$", "routeKeys": { "nxtPtoken": "nxtPtoken" }, "namedRegex": "^/play/(?<nxtPtoken>[^/]+?)/mission(?:/)?$" }, { "page": "/play/[token]/prologue", "regex": "^/play/([^/]+?)/prologue(?:/)?$", "routeKeys": { "nxtPtoken": "nxtPtoken" }, "namedRegex": "^/play/(?<nxtPtoken>[^/]+?)/prologue(?:/)?$" }, { "page": "/play/[token]/start", "regex": "^/play/([^/]+?)/start(?:/)?$", "routeKeys": { "nxtPtoken": "nxtPtoken" }, "namedRegex": "^/play/(?<nxtPtoken>[^/]+?)/start(?:/)?$" }], "data": { "static": [], "dynamic": [] } }, "locales": [] };
 var ConfigHeaders = [];
-var PrerenderManifest = { "version": 4, "routes": { "/": { "experimentalBypassFor": [{ "type": "header", "key": "next-action" }, { "type": "header", "key": "content-type", "value": "multipart/form-data;.*" }], "initialRevalidateSeconds": false, "srcRoute": "/", "dataRoute": "/index.rsc", "allowHeader": ["host", "x-matched-path", "x-prerender-revalidate", "x-prerender-revalidate-if-generated", "x-next-revalidated-tags", "x-next-revalidate-tag-token"] }, "/_global-error": { "experimentalBypassFor": [{ "type": "header", "key": "next-action" }, { "type": "header", "key": "content-type", "value": "multipart/form-data;.*" }], "initialRevalidateSeconds": false, "srcRoute": "/_global-error", "dataRoute": "/_global-error.rsc", "allowHeader": ["host", "x-matched-path", "x-prerender-revalidate", "x-prerender-revalidate-if-generated", "x-next-revalidated-tags", "x-next-revalidate-tag-token"] }, "/_not-found": { "initialStatus": 404, "experimentalBypassFor": [{ "type": "header", "key": "next-action" }, { "type": "header", "key": "content-type", "value": "multipart/form-data;.*" }], "initialRevalidateSeconds": false, "srcRoute": "/_not-found", "dataRoute": "/_not-found.rsc", "allowHeader": ["host", "x-matched-path", "x-prerender-revalidate", "x-prerender-revalidate-if-generated", "x-next-revalidated-tags", "x-next-revalidate-tag-token"] }, "/admin/login": { "experimentalBypassFor": [{ "type": "header", "key": "next-action" }, { "type": "header", "key": "content-type", "value": "multipart/form-data;.*" }], "initialRevalidateSeconds": false, "srcRoute": "/admin/login", "dataRoute": "/admin/login.rsc", "allowHeader": ["host", "x-matched-path", "x-prerender-revalidate", "x-prerender-revalidate-if-generated", "x-next-revalidated-tags", "x-next-revalidate-tag-token"] }, "/favicon.ico": { "initialHeaders": { "cache-control": "public, max-age=0, must-revalidate", "content-type": "image/x-icon", "x-next-cache-tags": "_N_T_/layout,_N_T_/favicon.ico/layout,_N_T_/favicon.ico/route,_N_T_/favicon.ico" }, "experimentalBypassFor": [{ "type": "header", "key": "next-action" }, { "type": "header", "key": "content-type", "value": "multipart/form-data;.*" }], "initialRevalidateSeconds": false, "srcRoute": "/favicon.ico", "dataRoute": null, "allowHeader": ["host", "x-matched-path", "x-prerender-revalidate", "x-prerender-revalidate-if-generated", "x-next-revalidated-tags", "x-next-revalidate-tag-token"] } }, "dynamicRoutes": {}, "notFoundRoutes": [], "preview": { "previewModeId": "55be0d417020c8de31d7047cf5964757", "previewModeSigningKey": "a27c6d014a63321dcc887c25592ccc6604782b9537e58c24100e6b50d194fb04", "previewModeEncryptionKey": "838b62b986dd401123f10e768d07cde4fa4abceb97de639626de7d74e28fea0f" } };
-var MiddlewareManifest = { "version": 3, "middleware": { "/": { "files": ["server/edge/chunks/node_modules_next_dist_esm_build_templates_edge-wrapper_0kvehva.js", "server/edge/chunks/[root-of-the-server]__08ca2jv._.js", "server/edge/chunks/turbopack-node_modules_next_dist_esm_build_templates_edge-wrapper_0lcpsxv.js"], "name": "middleware", "page": "/", "entrypoint": "server/edge/chunks/turbopack-node_modules_next_dist_esm_build_templates_edge-wrapper_0lcpsxv.js", "matchers": [{ "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?\\/admin(?:\\/((?:[^\\/#\\?]+?)(?:\\/(?:[^\\/#\\?]+?))*))?(\\\\.json)?[\\/#\\?]?$", "originalSource": "/admin/:path*" }], "wasm": [], "assets": [], "env": { "__NEXT_BUILD_ID": "IgGix1dk07wVYLkjeZE0P", "NEXT_SERVER_ACTIONS_ENCRYPTION_KEY": "F5KQG0homcGkychbzSvOaRA1SpE7ZVvJVmR6ThTHazA=", "__NEXT_PREVIEW_MODE_ID": "55be0d417020c8de31d7047cf5964757", "__NEXT_PREVIEW_MODE_ENCRYPTION_KEY": "838b62b986dd401123f10e768d07cde4fa4abceb97de639626de7d74e28fea0f", "__NEXT_PREVIEW_MODE_SIGNING_KEY": "a27c6d014a63321dcc887c25592ccc6604782b9537e58c24100e6b50d194fb04" } } }, "sortedMiddleware": ["/"], "functions": {} };
-var AppPathRoutesManifest = { "/_global-error/page": "/_global-error", "/_not-found/page": "/_not-found", "/admin/games/page": "/admin/games", "/admin/login/page": "/admin/login", "/admin/missions/page": "/admin/missions", "/admin/page": "/admin", "/admin/players/page": "/admin/players", "/admin/tokens/page": "/admin/tokens", "/api/admin/login/route": "/api/admin/login", "/api/admin/logout/route": "/api/admin/logout", "/api/game/by-token/[token]/route": "/api/game/by-token/[token]", "/api/game/current-mission/route": "/api/game/current-mission", "/api/game/result/route": "/api/game/result", "/api/game/start/route": "/api/game/start", "/api/game/submit-answer/route": "/api/game/submit-answer", "/api/session/claim/route": "/api/session/claim", "/favicon.ico/route": "/favicon.ico", "/page": "/", "/play/[token]/complete/page": "/play/[token]/complete", "/play/[token]/mission/page": "/play/[token]/mission", "/play/[token]/page": "/play/[token]", "/play/[token]/prologue/page": "/play/[token]/prologue", "/play/[token]/start/page": "/play/[token]/start" };
-var FunctionsConfigManifest = { "version": 1, "functions": {} };
+var PrerenderManifest = { "version": 4, "routes": { "/": { "experimentalBypassFor": [{ "type": "header", "key": "next-action" }, { "type": "header", "key": "content-type", "value": "multipart/form-data;.*" }], "initialRevalidateSeconds": false, "srcRoute": "/", "dataRoute": "/index.rsc", "allowHeader": ["host", "x-matched-path", "x-prerender-revalidate", "x-prerender-revalidate-if-generated", "x-next-revalidated-tags", "x-next-revalidate-tag-token"] }, "/_global-error": { "experimentalBypassFor": [{ "type": "header", "key": "next-action" }, { "type": "header", "key": "content-type", "value": "multipart/form-data;.*" }], "initialRevalidateSeconds": false, "srcRoute": "/_global-error", "dataRoute": "/_global-error.rsc", "allowHeader": ["host", "x-matched-path", "x-prerender-revalidate", "x-prerender-revalidate-if-generated", "x-next-revalidated-tags", "x-next-revalidate-tag-token"] }, "/_not-found": { "initialStatus": 404, "experimentalBypassFor": [{ "type": "header", "key": "next-action" }, { "type": "header", "key": "content-type", "value": "multipart/form-data;.*" }], "initialRevalidateSeconds": false, "srcRoute": "/_not-found", "dataRoute": "/_not-found.rsc", "allowHeader": ["host", "x-matched-path", "x-prerender-revalidate", "x-prerender-revalidate-if-generated", "x-next-revalidated-tags", "x-next-revalidate-tag-token"] }, "/admin/games/new": { "experimentalBypassFor": [{ "type": "header", "key": "next-action" }, { "type": "header", "key": "content-type", "value": "multipart/form-data;.*" }], "initialRevalidateSeconds": false, "srcRoute": "/admin/games/new", "dataRoute": "/admin/games/new.rsc", "allowHeader": ["host", "x-matched-path", "x-prerender-revalidate", "x-prerender-revalidate-if-generated", "x-next-revalidated-tags", "x-next-revalidate-tag-token"] }, "/admin/login": { "experimentalBypassFor": [{ "type": "header", "key": "next-action" }, { "type": "header", "key": "content-type", "value": "multipart/form-data;.*" }], "initialRevalidateSeconds": false, "srcRoute": "/admin/login", "dataRoute": "/admin/login.rsc", "allowHeader": ["host", "x-matched-path", "x-prerender-revalidate", "x-prerender-revalidate-if-generated", "x-next-revalidated-tags", "x-next-revalidate-tag-token"] }, "/admin/missions/new": { "experimentalBypassFor": [{ "type": "header", "key": "next-action" }, { "type": "header", "key": "content-type", "value": "multipart/form-data;.*" }], "initialRevalidateSeconds": false, "srcRoute": "/admin/missions/new", "dataRoute": "/admin/missions/new.rsc", "allowHeader": ["host", "x-matched-path", "x-prerender-revalidate", "x-prerender-revalidate-if-generated", "x-next-revalidated-tags", "x-next-revalidate-tag-token"] }, "/admin/tokens/new": { "experimentalBypassFor": [{ "type": "header", "key": "next-action" }, { "type": "header", "key": "content-type", "value": "multipart/form-data;.*" }], "initialRevalidateSeconds": false, "srcRoute": "/admin/tokens/new", "dataRoute": "/admin/tokens/new.rsc", "allowHeader": ["host", "x-matched-path", "x-prerender-revalidate", "x-prerender-revalidate-if-generated", "x-next-revalidated-tags", "x-next-revalidate-tag-token"] }, "/admin/upload": { "experimentalBypassFor": [{ "type": "header", "key": "next-action" }, { "type": "header", "key": "content-type", "value": "multipart/form-data;.*" }], "initialRevalidateSeconds": false, "srcRoute": "/admin/upload", "dataRoute": "/admin/upload.rsc", "allowHeader": ["host", "x-matched-path", "x-prerender-revalidate", "x-prerender-revalidate-if-generated", "x-next-revalidated-tags", "x-next-revalidate-tag-token"] }, "/favicon.ico": { "initialHeaders": { "cache-control": "public, max-age=0, must-revalidate", "content-type": "image/x-icon", "x-next-cache-tags": "_N_T_/layout,_N_T_/favicon.ico/layout,_N_T_/favicon.ico/route,_N_T_/favicon.ico" }, "experimentalBypassFor": [{ "type": "header", "key": "next-action" }, { "type": "header", "key": "content-type", "value": "multipart/form-data;.*" }], "initialRevalidateSeconds": false, "srcRoute": "/favicon.ico", "dataRoute": null, "allowHeader": ["host", "x-matched-path", "x-prerender-revalidate", "x-prerender-revalidate-if-generated", "x-next-revalidated-tags", "x-next-revalidate-tag-token"] } }, "dynamicRoutes": {}, "notFoundRoutes": [], "preview": { "previewModeId": "55be0d417020c8de31d7047cf5964757", "previewModeSigningKey": "a27c6d014a63321dcc887c25592ccc6604782b9537e58c24100e6b50d194fb04", "previewModeEncryptionKey": "838b62b986dd401123f10e768d07cde4fa4abceb97de639626de7d74e28fea0f" } };
+var MiddlewareManifest = { "version": 3, "middleware": { "/": { "files": ["server/edge/chunks/[root-of-the-server]__0zrx25l._.js", "server/edge/chunks/node_modules_next_dist_0drxi9a._.js", "server/edge/chunks/turbopack-node_modules_next_dist_esm_build_templates_edge-wrapper_0n3jsg7.js"], "name": "middleware", "page": "/", "entrypoint": "server/edge/chunks/turbopack-node_modules_next_dist_esm_build_templates_edge-wrapper_0n3jsg7.js", "matchers": [{ "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?\\/admin(?:\\/((?:[^\\/#\\?]+?)(?:\\/(?:[^\\/#\\?]+?))*))?(\\\\.json)?[\\/#\\?]?$", "originalSource": "/admin/:path*" }], "wasm": [], "assets": [], "env": { "__NEXT_BUILD_ID": "k4Xg1oi5aYD39jct9fU2w", "NEXT_SERVER_ACTIONS_ENCRYPTION_KEY": "F5KQG0homcGkychbzSvOaRA1SpE7ZVvJVmR6ThTHazA=", "__NEXT_PREVIEW_MODE_ID": "55be0d417020c8de31d7047cf5964757", "__NEXT_PREVIEW_MODE_ENCRYPTION_KEY": "838b62b986dd401123f10e768d07cde4fa4abceb97de639626de7d74e28fea0f", "__NEXT_PREVIEW_MODE_SIGNING_KEY": "a27c6d014a63321dcc887c25592ccc6604782b9537e58c24100e6b50d194fb04" } } }, "sortedMiddleware": ["/"], "functions": { "/api/admin/upload/route": { "files": ["server/middleware-build-manifest.js", "server/interception-route-rewrite-manifest.js", "required-server-files.js", "server/server-reference-manifest.js", "server/app/api/admin/upload/route_client-reference-manifest.js", "server/edge/chunks/_next-internal_server_app_api_admin_upload_route_actions_12~0jto.js", "server/edge/chunks/[root-of-the-server]__0vy4pli._.js", "server/edge/chunks/node_modules_next_dist_00bnoom._.js", "server/edge/chunks/turbopack-node_modules_next_dist_esm_build_templates_edge-wrapper_0.66g7d.js"], "name": "app/api/admin/upload/route", "page": "/api/admin/upload/route", "entrypoint": "server/edge/chunks/turbopack-node_modules_next_dist_esm_build_templates_edge-wrapper_0.66g7d.js", "matchers": [{ "regexp": "^/api/admin/upload(?:/)?$", "originalSource": "/api/admin/upload" }], "wasm": [], "assets": [], "env": { "__NEXT_BUILD_ID": "k4Xg1oi5aYD39jct9fU2w", "NEXT_SERVER_ACTIONS_ENCRYPTION_KEY": "F5KQG0homcGkychbzSvOaRA1SpE7ZVvJVmR6ThTHazA=", "__NEXT_PREVIEW_MODE_ID": "55be0d417020c8de31d7047cf5964757", "__NEXT_PREVIEW_MODE_ENCRYPTION_KEY": "838b62b986dd401123f10e768d07cde4fa4abceb97de639626de7d74e28fea0f", "__NEXT_PREVIEW_MODE_SIGNING_KEY": "a27c6d014a63321dcc887c25592ccc6604782b9537e58c24100e6b50d194fb04" } }, "/api/assets/[key]/route": { "files": ["server/middleware-build-manifest.js", "server/interception-route-rewrite-manifest.js", "required-server-files.js", "server/server-reference-manifest.js", "server/app/api/assets/[key]/route_client-reference-manifest.js", "server/edge/chunks/_next-internal_server_app_api_assets_[key]_route_actions_0ch4dda.js", "server/edge/chunks/[root-of-the-server]__0shmc59._.js", "server/edge/chunks/node_modules_next_dist_00bnoom._.js", "server/edge/chunks/turbopack-node_modules_next_dist_esm_build_templates_edge-wrapper_05ie.__.js"], "name": "app/api/assets/[key]/route", "page": "/api/assets/[key]/route", "entrypoint": "server/edge/chunks/turbopack-node_modules_next_dist_esm_build_templates_edge-wrapper_05ie.__.js", "matchers": [{ "regexp": "^/api/assets/(?P<nxtPkey>[^/]+?)(?:/)?$", "originalSource": "/api/assets/[key]" }], "wasm": [], "assets": [], "env": { "__NEXT_BUILD_ID": "k4Xg1oi5aYD39jct9fU2w", "NEXT_SERVER_ACTIONS_ENCRYPTION_KEY": "F5KQG0homcGkychbzSvOaRA1SpE7ZVvJVmR6ThTHazA=", "__NEXT_PREVIEW_MODE_ID": "55be0d417020c8de31d7047cf5964757", "__NEXT_PREVIEW_MODE_ENCRYPTION_KEY": "838b62b986dd401123f10e768d07cde4fa4abceb97de639626de7d74e28fea0f", "__NEXT_PREVIEW_MODE_SIGNING_KEY": "a27c6d014a63321dcc887c25592ccc6604782b9537e58c24100e6b50d194fb04" } } } };
+var AppPathRoutesManifest = { "/_global-error/page": "/_global-error", "/_not-found/page": "/_not-found", "/admin/games/[game_id]/detail/page": "/admin/games/[game_id]/detail", "/admin/games/new/page": "/admin/games/new", "/admin/games/page": "/admin/games", "/admin/login/page": "/admin/login", "/admin/missions/[mission_id]/detail/page": "/admin/missions/[mission_id]/detail", "/admin/missions/new/page": "/admin/missions/new", "/admin/missions/page": "/admin/missions", "/admin/page": "/admin", "/admin/players/[player_id]/detail/page": "/admin/players/[player_id]/detail", "/admin/players/page": "/admin/players", "/admin/tokens/[token_id]/detail/page": "/admin/tokens/[token_id]/detail", "/admin/tokens/new/page": "/admin/tokens/new", "/admin/tokens/page": "/admin/tokens", "/admin/upload/page": "/admin/upload", "/api/admin/login/route": "/api/admin/login", "/api/admin/logout/route": "/api/admin/logout", "/api/admin/upload/route": "/api/admin/upload", "/api/assets/[key]/route": "/api/assets/[key]", "/api/game/by-token/[token]/route": "/api/game/by-token/[token]", "/api/game/current-mission/route": "/api/game/current-mission", "/api/game/result/route": "/api/game/result", "/api/game/start/route": "/api/game/start", "/api/game/submit-answer/route": "/api/game/submit-answer", "/api/session/claim/route": "/api/session/claim", "/favicon.ico/route": "/favicon.ico", "/page": "/", "/play/[token]/complete/page": "/play/[token]/complete", "/play/[token]/mission/page": "/play/[token]/mission", "/play/[token]/page": "/play/[token]", "/play/[token]/prologue/page": "/play/[token]/prologue", "/play/[token]/start/page": "/play/[token]/start" };
+var FunctionsConfigManifest = { "version": 1, "functions": { "/api/admin/upload": {}, "/api/assets/[key]": {} } };
 var PagesManifest = { "/404": "pages/404.html", "/500": "pages/500.html" };
 process.env.NEXT_BUILD_ID = BuildId;
 process.env.NEXT_PREVIEW_MODE_ID = PrerenderManifest?.preview?.previewModeId;

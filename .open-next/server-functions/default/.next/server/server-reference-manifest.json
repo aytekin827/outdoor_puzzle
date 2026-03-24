@@ -1,100 +1,124 @@
 {
   "node": {
-    "409a9ad32281687ba59f37899348c7cc26cae0d000": {
+    "408418755648f1187dc663726b58a10ff545748ae8": {
       "workers": {
-        "app/admin/games/page": {
-          "moduleId": 30564,
-          "async": false,
-          "exportedName": "$$RSC_SERVER_ACTION_0",
-          "filename": "src/app/admin/games/page.tsx"
-        }
-      },
-      "filename": "src/app/admin/games/page.tsx",
-      "exportedName": "$$RSC_SERVER_ACTION_0"
-    },
-    "40b79eae09d53ec1cb9727e34281a00c7e4bbbb88c": {
-      "workers": {
-        "app/admin/games/page": {
-          "moduleId": 30564,
+        "app/admin/games/[game_id]/detail/page": {
+          "moduleId": 31231,
           "async": false,
           "exportedName": "$$RSC_SERVER_ACTION_1",
-          "filename": "src/app/admin/games/page.tsx"
+          "filename": "src/app/admin/games/[game_id]/detail/page.tsx"
         }
       },
-      "filename": "src/app/admin/games/page.tsx",
+      "filename": "src/app/admin/games/[game_id]/detail/page.tsx",
       "exportedName": "$$RSC_SERVER_ACTION_1"
     },
-    "4091d8cc12e71ba5315a70fab538402565f0789016": {
+    "60a5fcc0c7030c6a750c54c7f86f8dba2239b35f12": {
       "workers": {
-        "app/admin/missions/page": {
-          "moduleId": 35263,
+        "app/admin/games/[game_id]/detail/page": {
+          "moduleId": 31231,
+          "async": false,
+          "exportedName": "$$RSC_SERVER_ACTION_0",
+          "filename": "src/app/admin/games/[game_id]/detail/page.tsx"
+        }
+      },
+      "filename": "src/app/admin/games/[game_id]/detail/page.tsx",
+      "exportedName": "$$RSC_SERVER_ACTION_0"
+    },
+    "4057348855e1070de10e10f57c96ee34b75292825e": {
+      "workers": {
+        "app/admin/games/new/page": {
+          "moduleId": 37918,
+          "async": false,
+          "exportedName": "$$RSC_SERVER_ACTION_0",
+          "filename": "src/app/admin/games/new/page.tsx"
+        }
+      },
+      "filename": "src/app/admin/games/new/page.tsx",
+      "exportedName": "$$RSC_SERVER_ACTION_0"
+    },
+    "4011c188b51a6f9ab9be32b4df59e3697ab7fe259d": {
+      "workers": {
+        "app/admin/missions/[mission_id]/detail/page": {
+          "moduleId": 74171,
           "async": false,
           "exportedName": "$$RSC_SERVER_ACTION_1",
-          "filename": "src/app/admin/missions/page.tsx"
+          "filename": "src/app/admin/missions/[mission_id]/detail/page.tsx"
         }
       },
-      "filename": "src/app/admin/missions/page.tsx",
+      "filename": "src/app/admin/missions/[mission_id]/detail/page.tsx",
       "exportedName": "$$RSC_SERVER_ACTION_1"
     },
-    "40efec9de6601e27ee21135270a6c85f21607f37cb": {
+    "6001d7434d53b830297cab4cc4c76e99186df6a301": {
       "workers": {
-        "app/admin/missions/page": {
-          "moduleId": 35263,
+        "app/admin/missions/[mission_id]/detail/page": {
+          "moduleId": 74171,
           "async": false,
           "exportedName": "$$RSC_SERVER_ACTION_0",
-          "filename": "src/app/admin/missions/page.tsx"
+          "filename": "src/app/admin/missions/[mission_id]/detail/page.tsx"
         }
       },
-      "filename": "src/app/admin/missions/page.tsx",
+      "filename": "src/app/admin/missions/[mission_id]/detail/page.tsx",
       "exportedName": "$$RSC_SERVER_ACTION_0"
     },
-    "408512c03763ef44f685d2625a488bda2dc8374cbf": {
+    "40ba5f6296902dd2df70761580cf25fdcdbf78bca6": {
       "workers": {
-        "app/admin/players/page": {
-          "moduleId": 94393,
+        "app/admin/missions/new/page": {
+          "moduleId": 48672,
           "async": false,
           "exportedName": "$$RSC_SERVER_ACTION_0",
-          "filename": "src/app/admin/players/page.tsx"
+          "filename": "src/app/admin/missions/new/page.tsx"
         }
       },
-      "filename": "src/app/admin/players/page.tsx",
+      "filename": "src/app/admin/missions/new/page.tsx",
       "exportedName": "$$RSC_SERVER_ACTION_0"
     },
-    "4009fd7f2eae98fbb6433472fbb4fb1ff167dcee6b": {
+    "40d54cd5e49065f07cb69f8f5b31015ad59b8ac833": {
       "workers": {
-        "app/admin/tokens/page": {
-          "moduleId": 89449,
+        "app/admin/players/[player_id]/detail/page": {
+          "moduleId": 34475,
+          "async": false,
+          "exportedName": "$$RSC_SERVER_ACTION_0",
+          "filename": "src/app/admin/players/[player_id]/detail/page.tsx"
+        }
+      },
+      "filename": "src/app/admin/players/[player_id]/detail/page.tsx",
+      "exportedName": "$$RSC_SERVER_ACTION_0"
+    },
+    "40c1ba64f22f0721f3f8bbad1dea47fac8cd6986ff": {
+      "workers": {
+        "app/admin/tokens/[token_id]/detail/page": {
+          "moduleId": 84283,
           "async": false,
           "exportedName": "$$RSC_SERVER_ACTION_1",
-          "filename": "src/app/admin/tokens/page.tsx"
+          "filename": "src/app/admin/tokens/[token_id]/detail/page.tsx"
         }
       },
-      "filename": "src/app/admin/tokens/page.tsx",
+      "filename": "src/app/admin/tokens/[token_id]/detail/page.tsx",
       "exportedName": "$$RSC_SERVER_ACTION_1"
     },
-    "402d51cd34096f0e591c05106ef0112d376304368a": {
+    "609198b5b22f3844a6c3682d5633de723362a5582c": {
       "workers": {
-        "app/admin/tokens/page": {
-          "moduleId": 89449,
+        "app/admin/tokens/[token_id]/detail/page": {
+          "moduleId": 84283,
           "async": false,
           "exportedName": "$$RSC_SERVER_ACTION_0",
-          "filename": "src/app/admin/tokens/page.tsx"
+          "filename": "src/app/admin/tokens/[token_id]/detail/page.tsx"
         }
       },
-      "filename": "src/app/admin/tokens/page.tsx",
+      "filename": "src/app/admin/tokens/[token_id]/detail/page.tsx",
       "exportedName": "$$RSC_SERVER_ACTION_0"
     },
-    "40d8b7e56a73e78e33c12d656d7381235651f28154": {
+    "40871c9dc921ea07e2d5faf113a503a9b24890b805": {
       "workers": {
-        "app/admin/tokens/page": {
-          "moduleId": 89449,
+        "app/admin/tokens/new/page": {
+          "moduleId": 63237,
           "async": false,
-          "exportedName": "$$RSC_SERVER_ACTION_2",
-          "filename": "src/app/admin/tokens/page.tsx"
+          "exportedName": "$$RSC_SERVER_ACTION_0",
+          "filename": "src/app/admin/tokens/new/page.tsx"
         }
       },
-      "filename": "src/app/admin/tokens/page.tsx",
-      "exportedName": "$$RSC_SERVER_ACTION_2"
+      "filename": "src/app/admin/tokens/new/page.tsx",
+      "exportedName": "$$RSC_SERVER_ACTION_0"
     }
   },
   "edge": {},
