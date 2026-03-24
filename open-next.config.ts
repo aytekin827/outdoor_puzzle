@@ -1,10 +1,3 @@
-const config = {
-  default: {
-    runtime: "edge",
-  },
-  middleware: {
-    external: true,
-  },
-};
+import { defineCloudflareConfig } from "@opennextjs/cloudflare";
 
-export default config;
+export default defineCloudflareConfig();
