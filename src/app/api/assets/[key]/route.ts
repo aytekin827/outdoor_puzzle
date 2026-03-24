@@ -1,7 +1,7 @@
-import { NextResponse, NextRequest } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
+import { NextRequest, NextResponse } from "next/server";
 
-export const runtime = "edge";
+export const runtime = "notejs";
 
 export async function GET(req: NextRequest, { params }: { params: Promise<{ key: string }> }) {
   try {
@@ -20,7 +20,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ key:
       const headers = new Headers();
       object.writeHttpMetadata(headers);
       headers.set("etag", object.httpEtag);
-      
+
       return new NextResponse(object.body as ReadableStream, {
         headers,
       });
