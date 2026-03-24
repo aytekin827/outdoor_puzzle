@@ -7,8 +7,9 @@ import { ArrowLeft, Save, Trash2, Upload, ExternalLink } from "lucide-react";
 
 export const dynamic = 'force-dynamic';
 
-export default async function GameDetailPage({ params }: { params: { game_id: string } }) {
-  const game = await db.select().from(games).where(eq(games.id, params.game_id)).get();
+export default async function GameDetailPage({ params }: { params: Promise<{ game_id: string }> }) {
+  const { game_id } = await params;
+  const game = await db.select().from(games).where(eq(games.id, game_id)).get();
   
   if (!game) {
     redirect("/admin/games");

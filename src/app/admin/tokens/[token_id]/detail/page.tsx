@@ -7,8 +7,9 @@ import { ArrowLeft, Save, Trash2 } from "lucide-react";
 
 export const dynamic = 'force-dynamic';
 
-export default async function TokenDetailPage({ params }: { params: { token_id: string } }) {
-  const tokenRecord = await db.select().from(qrTokens).where(eq(qrTokens.id, params.token_id)).get();
+export default async function TokenDetailPage({ params }: { params: Promise<{ token_id: string }> }) {
+  const { token_id } = await params;
+  const tokenRecord = await db.select().from(qrTokens).where(eq(qrTokens.id, token_id)).get();
   
   if (!tokenRecord) {
     redirect("/admin/tokens");

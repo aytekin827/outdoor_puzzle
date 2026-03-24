@@ -3,9 +3,9 @@ import { getCloudflareContext } from "@opennextjs/cloudflare";
 
 export const runtime = "edge";
 
-export async function GET(req: NextRequest, { params }: { params: { key: string } }) {
+export async function GET(req: NextRequest, { params }: { params: Promise<{ key: string }> }) {
   try {
-    const key = params.key;
+    const { key } = await params;
     if (!key) return new NextResponse("Not Found", { status: 404 });
 
     const ctx = getCloudflareContext();

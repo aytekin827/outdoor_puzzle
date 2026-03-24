@@ -7,8 +7,9 @@ import { ArrowLeft, Save, Trash2 } from "lucide-react";
 
 export const dynamic = 'force-dynamic';
 
-export default async function MissionDetailPage({ params }: { params: { mission_id: string } }) {
-  const mission = await db.select().from(missions).where(eq(missions.id, params.mission_id)).get();
+export default async function MissionDetailPage({ params }: { params: Promise<{ mission_id: string }> }) {
+  const { mission_id } = await params;
+  const mission = await db.select().from(missions).where(eq(missions.id, mission_id)).get();
   
   if (!mission) {
     redirect("/admin/missions");

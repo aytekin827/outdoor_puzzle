@@ -7,8 +7,9 @@ import { ArrowLeft, Trash2, CheckCircle, XCircle } from "lucide-react";
 
 export const dynamic = 'force-dynamic';
 
-export default async function PlayerDetailPage({ params }: { params: { player_id: string } }) {
-  const playerRecord = await db.select().from(players).where(eq(players.id, params.player_id)).get();
+export default async function PlayerDetailPage({ params }: { params: Promise<{ player_id: string }> }) {
+  const { player_id } = await params;
+  const playerRecord = await db.select().from(players).where(eq(players.id, player_id)).get();
   
   if (!playerRecord) {
     redirect("/admin/players");
