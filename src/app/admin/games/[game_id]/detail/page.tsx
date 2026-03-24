@@ -1,16 +1,17 @@
 import { db } from "@/db";
 import { games, missions } from "@/db/schema";
 import { eq } from "drizzle-orm";
-import { redirect } from "next/navigation";
+import { ExternalLink, Save, Trash2 } from "lucide-react";
 import Link from "next/link";
-import { ArrowLeft, Save, Trash2, Upload, ExternalLink } from "lucide-react";
+import { redirect } from "next/navigation";
+import { PrologueEditor } from "../../PrologueEditor";
 
 export const dynamic = 'force-dynamic';
 
 export default async function GameDetailPage({ params }: { params: Promise<{ game_id: string }> }) {
   const { game_id } = await params;
   const game = await db.select().from(games).where(eq(games.id, game_id)).get();
-  
+
   if (!game) {
     redirect("/admin/games");
   }
@@ -47,11 +48,7 @@ export default async function GameDetailPage({ params }: { params: Promise<{ gam
 
   return (
     <div className="max-w-5xl mx-auto space-y-8 animate-in fade-in duration-500 pb-12">
-      <div className="flex justify-between items-end">
-        <Link href="/admin/games" className="inline-flex items-center text-sm font-medium text-slate-400 hover:text-white transition-colors">
-          <ArrowLeft className="w-4 h-4 mr-1" />
-          Back to Games
-        </Link>
+      <div className="flex justify-end items-end">
         <form action={handleDelete}>
           <button type="submit" className="text-red-400 hover:text-red-300 hover:bg-red-500/10 px-3 py-1.5 rounded-lg flex items-center gap-2 text-sm font-bold transition-all">
             <Trash2 className="w-4 h-4" /> Delete Game
@@ -60,62 +57,40 @@ export default async function GameDetailPage({ params }: { params: Promise<{ gam
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        
+
         {/* Edit Form */}
         <div className="lg:col-span-2 bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl">
           <div className="p-6 border-b border-slate-800 bg-slate-900/50">
-            <h1 className="text-2xl font-bold text-white">Edit Game Details</h1>
+            <h1 className="text-2xl font-bold text-white">Edit Game</h1>
             <p className="text-slate-400 text-sm mt-1">ID: {game.id}</p>
           </div>
 
           <form action={handleUpdate} className="p-6 flex flex-col gap-6">
             <div className="flex flex-col gap-2">
-              <label className="text-sm font-semibold text-slate-400">Title</label>
+              <label className="text-sm font-semibold text-slate-400">제목</label>
               <input name="title" defaultValue={game.title} required className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white focus:border-primary focus:outline-none transition-colors" />
             </div>
 
             <div className="flex flex-col gap-2">
-              <label className="text-sm font-semibold text-slate-400">Description</label>
+              <label className="text-sm font-semibold text-slate-400">설명</label>
               <textarea name="description" defaultValue={game.description || ""} className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white h-24 resize-none flex-1 focus:border-primary focus:outline-none transition-colors" />
             </div>
 
             <div className="flex gap-4 items-center p-4 bg-slate-950/50 border border-slate-800 rounded-lg">
               <input type="checkbox" id="isActive" name="isActive" defaultChecked={game.isActive ?? true} className="w-5 h-5 accent-primary bg-slate-900 border-slate-700 rounded" />
               <label htmlFor="isActive" className="text-sm font-semibold text-white cursor-pointer select-none">
-                Enable this Game / Is Active
+                Active
               </label>
             </div>
 
-            <div className="border-t border-slate-800 pt-6 pb-2">
-              <h2 className="text-lg font-bold text-white mb-4">Prologue Assets (R2 Bucket)</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div className="flex flex-col gap-2">
-                  <label className="text-sm font-semibold text-slate-400">Type</label>
-                  <select name="prologueType" defaultValue={game.prologueType} className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white focus:border-primary focus:outline-none transition-colors">
-                    <option value="slide">Slide</option>
-                    <option value="video">Video</option>
-                  </select>
-                </div>
-                
-                <div className="flex flex-col gap-2">
-                  <label className="text-sm font-semibold text-slate-400 flex justify-between">
-                    <span>Video URL</span>
-                    <a href="/admin/upload" target="_blank" className="text-primary hover:underline flex items-center gap-1 text-xs">
-                      R2 Upload Tool <ExternalLink className="w-3 h-3" />
-                    </a>
-                  </label>
-                  <input name="prologueVideoUrl" defaultValue={game.prologueVideoUrl || ""} className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white focus:border-primary focus:outline-none transition-colors" />
-                </div>
-              </div>
-
-              <div className="flex flex-col gap-2 mt-4">
-                <label className="text-sm font-semibold text-slate-400">Slides JSON Array</label>
-                <textarea name="prologueSlidesJson" defaultValue={game.prologueSlidesJson || ""} className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white h-24 font-mono text-xs resize-none focus:border-primary focus:outline-none transition-colors" />
-              </div>
-            </div>
+            <PrologueEditor 
+              initialType={game.prologueType} 
+              initialVideoUrl={game.prologueVideoUrl || ""} 
+              initialSlidesJson={game.prologueSlidesJson || ""} 
+            />
 
             <div className="pt-4 border-t border-slate-800">
-              <button type="submit" className="w-full px-8 py-3 bg-primary text-black font-bold rounded-lg hover:bg-primary/90 transition-colors flex items-center justify-center gap-2 shadow-lg shadow-primary/20">
+              <button type="submit" className="w-full px-8 py-3 bg-white text-black hover:bg-slate-200 dark:bg-white dark:text-black dark:hover:bg-slate-200 font-bold rounded-lg transition-colors flex items-center justify-center gap-2 shadow-lg shadow-white/10">
                 <Save className="w-5 h-5" /> Save Changes
               </button>
             </div>
@@ -149,9 +124,9 @@ export default async function GameDetailPage({ params }: { params: Promise<{ gam
               ))}
             </ul>
             <div className="mt-6 text-center">
-               <Link href={`/admin/missions/new?gameId=${game.id}`} className="text-xs text-primary font-bold hover:underline">
-                 + Add New Mission
-               </Link>
+              <Link href={`/admin/missions/new?gameId=${game.id}`} className="text-xs text-primary font-bold hover:underline">
+                + Add New Mission
+              </Link>
             </div>
           </div>
         </div>

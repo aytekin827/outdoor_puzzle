@@ -76,7 +76,7 @@ export default function AdminLoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="mt-4 bg-primary text-black font-bold py-3 rounded-lg flex items-center justify-center gap-2 hover:bg-primary/90 transition-all"
+            className="mt-4 bg-white text-black hover:bg-slate-200 dark:bg-white dark:text-black dark:hover:bg-slate-200 font-bold py-3 rounded-lg flex items-center justify-center gap-2 hover:bg-primary/90 transition-all"
           >
             {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : "AUTHENTICATE"}
           </button>

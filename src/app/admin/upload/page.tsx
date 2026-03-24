@@ -66,7 +66,7 @@ export default function R2UploadTool() {
         <button 
           type="submit" 
           disabled={!file || uploading}
-          className="w-full bg-emerald-500 disabled:bg-slate-700 disabled:text-slate-400 disabled:cursor-not-allowed text-black font-bold py-4 rounded-xl flex items-center justify-center gap-2 hover:bg-emerald-400 transition-colors"
+          className="w-full bg-white text-black hover:bg-slate-200 dark:bg-white dark:text-black dark:hover:bg-slate-200 disabled:bg-slate-700 disabled:text-slate-400 disabled:cursor-not-allowed font-bold py-4 rounded-xl flex items-center justify-center gap-2 transition-colors shadow-lg shadow-white/10"
         >
           {uploading ? <Loader2 className="w-5 h-5 animate-spin" /> : "Upload to Cloudflare R2"}
         </button>

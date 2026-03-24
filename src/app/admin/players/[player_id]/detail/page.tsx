@@ -2,8 +2,7 @@ import { db } from "@/db";
 import { players, games, submissions, missions } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
-import Link from "next/link";
-import { ArrowLeft, Trash2, CheckCircle, XCircle } from "lucide-react";
+import { Trash2, CheckCircle, XCircle } from "lucide-react";
 
 export const dynamic = 'force-dynamic';
 
@@ -44,11 +43,7 @@ export default async function PlayerDetailPage({ params }: { params: Promise<{ p
 
   return (
     <div className="max-w-4xl mx-auto space-y-8 animate-in fade-in duration-500 pb-12">
-      <div className="flex justify-between items-end">
-        <Link href="/admin/players" className="inline-flex items-center text-sm font-medium text-slate-400 hover:text-white transition-colors">
-          <ArrowLeft className="w-4 h-4 mr-1" />
-          Back to Players
-        </Link>
+      <div className="flex justify-end items-end">
         <form action={handleDelete}>
           <button type="submit" className="text-red-400 hover:text-red-300 hover:bg-red-500/10 px-3 py-1.5 rounded-lg flex items-center gap-2 text-sm font-bold transition-all">
             <Trash2 className="w-4 h-4" /> Reset / Delete Player

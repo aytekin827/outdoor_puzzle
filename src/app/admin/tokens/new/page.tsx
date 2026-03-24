@@ -1,8 +1,7 @@
 import { db } from "@/db";
 import { games, qrTokens } from "@/db/schema";
 import { redirect } from "next/navigation";
-import Link from "next/link";
-import { ArrowLeft, RefreshCw } from "lucide-react";
+import { RefreshCw } from "lucide-react";
 
 export const dynamic = 'force-dynamic';
 
@@ -28,10 +27,6 @@ export default async function NewTokenPage() {
 
   return (
     <div className="max-w-xl mx-auto space-y-6 animate-in fade-in duration-500">
-      <Link href="/admin/tokens" className="inline-flex items-center text-sm font-medium text-slate-400 hover:text-white transition-colors">
-        <ArrowLeft className="w-4 h-4 mr-1" />
-        Back to Tokens
-      </Link>
 
       <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl">
         <div className="p-6 border-b border-slate-800 bg-slate-900/50">
@@ -55,7 +50,7 @@ export default async function NewTokenPage() {
           </div>
           
           <div className="pt-4 border-t border-slate-800">
-            <button type="submit" className="w-full px-8 py-3 bg-emerald-500 text-black font-bold rounded-lg flex items-center justify-center gap-2 hover:bg-emerald-400 transition-colors shadow-lg shadow-emerald-500/20">
+            <button type="submit" className="w-full px-8 py-3 bg-white text-black hover:bg-slate-200 dark:bg-white dark:text-black dark:hover:bg-slate-200 font-bold rounded-lg flex items-center justify-center gap-2 transition-colors shadow-lg shadow-white/10">
               <RefreshCw className="w-5 h-5" /> Generate Token
             </button>
           </div>
