@@ -13,9 +13,9 @@ export function getDb(context?: any) {
   // Fallback to local sqlite for regular 'npm run dev' or migrations
   if (typeof window === 'undefined') {
     try {
-      // Standard CommonJS require for Node.js fallback (runs only locally since OpenNext bypasses this)
-      const Database = require('better-sqlite3');
-      const { drizzle } = require('drizzle-orm/better-sqlite3');
+      // Standard CommonJS require for Node.js fallback (hidden from bundler to avoid Windows EPERM / symlink issues)
+      const Database = eval(`require('better-sqlite3')`);
+      const { drizzle } = eval(`require('drizzle-orm/better-sqlite3')`);
       
       const sqlite = new Database('sqlite.db');
       sqlite.pragma('foreign_keys = ON');
