@@ -1,21 +1,35 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { db } from "@/db";
-import { players } from "@/db/schema";
+import { players, playSessions } from "@/db/schema";
 import { eq } from "drizzle-orm";
-import { cookies } from "next/headers";
+import { getPlayerSessionContext, ensurePlaySession } from "@/lib/game-session";
 
-export async function POST(req: NextRequest) {
+export async function POST() {
   try {
-    const cookieStore = await cookies();
-    const playerId = cookieStore.get("playerId")?.value;
-
-    if (!playerId) {
+    const { player, playSession } = await getPlayerSessionContext();
+    if (!player) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    db.update(players)
-      .set({ status: "playing", startedAt: Date.now() })
-      .where(eq(players.id, playerId))
+    const session = playSession ?? await ensurePlaySession(player);
+    if (!session) {
+      return NextResponse.json({ error: "Session not found" }, { status: 404 });
+    }
+
+    const now = Date.now();
+
+    await db.update(players)
+      .set({ status: "playing", startedAt: player.startedAt ?? now })
+      .where(eq(players.id, player.id))
+      .run();
+
+    await db.update(playSessions)
+      .set({
+        status: "playing",
+        startedAt: session.startedAt ?? now,
+        updatedAt: now,
+      })
+      .where(eq(playSessions.id, session.id))
       .run();
 
     return NextResponse.json({ success: true });

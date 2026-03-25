@@ -3,6 +3,7 @@ import { games, missions } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { Save, Trash2 } from "lucide-react";
 import { redirect } from "next/navigation";
+import { MissionImageEditor } from "../../MissionImageEditor";
 
 export const dynamic = 'force-dynamic';
 
@@ -26,6 +27,10 @@ export default async function MissionDetailPage({ params, searchParams }: { para
     const riddleQuestion = formData.get("riddleQuestion") as string;
     const answer = formData.get("answer") as string;
     const hint = formData.get("hint") as string;
+    const imageAssetKey = formData.get("imageAssetKey") as string;
+    const imageUrl = formData.get("imageUrl") as string;
+    const imageAlt = formData.get("imageAlt") as string;
+    const imageCaption = formData.get("imageCaption") as string;
     const returnUrl = formData.get("returnTo") as string;
 
     await db.update(missions).set({
@@ -35,7 +40,11 @@ export default async function MissionDetailPage({ params, searchParams }: { para
       checkpointInstruction,
       riddleQuestion,
       answer,
-      hint
+      hint,
+      imageAssetKey,
+      imageUrl,
+      imageAlt,
+      imageCaption,
     }).where(eq(missions.id, mission!.id)).run();
 
     redirect(returnUrl || "/admin/missions");
@@ -103,6 +112,13 @@ export default async function MissionDetailPage({ params, searchParams }: { para
             <label className="text-sm font-semibold text-slate-400">Hint (Optional)</label>
             <input name="hint" defaultValue={mission.hint || ""} className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white focus:border-primary focus:outline-none transition-colors" />
           </div>
+
+          <MissionImageEditor
+            initialImageUrl={mission.imageUrl || ""}
+            initialImageAssetKey={mission.imageAssetKey || ""}
+            initialImageAlt={mission.imageAlt || ""}
+            initialImageCaption={mission.imageCaption || ""}
+          />
 
           <div className="sm:col-span-2 pt-6 border-t border-slate-800">
             <button type="submit" className="w-full px-8 py-3 bg-white text-black hover:bg-slate-200 dark:bg-white dark:text-black dark:hover:bg-slate-200 font-bold rounded-lg transition-colors flex items-center justify-center gap-2 shadow-lg shadow-white/10">
