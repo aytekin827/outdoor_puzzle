@@ -96,7 +96,7 @@ export default async function AdminDashboard() {
       <div>
         <h1 className="text-3xl font-bold text-white mb-2">운영 대시보드</h1>
         <p className="text-slate-400 text-sm">
-          기존 운영 현황에 세션, 설문, GPS, 행동 로그 지표를 함께 확인할 수 있도록 확장했습니다.
+          기존 운영 현황에 세션, 설문, GPS, 행동 로그 지표를 함께 확인할 수 있도록 확장했습니다
         </p>
       </div>
 
