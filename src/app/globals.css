@@ -2,35 +2,41 @@
 
 @layer base {
   :root {
-    --background: 222 47% 11%;
-    --foreground: 210 40% 98%;
+    --color-background: #0b1120;
+    --color-foreground: #f8fafc;
 
-    --card: 222 47% 11%;
-    --card-foreground: 210 40% 98%;
+    --color-card: #0b1120;
+    --color-card-foreground: #f8fafc;
 
-    --popover: 222 47% 11%;
-    --popover-foreground: 210 40% 98%;
+    --color-popover: #0b1120;
+    --color-popover-foreground: #f8fafc;
 
-    --primary: 217 91% 60%;
-    --primary-foreground: 222 47% 11%;
+    --color-primary: #3b82f6; /* bright blue */
+    --color-primary-foreground: #ffffff;
 
-    --secondary: 217 32% 17%;
-    --secondary-foreground: 210 40% 98%;
+    --color-secondary: #1e293b;
+    --color-secondary-foreground: #f8fafc;
 
-    --muted: 217 32% 17%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --color-muted: #1e293b;
+    --color-muted-foreground: #94a3b8;
 
-    --accent: 217 32% 17%;
-    --accent-foreground: 210 40% 98%;
+    --color-accent: #1e293b;
+    --color-accent-foreground: #f8fafc;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --color-destructive: #991b1b;
+    --color-destructive-foreground: #f8fafc;
 
-    --border: 217 32% 17%;
-    --input: 217 32% 17%;
-    --ring: 224 71.4% 4.1%;
+    --color-border: #1e293b;
+    --color-input: #1e293b;
+    --color-ring: #020617;
 
     --radius: 0.75rem;
+
+    /* Legacy HSL for backwards compatibility if needed */
+    --primary: 217 91% 60%;
+    --background: 222 47% 11%;
+    --foreground: 210 40% 98%;
+    --border: 217 32% 17%;
   }
 }
 

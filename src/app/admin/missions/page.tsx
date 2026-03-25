@@ -17,7 +17,7 @@ export default async function MissionsPage() {
           <h1 className="text-3xl font-bold text-white mb-1">Missions</h1>
           <p className="text-slate-400">Manage questions and checkpoints for your games.</p>
         </div>
-        <Link href="/admin/missions/new" className="bg-primary hover:bg-primary/90 text-black font-bold py-2 px-4 rounded-lg flex items-center gap-2 transition-all shadow-lg shadow-primary/20">
+        <Link href="/admin/missions/new" className="bg-primary hover:bg-primary/90 text-white font-bold py-2.5 px-5 rounded-xl flex items-center gap-2 transition-all shadow-lg shadow-primary/25 border border-primary/20">
           <Plus className="w-5 h-5" /> Add New Mission
         </Link>
       </div>
