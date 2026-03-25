@@ -2,6 +2,7 @@ import { db } from "@/db";
 import { games } from "@/db/schema";
 import { redirect } from "next/navigation";
 import { PrologueEditor } from "../PrologueEditor";
+import { EpilogueEditor } from "../EpilogueEditor";
 
 export const dynamic = 'force-dynamic';
 
@@ -13,6 +14,9 @@ export default function NewGamePage() {
     const prologueType = formData.get("prologueType") as string;
     const prologueVideoUrl = formData.get("prologueVideoUrl") as string;
     const prologueSlidesJson = formData.get("prologueSlidesJson") as string;
+    const epilogueType = formData.get("epilogueType") as string;
+    const epilogueContent = formData.get("epilogueContent") as string;
+    const epilogueSlidesJson = formData.get("epilogueSlidesJson") as string;
 
     await db.insert(games).values({
       id: crypto.randomUUID(),
@@ -21,6 +25,9 @@ export default function NewGamePage() {
       prologueType,
       prologueVideoUrl,
       prologueSlidesJson,
+      epilogueType,
+      epilogueContent,
+      epilogueSlidesJson,
       isActive: true,
       createdAt: Date.now()
     }).run();
@@ -49,6 +56,10 @@ export default function NewGamePage() {
 
           <div className="sm:col-span-2">
             <PrologueEditor />
+          </div>
+
+          <div className="sm:col-span-2">
+            <EpilogueEditor />
           </div>
 
           <div className="sm:col-span-2 pt-4 border-t border-slate-800">

@@ -1,6 +1,7 @@
 import { db } from "@/db";
 import { games, missions } from "@/db/schema";
 import { redirect } from "next/navigation";
+import { MissionImageEditor } from "../MissionImageEditor";
 
 export const dynamic = 'force-dynamic';
 
@@ -17,6 +18,10 @@ export default async function NewMissionPage({ searchParams }: { searchParams: P
     const riddleQuestion = formData.get("riddleQuestion") as string;
     const answer = formData.get("answer") as string;
     const hint = formData.get("hint") as string;
+    const imageAssetKey = formData.get("imageAssetKey") as string;
+    const imageUrl = formData.get("imageUrl") as string;
+    const imageAlt = formData.get("imageAlt") as string;
+    const imageCaption = formData.get("imageCaption") as string;
     const returnUrl = formData.get("returnTo") as string;
     
     await db.insert(missions).values({
@@ -28,6 +33,10 @@ export default async function NewMissionPage({ searchParams }: { searchParams: P
       riddleQuestion,
       answer,
       hint,
+      imageAssetKey,
+      imageUrl,
+      imageAlt,
+      imageCaption,
       createdAt: Date.now()
     }).run();
     
@@ -82,6 +91,8 @@ export default async function NewMissionPage({ searchParams }: { searchParams: P
             <label className="text-sm font-semibold text-slate-400">Hint</label>
             <input name="hint" className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white focus:border-primary focus:outline-none transition-colors" placeholder="Optional hint" />
           </div>
+
+          <MissionImageEditor />
           
           <div className="sm:col-span-2 pt-4 border-t border-slate-800">
             <button type="submit" className="w-full sm:w-auto px-8 py-3 bg-white text-black hover:bg-slate-200 dark:bg-white dark:text-black dark:hover:bg-slate-200 font-bold rounded-lg transition-colors shadow-lg shadow-white/10">

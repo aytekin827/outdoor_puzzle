@@ -3,6 +3,7 @@ import { db } from "@/db";
 import { qrTokens, players } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { cookies } from "next/headers";
+import { createPlaySessionForPlayer } from "@/lib/game-session";
 
 export async function POST(req: NextRequest) {
   try {
@@ -39,10 +40,25 @@ export async function POST(req: NextRequest) {
       status: "ready", // ready, playing, completed
     }).run();
 
+    const createdPlayer = {
+      id: playerId,
+      gameId: qrToken.gameId,
+      qrTokenId: qrToken.id,
+      nickname,
+      startedAt: null,
+      completedAt: null,
+      status: "ready",
+    };
+    const playSession = await createPlaySessionForPlayer(createdPlayer);
+
     // Set cookie
-    (await cookies()).set("playerId", playerId, { httpOnly: true, path: "/" });
+    const cookieStore = await cookies();
+    cookieStore.set("playerId", playerId, { httpOnly: true, path: "/" });
+    if (playSession) {
+      cookieStore.set("playSessionId", playSession.id, { httpOnly: true, path: "/" });
+    }
     
-    return NextResponse.json({ success: true, playerId });
+    return NextResponse.json({ success: true, playerId, playSessionId: playSession?.id ?? null });
   } catch (err) {
     console.error(err);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });

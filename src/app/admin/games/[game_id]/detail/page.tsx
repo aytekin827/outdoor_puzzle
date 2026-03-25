@@ -5,6 +5,7 @@ import { Save, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { PrologueEditor } from "../../PrologueEditor";
+import { EpilogueEditor } from "../../EpilogueEditor";
 
 export const dynamic = 'force-dynamic';
 
@@ -25,6 +26,9 @@ export default async function GameDetailPage({ params }: { params: Promise<{ gam
     const prologueType = formData.get("prologueType") as string;
     const prologueVideoUrl = formData.get("prologueVideoUrl") as string;
     const prologueSlidesJson = formData.get("prologueSlidesJson") as string;
+    const epilogueType = formData.get("epilogueType") as string;
+    const epilogueContent = formData.get("epilogueContent") as string;
+    const epilogueSlidesJson = formData.get("epilogueSlidesJson") as string;
     const isActive = formData.get("isActive") === "on";
 
     await db.update(games).set({
@@ -33,6 +37,9 @@ export default async function GameDetailPage({ params }: { params: Promise<{ gam
       prologueType,
       prologueVideoUrl,
       prologueSlidesJson,
+      epilogueType,
+      epilogueContent,
+      epilogueSlidesJson,
       isActive,
     }).where(eq(games.id, game!.id)).run();
 
@@ -87,6 +94,12 @@ export default async function GameDetailPage({ params }: { params: Promise<{ gam
               initialType={game.prologueType}
               initialVideoUrl={game.prologueVideoUrl || ""}
               initialSlidesJson={game.prologueSlidesJson || ""}
+            />
+
+            <EpilogueEditor
+              initialType={game.epilogueType || "text"}
+              initialContent={game.epilogueContent || ""}
+              initialSlidesJson={game.epilogueSlidesJson || "[]"}
             />
 
             <div className="pt-4 border-t border-slate-800">
