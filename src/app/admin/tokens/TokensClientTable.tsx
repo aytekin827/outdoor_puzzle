@@ -1,14 +1,14 @@
 "use client";
 
 import { DataTable } from "@/components/DataTable";
-import { CheckCircle, Clock, QrCode, Copy } from "lucide-react";
+import { CheckCircle, Clock, QrCode } from "lucide-react";
 
 export function TokensClientTable({ data }: { data: any[] }) {
   const handleCopyQR = async (e: React.MouseEvent, token: string) => {
     e.stopPropagation();
     const url = `${window.location.origin}/play/${token}`;
     const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=${encodeURIComponent(url)}`;
-    
+
     try {
       const response = await fetch(qrUrl);
       const blob = await response.blob();
@@ -35,13 +35,13 @@ export function TokensClientTable({ data }: { data: any[] }) {
       basePath="/admin/tokens"
       columns={[
         { key: "token", label: "Token ID" },
-        { 
-          key: "gameTitle", 
+        {
+          key: "gameTitle",
           label: "Attached Game",
           render: (_val: any, row: any) => <span className="text-slate-400">{row.gameTitle}</span>
         },
-        { 
-          key: "isUsed", 
+        {
+          key: "isUsed",
           label: "Status",
           render: (val: any) => val ? (
             <span className="flex items-center gap-1.5 text-slate-500 font-bold"><CheckCircle className="w-4 h-4" /> Used</span>
@@ -64,7 +64,6 @@ export function TokensClientTable({ data }: { data: any[] }) {
               title="Copy QR Image"
             >
               <QrCode className="w-4 h-4" />
-              <span className="text-xs font-bold hidden group-hover:inline">복사</span>
             </button>
           )
         }
