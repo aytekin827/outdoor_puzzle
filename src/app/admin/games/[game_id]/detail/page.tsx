@@ -1,7 +1,7 @@
 import { db } from "@/db";
 import { games, missions } from "@/db/schema";
 import { eq } from "drizzle-orm";
-import { ExternalLink, Save, Trash2 } from "lucide-react";
+import { Save, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { PrologueEditor } from "../../PrologueEditor";
@@ -51,7 +51,7 @@ export default async function GameDetailPage({ params }: { params: Promise<{ gam
       <div className="flex justify-end items-end">
         <form action={handleDelete}>
           <button type="submit" className="text-red-400 hover:text-red-300 hover:bg-red-500/10 px-3 py-1.5 rounded-lg flex items-center gap-2 text-sm font-bold transition-all">
-            <Trash2 className="w-4 h-4" /> Delete Game
+            <Trash2 className="w-4 h-4" /> 게임 삭제
           </button>
         </form>
       </div>
@@ -61,7 +61,7 @@ export default async function GameDetailPage({ params }: { params: Promise<{ gam
         {/* Edit Form */}
         <div className="lg:col-span-2 bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl">
           <div className="p-6 border-b border-slate-800 bg-slate-900/50">
-            <h1 className="text-2xl font-bold text-white">Edit Game</h1>
+            <h1 className="text-2xl font-bold text-white">게임 수정</h1>
             <p className="text-slate-400 text-sm mt-1">ID: {game.id}</p>
           </div>
 
@@ -83,15 +83,15 @@ export default async function GameDetailPage({ params }: { params: Promise<{ gam
               </label>
             </div>
 
-            <PrologueEditor 
-              initialType={game.prologueType} 
-              initialVideoUrl={game.prologueVideoUrl || ""} 
-              initialSlidesJson={game.prologueSlidesJson || ""} 
+            <PrologueEditor
+              initialType={game.prologueType}
+              initialVideoUrl={game.prologueVideoUrl || ""}
+              initialSlidesJson={game.prologueSlidesJson || ""}
             />
 
             <div className="pt-4 border-t border-slate-800">
               <button type="submit" className="w-full px-8 py-3 bg-white text-black hover:bg-slate-200 dark:bg-white dark:text-black dark:hover:bg-slate-200 font-bold rounded-lg transition-colors flex items-center justify-center gap-2 shadow-lg shadow-white/10">
-                <Save className="w-5 h-5" /> Save Changes
+                <Save className="w-5 h-5" /> 저장
               </button>
             </div>
           </form>
@@ -101,7 +101,7 @@ export default async function GameDetailPage({ params }: { params: Promise<{ gam
         <div className="lg:col-span-1 space-y-6">
           <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl relative overflow-hidden">
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-xl font-bold text-white">Missions</h2>
+              <h2 className="text-xl font-bold text-white">미션(Missions)</h2>
               <span className="bg-slate-800 text-slate-300 text-xs px-3 py-1 font-bold rounded-full">
                 {linkedMissions.length}
               </span>
@@ -109,10 +109,10 @@ export default async function GameDetailPage({ params }: { params: Promise<{ gam
 
             <ul className="space-y-3">
               {linkedMissions.length === 0 ? (
-                <p className="text-slate-500 text-sm italic">No missions attached. Go to the Missions tab to add.</p>
+                <p className="text-slate-500 text-sm italic">연결된 미션이 없습니다. 미션 탭에서 추가해주세요.</p>
               ) : linkedMissions.map((m) => (
                 <li key={m.id}>
-                  <Link href={`/admin/missions/${m.id}/detail`} className="block border border-slate-800 bg-slate-950 hover:bg-slate-800/50 p-4 rounded-xl transition-all group">
+                  <Link href={`/admin/missions/${m.id}/detail?returnTo=/admin/games/${game.id}/detail`} className="block border border-slate-800 bg-slate-950 hover:bg-slate-800/50 p-4 rounded-xl transition-all group">
                     <p className="font-bold text-primary mb-1 group-hover:underline">
                       #{m.orderIndex} {m.title}
                     </p>
@@ -124,8 +124,8 @@ export default async function GameDetailPage({ params }: { params: Promise<{ gam
               ))}
             </ul>
             <div className="mt-6 text-center">
-              <Link href={`/admin/missions/new?gameId=${game.id}`} className="text-xs text-primary font-bold hover:underline">
-                + Add New Mission
+              <Link href={`/admin/missions/new?gameId=${game.id}&returnTo=/admin/games/${game.id}/detail`} className="text-xs text-primary font-bold hover:underline">
+                + 미션 추가
               </Link>
             </div>
           </div>

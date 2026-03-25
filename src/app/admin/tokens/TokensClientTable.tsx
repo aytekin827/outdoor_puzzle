@@ -4,6 +4,11 @@ import { DataTable } from "@/components/DataTable";
 import { CheckCircle, Clock, QrCode } from "lucide-react";
 
 export function TokensClientTable({ data }: { data: any[] }) {
+  // Get unique games for filtering
+  const uniqueGames = Array.from(new Map(data.map(item => [item.gameId, item.gameTitle])).entries())
+    .filter(([id, title]) => id && title)
+    .map(([id, title]) => ({ label: title, value: id }));
+
   const handleCopyQR = async (e: React.MouseEvent, token: string) => {
     e.stopPropagation();
     const url = `${window.location.origin}/play/${token}`;
@@ -15,7 +20,7 @@ export function TokensClientTable({ data }: { data: any[] }) {
       await navigator.clipboard.write([
         new ClipboardItem({ [blob.type]: blob })
       ]);
-      alert(`이미지 복사 완료: ${token}`);
+      alert(`QR 이미지 복사 완료`);
     } catch (err) {
       console.error("Failed to copy image: ", err);
       // Fallback: Copy URL only if image copy fails
@@ -29,41 +34,46 @@ export function TokensClientTable({ data }: { data: any[] }) {
   };
 
   return (
-    <DataTable
+    <DataTable<any>
       data={data}
-      searchKey="token"
+      searchKeys={["token", "gameTitle"]}
+      searchHelpText="검색어 : 토큰 ID, 게임 제목"
       basePath="/admin/tokens"
+      defaultSort={{ key: "createdAt", direction: "desc" }}
+      filters={uniqueGames.length > 0 ? [
+        { key: "gameId", label: "게임", options: uniqueGames }
+      ] : []}
       columns={[
-        { key: "token", label: "Token ID" },
+        { key: "token", label: "토큰 ID" },
         {
           key: "gameTitle",
-          label: "Attached Game",
+          label: "게임",
           render: (_val: any, row: any) => <span className="text-slate-400">{row.gameTitle}</span>
         },
         {
           key: "isUsed",
-          label: "Status",
+          label: "상태",
           render: (val: any) => val ? (
-            <span className="flex items-center gap-1.5 text-slate-500 font-bold"><CheckCircle className="w-4 h-4" /> Used</span>
+            <span className="flex items-center gap-1.5 text-slate-500 font-bold"><CheckCircle className="w-4 h-4" /> 사용됨</span>
           ) : (
-            <span className="flex items-center gap-1.5 text-emerald-400 font-bold"><Clock className="w-4 h-4" /> Unused</span>
+            <span className="flex items-center gap-1.5 text-emerald-400 font-bold"><Clock className="w-4 h-4" /> 사용가능</span>
           )
         },
         {
           key: "createdAt",
-          label: "Created At",
+          label: "생성일",
           render: (val: any) => new Date(val).toLocaleDateString()
         },
         {
           key: "id" as any,
-          label: "QR",
+          label: "QR코드",
           render: (_val: any, row: any) => (
             <button
               onClick={(e) => handleCopyQR(e, row.token)}
               className="p-2 bg-slate-800 hover:bg-primary hover:text-white rounded-lg text-primary transition-all flex items-center gap-2 group"
-              title="Copy QR Image"
+              title="QR코드 복사"
             >
-              <QrCode className="w-4 h-4" />
+              <QrCode className="w-4 h-4" /> 복사
             </button>
           )
         }

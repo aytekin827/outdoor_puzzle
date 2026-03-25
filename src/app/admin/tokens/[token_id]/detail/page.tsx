@@ -1,15 +1,15 @@
 import { db } from "@/db";
-import { qrTokens, games } from "@/db/schema";
+import { games, qrTokens } from "@/db/schema";
 import { eq } from "drizzle-orm";
-import { redirect } from "next/navigation";
 import { Save, Trash2 } from "lucide-react";
+import { redirect } from "next/navigation";
 
 export const dynamic = 'force-dynamic';
 
 export default async function TokenDetailPage({ params }: { params: Promise<{ token_id: string }> }) {
   const { token_id } = await params;
   const tokenRecord = await db.select().from(qrTokens).where(eq(qrTokens.id, token_id)).get();
-  
+
   if (!tokenRecord) {
     redirect("/admin/tokens");
   }
@@ -42,20 +42,20 @@ export default async function TokenDetailPage({ params }: { params: Promise<{ to
       <div className="flex justify-end items-end">
         <form action={handleDelete}>
           <button type="submit" className="text-red-400 hover:text-red-300 hover:bg-red-500/10 px-3 py-1.5 rounded-lg flex items-center gap-2 text-sm font-bold transition-all">
-            <Trash2 className="w-4 h-4" /> Delete Token
+            <Trash2 className="w-4 h-4" /> 삭제
           </button>
         </form>
       </div>
 
       <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl">
         <div className="p-6 border-b border-slate-800 bg-slate-900/50">
-          <h1 className="text-2xl font-bold text-white">Edit Token</h1>
+          <h1 className="text-2xl font-bold text-white">토큰(Token) 수정</h1>
           <p className="text-slate-400 font-mono text-xs mt-2 uppercase">{tokenRecord.id}</p>
         </div>
 
         <form action={handleUpdate} className="p-6 space-y-6">
           <div className="flex flex-col gap-2">
-            <label className="text-sm font-semibold text-slate-400">Attached Game</label>
+            <label className="text-sm font-semibold text-slate-400">연결된 게임</label>
             <select name="gameId" defaultValue={tokenRecord.gameId} required className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white focus:border-primary focus:outline-none transition-colors">
               {allGames.map(g => <option key={g.id} value={g.id}>{g.title}</option>)}
             </select>
@@ -69,13 +69,13 @@ export default async function TokenDetailPage({ params }: { params: Promise<{ to
           <div className="flex gap-4 items-center p-4 bg-slate-950/50 border border-slate-800 rounded-lg">
             <input type="checkbox" id="isUsed" name="isUsed" defaultChecked={tokenRecord.isUsed ?? false} className="w-5 h-5 accent-primary bg-slate-900 border-slate-700 rounded" />
             <label htmlFor="isUsed" className="text-sm font-semibold text-white cursor-pointer select-none">
-              Mark as Used
+              사용됨
             </label>
           </div>
 
           <div className="pt-6 border-t border-slate-800">
             <button type="submit" className="w-full px-8 py-3 bg-white text-black hover:bg-slate-200 dark:bg-white dark:text-black dark:hover:bg-slate-200 font-bold rounded-lg transition-colors flex items-center justify-center gap-2 shadow-lg shadow-white/10">
-              <Save className="w-5 h-5" /> Update Token Settings
+              <Save className="w-5 h-5" /> 저장
             </button>
           </div>
         </form>

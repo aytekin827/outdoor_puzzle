@@ -6,8 +6,9 @@ import { redirect } from "next/navigation";
 
 export const dynamic = 'force-dynamic';
 
-export default async function MissionDetailPage({ params }: { params: Promise<{ mission_id: string }> }) {
+export default async function MissionDetailPage({ params, searchParams }: { params: Promise<{ mission_id: string }>, searchParams: Promise<{ returnTo?: string }> }) {
   const { mission_id } = await params;
+  const { returnTo } = await searchParams;
   const mission = await db.select().from(missions).where(eq(missions.id, mission_id)).get();
 
   if (!mission) {
@@ -25,6 +26,7 @@ export default async function MissionDetailPage({ params }: { params: Promise<{ 
     const riddleQuestion = formData.get("riddleQuestion") as string;
     const answer = formData.get("answer") as string;
     const hint = formData.get("hint") as string;
+    const returnUrl = formData.get("returnTo") as string;
 
     await db.update(missions).set({
       gameId,
@@ -36,32 +38,35 @@ export default async function MissionDetailPage({ params }: { params: Promise<{ 
       hint
     }).where(eq(missions.id, mission!.id)).run();
 
-    redirect("/admin/missions");
+    redirect(returnUrl || "/admin/missions");
   }
 
-  async function handleDelete() {
+  async function handleDelete(formData: FormData) {
     "use server";
+    const returnUrl = formData.get("returnTo") as string;
     await db.delete(missions).where(eq(missions.id, mission!.id)).run();
-    redirect(`/admin/games/${mission!.gameId}/detail`);
+    redirect(returnUrl || `/admin/games/${mission!.gameId}/detail`);
   }
 
   return (
     <div className="max-w-4xl mx-auto space-y-8 animate-in fade-in duration-500 pb-12">
       <div className="flex justify-end items-end">
         <form action={handleDelete}>
+          <input type="hidden" name="returnTo" value={returnTo || ""} />
           <button type="submit" className="text-red-400 hover:text-red-300 hover:bg-red-500/10 px-3 py-1.5 rounded-lg flex items-center gap-2 text-sm font-bold transition-all">
-            <Trash2 className="w-4 h-4" /> Delete Mission
+            <Trash2 className="w-4 h-4" /> 삭제
           </button>
         </form>
       </div>
 
       <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl">
         <div className="p-6 border-b border-slate-800 bg-slate-900/50">
-          <h1 className="text-2xl font-bold text-white">Edit Mission</h1>
+          <h1 className="text-2xl font-bold text-white">미션(Mission) 수정</h1>
           <p className="text-slate-400 text-sm mt-1">ID: {mission.id}</p>
         </div>
 
         <form action={handleUpdate} className="p-6 grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <input type="hidden" name="returnTo" value={returnTo || ""} />
           <div className="flex flex-col gap-2 sm:col-span-2">
             <label className="text-sm font-semibold text-slate-400">Attached Game</label>
             <select name="gameId" defaultValue={mission.gameId} required className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white focus:border-primary focus:outline-none transition-colors">

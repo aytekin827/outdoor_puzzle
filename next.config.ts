@@ -21,6 +21,7 @@ const nextConfig: NextConfig = {
     // !! WARN !!
     ignoreBuildErrors: true,
   },
+  turbopack: {}
 };
 
 export default withPWA(nextConfig);

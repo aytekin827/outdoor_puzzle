@@ -1,9 +1,9 @@
 import { db } from "@/db";
-import { qrTokens, games } from "@/db/schema";
+import { games, qrTokens } from "@/db/schema";
+import { desc, eq } from "drizzle-orm";
 import { Plus } from "lucide-react";
 import Link from "next/link";
 import { TokensClientTable } from "./TokensClientTable";
-import { desc, eq } from "drizzle-orm";
 
 export const dynamic = 'force-dynamic';
 
@@ -11,27 +11,28 @@ export default async function TokensPage() {
   const tokensRaw = await db.select({
     id: qrTokens.id,
     token: qrTokens.token,
+    gameId: qrTokens.gameId,
     isUsed: qrTokens.isUsed,
     createdAt: qrTokens.createdAt,
     gameTitle: games.title,
   })
-  .from(qrTokens)
-  .leftJoin(games, eq(qrTokens.gameId, games.id))
-  .orderBy(desc(qrTokens.createdAt))
-  .all();
-  
+    .from(qrTokens)
+    .leftJoin(games, eq(qrTokens.gameId, games.id))
+    .orderBy(desc(qrTokens.createdAt))
+    .all();
+
   return (
     <div className="space-y-6 animate-in fade-in duration-500">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-white mb-1">QR Tokens</h1>
-          <p className="text-slate-400">Generate entry codes for players to join games.</p>
+          <h1 className="text-3xl font-bold text-white mb-1">토큰</h1>
+          <p className="text-slate-400">방탈출 게임 참여 코드 생성을 관리합니다.</p>
         </div>
         <Link href="/admin/tokens/new" className="bg-primary hover:bg-primary/90 text-white font-bold py-2.5 px-5 rounded-xl flex items-center gap-2 transition-all shadow-lg shadow-primary/25 border border-primary/20">
-          <Plus className="w-5 h-5" /> Generate Token
+          <Plus className="w-5 h-5" /> 토큰 생성
         </Link>
       </div>
-      
+
       <TokensClientTable data={tokensRaw} />
     </div>
   );

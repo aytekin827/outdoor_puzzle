@@ -4,8 +4,8 @@ import { redirect } from "next/navigation";
 
 export const dynamic = 'force-dynamic';
 
-export default async function NewMissionPage({ searchParams }: { searchParams: Promise<{ gameId?: string }> }) {
-  const { gameId } = await searchParams;
+export default async function NewMissionPage({ searchParams }: { searchParams: Promise<{ gameId?: string, returnTo?: string }> }) {
+  const { gameId, returnTo } = await searchParams;
   const allGames = await db.select().from(games).all();
 
   async function handleCreate(formData: FormData) {
@@ -17,6 +17,7 @@ export default async function NewMissionPage({ searchParams }: { searchParams: P
     const riddleQuestion = formData.get("riddleQuestion") as string;
     const answer = formData.get("answer") as string;
     const hint = formData.get("hint") as string;
+    const returnUrl = formData.get("returnTo") as string;
     
     await db.insert(missions).values({
       id: crypto.randomUUID(),
@@ -30,7 +31,7 @@ export default async function NewMissionPage({ searchParams }: { searchParams: P
       createdAt: Date.now()
     }).run();
     
-    redirect(`/admin/games/${gameId}/detail`);
+    redirect(returnUrl || `/admin/missions`);
   }
 
   return (
@@ -43,6 +44,7 @@ export default async function NewMissionPage({ searchParams }: { searchParams: P
         </div>
 
         <form action={handleCreate} className="p-6 grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <input type="hidden" name="returnTo" value={returnTo || ""} />
           <div className="flex flex-col gap-2 sm:col-span-2">
             <label className="text-sm font-semibold text-slate-400">Attached Game</label>
             <select name="gameId" defaultValue={gameId || ""} required className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white focus:border-primary focus:outline-none transition-colors">

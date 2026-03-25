@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { Search, ChevronUp, ChevronDown } from "lucide-react";
 
 interface Column<T> {
@@ -10,17 +10,41 @@ interface Column<T> {
   render?: (val: any, row: T) => React.ReactNode;
 }
 
+interface FilterOption {
+  label: string;
+  value: any;
+}
+
+interface FilterConfig<T> {
+  key: keyof T;
+  label: string;
+  options: FilterOption[];
+}
+
 interface DataTableProps<T> {
   data: T[];
   columns: Column<T>[];
-  searchKey: keyof T;
+  searchKeys: (keyof T)[];
+  searchHelpText?: string;
   basePath: string; // e.g. "/admin/games" -> navigates to "/admin/games/[id]/detail"
+  filters?: FilterConfig<T>[];
+  defaultSort?: { key: keyof T; direction: 'asc' | 'desc' };
 }
 
-export function DataTable<T extends { id: string }>({ data, columns, searchKey, basePath }: DataTableProps<T>) {
+export function DataTable<T extends { id: string }>({ 
+  data, 
+  columns, 
+  searchKeys, 
+  searchHelpText,
+  basePath, 
+  filters,
+  defaultSort
+}: DataTableProps<T>) {
   const router = useRouter();
+  const pathname = usePathname();
   const [search, setSearch] = useState("");
-  const [sortConfig, setSortConfig] = useState<{ key: keyof T; direction: 'asc' | 'desc' } | null>(null);
+  const [activeFilters, setActiveFilters] = useState<Record<string, any>>({});
+  const [sortConfig, setSortConfig] = useState<{ key: keyof T; direction: 'asc' | 'desc' } | null>(defaultSort || null);
 
   const handleSort = (key: keyof T) => {
     let direction: 'asc' | 'desc' = 'asc';
@@ -28,11 +52,28 @@ export function DataTable<T extends { id: string }>({ data, columns, searchKey, 
     setSortConfig({ key, direction });
   };
 
+  const handleFilterChange = (key: string, value: any) => {
+    setActiveFilters(prev => ({
+      ...prev,
+      [key]: value
+    }));
+  };
+
   const filteredData = data.filter(item => {
-    const val = item[searchKey];
-    if (typeof val === 'string') {
-      return val.toLowerCase().includes(search.toLowerCase());
+    // Search filter across multiple keys
+    const matchesSearch = search === "" || searchKeys.some(key => {
+      const val = item[key];
+      return typeof val === 'string' && val.toLowerCase().includes(search.toLowerCase());
+    });
+
+    if (!matchesSearch) return false;
+
+    // Filter by columns
+    for (const [key, value] of Object.entries(activeFilters)) {
+      if (value === "" || value === undefined || value === null) continue;
+      if (item[key as keyof T] !== value) return false;
     }
+
     return true;
   });
 
@@ -50,17 +91,41 @@ export function DataTable<T extends { id: string }>({ data, columns, searchKey, 
   return (
     <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden flex flex-col pt-4">
       {/* Search & Filter Bar */}
-      <div className="px-6 pb-4 flex items-center justify-between gap-4">
-        <div className="relative w-full max-w-sm">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
-          <input 
-            type="text" 
-            placeholder="Search..." 
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="w-full bg-slate-950 border border-slate-800 rounded-lg pl-10 pr-4 py-2 text-sm text-white focus:outline-none focus:border-primary transition-colors"
-          />
+      <div className="px-6 pb-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="w-full max-w-sm">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+            <input 
+              type="text" 
+              placeholder="Search..." 
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="w-full bg-slate-950 border border-slate-800 rounded-lg pl-10 pr-4 py-2 text-sm text-white focus:outline-none focus:border-primary transition-colors"
+            />
+          </div>
+          {searchHelpText && (
+            <p className="text-[10px] text-slate-500 mt-1 ml-1">{searchHelpText}</p>
+          )}
         </div>
+
+        {/* Filters */}
+        {filters && filters.length > 0 && (
+          <div className="flex flex-wrap gap-2">
+            {filters.map(f => (
+              <select
+                key={String(f.key)}
+                value={activeFilters[String(f.key)] || ""}
+                onChange={(e) => handleFilterChange(String(f.key), e.target.value)}
+                className="bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs font-semibold text-slate-300 focus:outline-none focus:border-primary"
+              >
+                <option value="">{f.label}: 전체</option>
+                {f.options.map(opt => (
+                  <option key={String(opt.value)} value={opt.value}>{opt.label}</option>
+                ))}
+              </select>
+            ))}
+          </div>
+        )}
       </div>
 
       <div className="overflow-x-auto">
@@ -93,7 +158,7 @@ export function DataTable<T extends { id: string }>({ data, columns, searchKey, 
             ) : sortedData.map((row) => (
               <tr 
                 key={row.id} 
-                onClick={() => router.push(`${basePath}/${row.id}/detail`)}
+                onClick={() => router.push(`${basePath}/${row.id}/detail?returnTo=${encodeURIComponent(pathname)}`)}
                 className="hover:bg-slate-800/50 transition-colors cursor-pointer"
               >
                 {columns.map(col => (
