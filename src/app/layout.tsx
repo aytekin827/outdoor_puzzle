@@ -1,22 +1,25 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
-
-
 export const metadata: Metadata = {
-  title: "야외방탈출",
-  description: "숨겨진 단서를 찾아 다음 체크포인트로 이동하세요.",
+  title: "야외 방탈출",
+  description: "야외 공간에서 즐기는 몰입형 스토리 기반 방탈출 게임 플랫폼입니다.",
   manifest: "/manifest.json",
-  themeColor: "#000000",
-  viewport: "width=device-width, initial-scale=1, maximum-scale=1",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "야외방탈출",
+    title: "야외 방탈출",
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#000000",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
 };
 
 export default function RootLayout({
