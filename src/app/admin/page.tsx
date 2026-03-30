@@ -154,11 +154,11 @@ export default async function AdminDashboard() {
           <div className="p-6 grid grid-cols-2 gap-4 text-sm">
             <div className="rounded-xl border border-slate-800 bg-slate-950 p-4">
               <p className="text-slate-500">진행 중 플레이어</p>
-              <p className="text-2xl font-bold text-blue-400 mt-2">{activePlayers}</p>
+              <p className="text-2xl font-bold text-white mt-2">{activePlayers}</p>
             </div>
             <div className="rounded-xl border border-slate-800 bg-slate-950 p-4">
               <p className="text-slate-500">완료 플레이어</p>
-              <p className="text-2xl font-bold text-emerald-400 mt-2">{completedPlayers}</p>
+              <p className="text-2xl font-bold text-white mt-2">{completedPlayers}</p>
             </div>
             <div className="rounded-xl border border-slate-800 bg-slate-950 p-4 col-span-2">
               <p className="text-slate-500">평균 완료 시간</p>
