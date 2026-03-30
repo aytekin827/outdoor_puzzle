@@ -60,11 +60,11 @@ export default async function SurveysPage() {
         </div>
         <div className="rounded-2xl border border-slate-800 bg-slate-900 p-5">
           <p className="text-slate-500 text-sm">평균 만족도</p>
-          <p className="text-3xl font-bold text-cyan-400 mt-2">{averageSatisfaction}</p>
+          <p className="text-3xl font-bold text-white mt-2">{averageSatisfaction}</p>
         </div>
         <div className="rounded-2xl border border-slate-800 bg-slate-900 p-5">
           <p className="text-slate-500 text-sm">평균 난이도</p>
-          <p className="text-3xl font-bold text-amber-400 mt-2">{averageDifficulty}</p>
+          <p className="text-3xl font-bold text-white mt-2">{averageDifficulty}</p>
         </div>
       </div>
 

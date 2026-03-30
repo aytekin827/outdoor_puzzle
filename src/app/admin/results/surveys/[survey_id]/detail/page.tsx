@@ -32,7 +32,7 @@ export default async function SurveyDetailPage({
 
   return (
     <div className="space-y-8">
-      <div className="flex items-start justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold text-white mb-2">설문 상세</h1>
           <p className="text-slate-400 text-sm">응답자 정보와 게임 맥락을 함께 확인할 수 있는 설문 상세 화면입니다.</p>

@@ -176,7 +176,7 @@ export default async function AdminDashboard() {
           <div className="p-6 space-y-4 text-sm text-slate-300">
             <div className="flex items-center justify-between rounded-xl border border-slate-800 bg-slate-950 p-4">
               <span>설문 제출 수</span>
-              <span className="font-bold text-cyan-400">{allSurveys.length}</span>
+              <span className="font-bold text-white">{allSurveys.length}</span>
             </div>
             <div className="flex items-center justify-between rounded-xl border border-slate-800 bg-slate-950 p-4">
               <span>세션 수</span>
@@ -184,11 +184,11 @@ export default async function AdminDashboard() {
             </div>
             <div className="flex items-center justify-between rounded-xl border border-slate-800 bg-slate-950 p-4">
               <span>위치 로그 누적</span>
-              <span className="font-bold text-orange-400">{allLocationLogs.length}</span>
+              <span className="font-bold text-white">{allLocationLogs.length}</span>
             </div>
             <div className="flex items-center justify-between rounded-xl border border-slate-800 bg-slate-950 p-4">
               <span>행동 로그 누적</span>
-              <span className="font-bold text-indigo-400">{allEventLogs.length}</span>
+              <span className="font-bold text-white">{allEventLogs.length}</span>
             </div>
             <div className="flex items-center justify-between rounded-xl border border-slate-800 bg-slate-950 p-4">
               <span>토큰 사용률</span>

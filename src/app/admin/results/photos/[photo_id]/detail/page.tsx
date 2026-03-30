@@ -32,7 +32,7 @@ export default async function PhotoDetailPage({
 
   return (
     <div className="space-y-8">
-      <div className="flex items-start justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold text-white mb-2">인증샷 상세</h1>
           <p className="text-slate-400 text-sm">인증샷과 연결된 플레이 세션 정보를 함께 확인합니다.</p>

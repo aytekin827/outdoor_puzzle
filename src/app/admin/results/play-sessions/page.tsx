@@ -1,5 +1,5 @@
 import { db } from "@/db";
-import { games, playSessions, players, postGameSurveys, completionPhotos } from "@/db/schema";
+import { completionPhotos, games, playSessions, players, postGameSurveys } from "@/db/schema";
 import { PlaySessionsClientTable } from "./PlaySessionsClientTable";
 
 export const dynamic = "force-dynamic";
@@ -67,12 +67,12 @@ export default async function PlaySessionsPage() {
         </div>
         <div className="rounded-2xl border border-slate-800 bg-slate-900 p-5">
           <p className="text-slate-500 text-sm">완료 세션</p>
-          <p className="text-3xl font-bold text-emerald-400 mt-2">{completedCount}</p>
+          <p className="text-3xl font-bold text-white mt-2">{completedCount}</p>
         </div>
         <div className="rounded-2xl border border-slate-800 bg-slate-900 p-5">
           <p className="text-slate-500 text-sm">진행/이탈</p>
-          <p className="text-3xl font-bold text-blue-400 mt-2">
-            {activeCount} / <span className="text-rose-400">{abandonedCount}</span>
+          <p className="text-3xl font-bold text-white mt-2">
+            {activeCount} / <span>{abandonedCount}</span>
           </p>
         </div>
       </div>

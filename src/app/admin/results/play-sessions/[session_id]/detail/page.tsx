@@ -115,7 +115,7 @@ export default async function PlaySessionDetailPage({
 
   return (
     <div className="space-y-8">
-      <div className="flex items-start justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold text-white mb-2">플레이 세션 상세</h1>
           <p className="text-slate-400 text-sm">
@@ -250,7 +250,7 @@ export default async function PlaySessionDetailPage({
               {missionProgress.length === 0 ? (
                 <p className="text-slate-400 text-sm">미션 진행 기록이 없습니다.</p>
               ) : missionProgress.map((mission) => (
-                <div key={mission.id} className="bg-slate-950 border border-slate-800 p-4 rounded-xl flex items-start justify-between gap-4">
+                <div key={mission.id} className="bg-slate-950 border border-slate-800 p-4 rounded-xl flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
                   <div className="space-y-2">
                     <p className="text-xs text-primary font-bold">Mission #{mission.orderIndex}</p>
                     <p className="text-sm text-slate-100 font-semibold">{mission.title || "Unknown mission"}</p>
@@ -281,7 +281,7 @@ export default async function PlaySessionDetailPage({
               {allSubmissions.length === 0 ? (
                 <p className="text-slate-400 text-sm">정답 제출 기록이 없습니다.</p>
               ) : allSubmissions.map((submission) => (
-                <div key={submission.id} className="bg-slate-950 border border-slate-800 p-4 rounded-xl flex items-center justify-between gap-4">
+                <div key={submission.id} className="bg-slate-950 border border-slate-800 p-4 rounded-xl flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                   <div>
                     <p className="text-xs text-primary font-bold mb-1">Mission #{submission.orderIndex}</p>
                     <p className="text-sm text-slate-400 mb-1">{submission.missionTitle || "Unknown mission"}</p>

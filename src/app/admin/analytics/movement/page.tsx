@@ -56,11 +56,11 @@ export default async function MovementAnalyticsPage() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div className="rounded-2xl border border-slate-800 bg-slate-900 p-5">
           <p className="text-slate-500 text-sm">위치 로그 수</p>
-          <p className="text-3xl font-bold text-orange-400 mt-2">{locationRows.length}</p>
+          <p className="text-3xl font-bold text-white mt-2">{locationRows.length}</p>
         </div>
         <div className="rounded-2xl border border-slate-800 bg-slate-900 p-5">
           <p className="text-slate-500 text-sm">행동 로그 수</p>
-          <p className="text-3xl font-bold text-indigo-400 mt-2">{eventRows.length}</p>
+          <p className="text-3xl font-bold text-white mt-2">{eventRows.length}</p>
         </div>
         <div className="rounded-2xl border border-slate-800 bg-slate-900 p-5">
           <p className="text-slate-500 text-sm">위치 권한 허용 세션</p>
