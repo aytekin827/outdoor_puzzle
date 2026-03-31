@@ -26,7 +26,7 @@ export default function PlayLandingPage() {
         }
 
         if (data.qrToken.isUsed) {
-          setError("이미 사용된 큐알 코드입니다.");
+          setError("이미 사용된 코드입니다.");
           return;
         }
 

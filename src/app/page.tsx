@@ -52,7 +52,7 @@ export default function Home() {
             disabled={!token.trim()}
             className="group relative flex items-center justify-center gap-2 w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-4 px-6 rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden"
           >
-            <span>토큰으로 시작하기</span>
+            <span>시작하기</span>
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </button>
         </form>
