@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronRight, FileVideo, Image as ImageIcon, Play, Volume2 } from "lucide-react";
+import { ChevronRight, Volume2 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -50,12 +50,12 @@ export function ClosingInstructionClient({ token, mission }: ClosingInstructionC
       {/* Background Decor */}
       <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-primary/10 via-black to-black opacity-30 pointer-events-none" />
       <div className="absolute top-[-100px] right-[-100px] w-64 h-64 bg-primary/20 blur-[100px] rounded-full" />
-      
+
       <div className="max-w-2xl w-full flex flex-col gap-10 flex-1 relative z-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
         <header className="space-y-2">
           <div className="flex items-center gap-2 mb-2">
-             <div className="h-0.5 w-8 bg-primary rounded-full" />
-             <span className="text-primary font-black uppercase tracking-widest text-[10px]">Mission Clear</span>
+            <div className="h-0.5 w-8 bg-primary rounded-full" />
+            <span className="text-primary font-black uppercase tracking-widest text-[10px]">Mission Clear</span>
           </div>
           <h1 className="text-4xl font-black italic tracking-tighter sm:text-5xl leading-tight">
             새로운 지령
@@ -95,7 +95,7 @@ export function ClosingInstructionClient({ token, mission }: ClosingInstructionC
                   className="w-full h-full object-cover animate-in fade-in zoom-in-95 duration-500"
                 />
               </div>
-              
+
               {slides.length > 1 && (
                 <div className="absolute bottom-6 left-0 w-full flex justify-center gap-3">
                   {slides.map((_, i) => (
@@ -112,43 +112,35 @@ export function ClosingInstructionClient({ token, mission }: ClosingInstructionC
 
           {mission.closingInstruction && (
             <div className="p-8 sm:p-10 bg-gradient-to-br from-slate-900 to-slate-950 border-t border-slate-800/50">
-               <div className="flex items-start gap-4">
-                  <div className="bg-primary/20 p-2.5 rounded-xl flex-shrink-0">
-                    <Volume2 className="w-5 h-5 text-primary" />
-                  </div>
-                  <div className="flex-1 space-y-4">
-                    <p className="text-white text-lg sm:text-xl font-bold leading-relaxed whitespace-pre-wrap">
-                      {mission.closingInstruction}
-                    </p>
-                  </div>
-               </div>
+              <div className="flex items-start gap-4">
+                <div className="bg-primary/20 p-2.5 rounded-xl flex-shrink-0">
+                  <Volume2 className="w-5 h-5 text-primary" />
+                </div>
+                <div className="flex-1 space-y-4">
+                  <p className="text-white text-lg sm:text-xl font-bold leading-relaxed whitespace-pre-wrap">
+                    {mission.closingInstruction}
+                  </p>
+                </div>
+              </div>
             </div>
           )}
         </div>
 
         {/* Footer Actions */}
-        <div className="mt-8 pb-16">
+        <div className="mt-4 pb-12">
           <Link
             href={`/play/${token}/mission`}
-            className="group relative w-full flex items-center justify-between bg-primary hover:bg-emerald-400 text-black px-10 py-7 rounded-2xl font-black transition-all shadow-2xl shadow-primary/40 hover:-translate-y-1 active:scale-95 overflow-hidden"
+            className="group w-full flex items-center justify-between bg-emerald-500 hover:bg-emerald-400 text-black px-10 py-6 rounded-2xl font-black transition-all shadow-xl shadow-emerald-500/20 hover:-translate-y-1 active:scale-95"
           >
-            {/* Animated Background Pulse */}
-            <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-in-out pointer-events-none" />
-            
-            <div className="flex flex-col items-start relative z-10">
-              <span className="text-[10px] uppercase tracking-[0.2em] opacity-60 mb-1">Mission Completed</span>
-              <span className="text-2xl italic tracking-tighter uppercase leading-none">새로운 미션 도전하기</span>
-            </div>
-            
-            <div className="bg-black/10 group-hover:bg-black/20 p-3 rounded-2xl transition-colors relative z-10 border border-black/5">
-              <ChevronRight className="w-8 h-8 stroke-[3.5px] animate-pulse" />
+            <span className="text-xl italic tracking-tighter uppercase">지령 완수! 다음 미션 진행</span>
+            <div className="bg-black/10 group-hover:bg-black/20 p-2 rounded-xl transition-colors">
+              <ChevronRight className="w-6 h-6 stroke-[3px]" />
             </div>
           </Link>
-          
-          <p className="text-center mt-8 text-[10px] text-slate-600 font-black uppercase tracking-[0.3em] flex items-center justify-center gap-4 opacity-50">
-            <span className="w-1 h-1 bg-slate-800 rounded-full" />
-            Next Phase Initialization
-            <span className="w-1 h-1 bg-slate-800 rounded-full" />
+          <p className="text-center mt-6 text-xs text-slate-600 font-bold uppercase tracking-widest flex items-center justify-center gap-2">
+            <span className="w-1.5 h-1.5 bg-slate-800 rounded-full" />
+            Outdoor Mystery Puzzle Adventure Game
+            <span className="w-1.5 h-1.5 bg-slate-800 rounded-full" />
           </p>
         </div>
       </div>
