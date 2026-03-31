@@ -377,153 +377,172 @@ export default function CompletePage() {
 
       {stage === "survey" ? (
         <div className="w-full max-w-md md:max-w-xl mx-auto flex flex-col gap-6 py-4">
-          <div className="glass-panel p-6">
-            <h1 className="text-2xl font-bold text-white mb-2">게임 종료 설문</h1>
-            <p className="text-sm text-slate-400">운영 개선을 위해 간단한 만족도 조사를 남겨주세요.</p>
-          </div>
-
-          <form onSubmit={handleSurveySubmit} className="glass-panel p-6 flex flex-col gap-5">
-            <div className="flex flex-col gap-2">
-              <label className="text-sm font-semibold text-slate-300">연령대</label>
-              <select
-                value={form.ageRange}
-                onChange={(event) => updateField("ageRange", event.target.value)}
-                className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white"
+          {submitted ? (
+            <div className="glass-panel p-10 flex flex-col items-center text-center animate-in zoom-in duration-500">
+              <div className="w-20 h-20 bg-emerald-500/20 rounded-full flex items-center justify-center mb-6 shadow-[0_0_20px_rgba(16,185,129,0.2)]">
+                <CheckCircle2 className="w-10 h-10 text-emerald-500" />
+              </div>
+              <h1 className="text-2xl font-bold text-white mb-3">설문 제출 완료</h1>
+              <p className="text-slate-300 mb-8 leading-relaxed">
+                설문에 참여해주셔서 감사합니다.<br />
+                제공해주신 의견은 더 나은 게임 환경을 만드는 데<br />
+                소중한 자료로 활용하겠습니다.
+              </p>
+              
+              <button
+                type="button"
+                onClick={() => router.push(`/play/${token}`)}
+                className="w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-4 px-6 rounded-xl transition-all border border-slate-700"
               >
-                <option value="">선택해주세요</option>
-                {ageOptions.map((option) => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </select>
+                처음 화면으로 돌아가기
+              </button>
             </div>
+          ) : (
+            <>
+              <div className="glass-panel p-6">
+                <h1 className="text-2xl font-bold text-white mb-2">게임 종료 설문</h1>
+                <p className="text-sm text-slate-400">마지막으로 간단한 만족도 조사를 부탁드립니다.</p>
+              </div>
 
-            <div className="flex flex-col gap-2">
-              <label className="text-sm font-semibold text-slate-300">그룹 유형</label>
-              <select
-                value={form.groupType}
-                onChange={(event) => updateField("groupType", event.target.value)}
-                className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white"
-              >
-                <option value="">선택해주세요</option>
-                {groupOptions.map((option) => (
-                  <option key={option} value={option}>
-                    {groupOptionLabels[option] || option}
-                  </option>
-                ))}
-              </select>
-            </div>
+              <div className="glass-panel p-6 flex flex-col gap-4">
+                <div>
+                  <h2 className="text-lg font-bold text-white">인증샷 업로드</h2>
+                  <p className="text-sm text-slate-400 mt-1">오늘의 추억을 사진으로 남겨주세요 (선택).</p>
+                </div>
 
-            {form.groupType === "other" ? (
-              <div className="flex flex-col gap-2">
-                <label className="text-sm font-semibold text-slate-300">기타 그룹 설명</label>
-                <input
-                  value={form.groupTypeOther}
-                  onChange={(event) => updateField("groupTypeOther", event.target.value)}
-                  className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white"
-                  placeholder="직접 입력해주세요"
+                {photoUrl ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={photoUrl} alt="Completion photo" className="w-full rounded-xl border border-white/10 object-cover max-h-72" />
+                ) : (
+                  <div className="rounded-xl border border-dashed border-slate-700 min-h-40 flex items-center justify-center text-slate-500 text-sm">
+                    아직 업로드된 인증샷이 없습니다.
+                  </div>
+                )}
+
+                <label className="w-full bg-white/10 text-white hover:bg-white/20 font-bold py-4 px-6 rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer border border-white/10">
+                  {uploading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Camera className="w-5 h-5" />}
+                  {uploading ? "업로드 중..." : photoUploaded ? "다른 사진으로 변경" : "인증샷 업로드"}
+                  <input type="file" accept="image/*" onChange={handlePhotoUpload} className="hidden" disabled={uploading} />
+                </label>
+
+                {photoUploaded ? (
+                  <div className="text-sm text-emerald-300 flex items-center gap-2 justify-center">
+                    <CheckCircle2 className="w-4 h-4" />
+                    인증샷 전송 완료
+                  </div>
+                ) : null}
+              </div>
+
+              <form onSubmit={handleSurveySubmit} className="glass-panel p-6 flex flex-col gap-5">
+                <div className="flex flex-col gap-2">
+                  <label className="text-sm font-semibold text-slate-300">연령대</label>
+                  <select
+                    value={form.ageRange}
+                    onChange={(event) => updateField("ageRange", event.target.value)}
+                    className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white"
+                  >
+                    <option value="">선택해주세요</option>
+                    {ageOptions.map((option) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="flex flex-col gap-2">
+                  <label className="text-sm font-semibold text-slate-300">그룹 유형</label>
+                  <select
+                    value={form.groupType}
+                    onChange={(event) => updateField("groupType", event.target.value)}
+                    className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white"
+                  >
+                    <option value="">선택해주세요</option>
+                    {groupOptions.map((option) => (
+                      <option key={option} value={option}>
+                        {groupOptionLabels[option] || option}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {form.groupType === "other" ? (
+                  <div className="flex flex-col gap-2">
+                    <label className="text-sm font-semibold text-slate-300">기타 그룹 설명</label>
+                    <input
+                      value={form.groupTypeOther}
+                      onChange={(event) => updateField("groupTypeOther", event.target.value)}
+                      className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white"
+                      placeholder="직접 입력해주세요"
+                    />
+                  </div>
+                ) : null}
+
+                <div className="flex flex-col gap-2">
+                  <label className="text-sm font-semibold text-slate-300">성별</label>
+                  <select
+                    value={form.gender}
+                    onChange={(event) => updateField("gender", event.target.value)}
+                    className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white"
+                  >
+                    <option value="">선택해주세요</option>
+                    {genderOptions.map((option) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <StarRating
+                  label="만족도"
+                  value={form.satisfactionScore}
+                  onChange={(nextValue) => updateField("satisfactionScore", nextValue)}
                 />
-              </div>
-            ) : null}
 
-            <div className="flex flex-col gap-2">
-              <label className="text-sm font-semibold text-slate-300">성별</label>
-              <select
-                value={form.gender}
-                onChange={(event) => updateField("gender", event.target.value)}
-                className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white"
+                <StarRating
+                  label="난이도"
+                  value={form.difficultyScore}
+                  onChange={(nextValue) => updateField("difficultyScore", nextValue)}
+                />
+
+                <div className="flex flex-col gap-2">
+                  <label className="text-sm font-semibold text-slate-300">후기</label>
+                  <textarea
+                    value={form.comment}
+                    onChange={(event) => updateField("comment", event.target.value)}
+                    className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white h-28 resize-none"
+                    placeholder="느낀 점이나 개선 의견을 남겨주세요"
+                  />
+                </div>
+
+                <div className="pt-4">
+                  <button
+                    type="submit"
+                    disabled={!isValidSurvey || saving}
+                    className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-5 px-6 rounded-xl transition-all disabled:opacity-50 flex items-center justify-center gap-2 shadow-lg shadow-primary/20"
+                  >
+                    {saving ? (
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                    ) : (
+                      <>
+                        <Send className="w-5 h-5" />
+                        설문 완료 및 게임 종료
+                      </>
+                    )}
+                  </button>
+                </div>
+              </form>
+
+              <button
+                type="button"
+                onClick={() => router.push(`/play/${token}`)}
+                className="text-sm text-slate-500 hover:text-white transition-colors py-4 text-center"
               >
-                <option value="">선택해주세요</option>
-                {genderOptions.map((option) => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <StarRating
-              label="만족도"
-              value={form.satisfactionScore}
-              onChange={(nextValue) => updateField("satisfactionScore", nextValue)}
-            />
-
-            <StarRating
-              label="난이도"
-              value={form.difficultyScore}
-              onChange={(nextValue) => updateField("difficultyScore", nextValue)}
-            />
-
-            <div className="flex flex-col gap-2">
-              <label className="text-sm font-semibold text-slate-300">후기</label>
-              <textarea
-                value={form.comment}
-                onChange={(event) => updateField("comment", event.target.value)}
-                className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white h-28 resize-none"
-                placeholder="느낀 점이나 개선 의견을 남겨주세요"
-              />
-            </div>
-
-            <button
-              type="submit"
-              disabled={!isValidSurvey || saving}
-              className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-4 px-6 rounded-xl transition-all disabled:opacity-50 flex items-center justify-center gap-2"
-            >
-              {saving ? (
-                <Loader2 className="w-5 h-5 animate-spin" />
-              ) : (
-                <>
-                  <Send className="w-4 h-4" />
-                  설문 제출
-                </>
-              )}
-            </button>
-
-            {submitted ? (
-              <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-3 text-sm text-emerald-300 flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4" />
-                설문이 저장되었습니다.
-              </div>
-            ) : null}
-          </form>
-
-          <div className="glass-panel p-6 flex flex-col gap-4">
-            <div>
-              <h2 className="text-lg font-bold text-white">인증샷 업로드</h2>
-              <p className="text-sm text-slate-400 mt-1">게임 완료 후 인증 사진을 업로드할 수 있습니다.</p>
-            </div>
-
-            {photoUrl ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={photoUrl} alt="Completion photo" className="w-full rounded-xl border border-white/10 object-cover max-h-72" />
-            ) : (
-              <div className="rounded-xl border border-dashed border-slate-700 min-h-40 flex items-center justify-center text-slate-500 text-sm">
-                아직 업로드된 인증샷이 없습니다.
-              </div>
-            )}
-
-            <label className="w-full bg-white text-black hover:bg-slate-200 font-bold py-4 px-6 rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer">
-              {uploading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Camera className="w-5 h-5" />}
-              {uploading ? "업로드 중..." : photoUploaded ? "인증샷 다시 업로드" : "인증샷 업로드"}
-              <input type="file" accept="image/*" onChange={handlePhotoUpload} className="hidden" disabled={uploading} />
-            </label>
-
-            {photoUploaded ? (
-              <div className="text-sm text-emerald-300 flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4" />
-                인증샷이 저장되었습니다.
-              </div>
-            ) : null}
-          </div>
-
-          <button
-            type="button"
-            onClick={() => router.push(`/play/${token}`)}
-            className="text-sm text-slate-400 hover:text-white transition-colors py-4"
-          >
-            처음 화면으로 돌아가기
-          </button>
+                처음 화면으로 돌아가기
+              </button>
+            </>
+          )}
         </div>
       ) : null}
     </div>

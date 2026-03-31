@@ -1,13 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useRouter, useParams } from "next/navigation";
 import { Loader2, Play } from "lucide-react";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function StartPage() {
   const { token } = useParams();
   const router = useRouter();
-  
+
   const [loading, setLoading] = useState(true);
   const [starting, setStarting] = useState(false);
   const [game, setGame] = useState<{ title: string; description: string } | null>(null);
@@ -58,13 +58,13 @@ export default function StartPage() {
         <div className="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center mb-6">
           <Play className="w-10 h-10 text-primary ml-1" />
         </div>
-        
+
         <h1 className="text-3xl font-bold text-white mb-2">{game?.title}</h1>
         <p className="text-slate-300 text-sm mb-8 leading-relaxed">
-          환영합니다, <span className="text-primary font-bold">{player?.nickname}</span> 요원님.<br/>
+          환영합니다, <span className="text-primary font-bold">{player?.nickname}</span>님.<br />
           {game?.description}
         </p>
-        
+
         <div className="w-full space-y-4 text-left bg-black/20 p-4 rounded-xl mb-8">
           <h3 className="text-sm font-semibold text-white">주의사항</h3>
           <ul className="text-xs text-slate-400 space-y-2 list-disc pl-4">
@@ -73,8 +73,8 @@ export default function StartPage() {
             <li>브라우저를 닫아도 게임은 이어서 진행할 수 있습니다.</li>
           </ul>
         </div>
-        
-        <button 
+
+        <button
           onClick={handleStart}
           disabled={starting}
           className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-4 px-6 rounded-xl transition-all shadow-lg hover:shadow-primary/25 disabled:opacity-50 flex items-center justify-center gap-2"
