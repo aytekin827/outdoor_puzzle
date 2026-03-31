@@ -8,6 +8,7 @@ type PlaySessionRow = {
   nickname: string;
   gameTitle: string;
   status: string;
+  startedAt: number;
   totalDurationLabel: string;
   hintCount: number;
   wrongSubmissionCount: number;
@@ -34,10 +35,9 @@ export function PlaySessionsClientTable({ data }: { data: PlaySessionRow[] }) {
             { label: "준비", value: "ready" },
             { label: "진행 중", value: "playing" },
             { label: "완료", value: "completed" },
-            { label: "이탈", value: "abandoned" },
           ],
         },
-        ...(uniqueGames.length > 0 ? [{ key: "gameId", label: "게임", options: uniqueGames }] : []),
+        ...(uniqueGames.length > 0 ? [{ key: "gameId" as keyof PlaySessionRow, label: "게임", options: uniqueGames }] : []),
       ]}
       columns={[
         { key: "nickname", label: "플레이어" },
@@ -54,7 +54,7 @@ export function PlaySessionsClientTable({ data }: { data: PlaySessionRow[] }) {
                   : value === "abandoned"
                     ? "text-rose-400 bg-rose-500/10"
                     : "text-slate-300 bg-slate-700/40";
-            return <span className={`px-2 py-1 rounded text-xs font-bold uppercase ${tone}`}>{value}</span>;
+            return <span className={`px-2 py-1 rounded text-xs font-bold uppercase ${tone}`}>{value as string}</span>;
           },
         },
         {

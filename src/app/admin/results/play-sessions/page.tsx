@@ -49,7 +49,6 @@ export default async function PlaySessionsPage() {
 
   const completedCount = tableData.filter((item) => item.status === "completed").length;
   const activeCount = tableData.filter((item) => item.status === "playing").length;
-  const abandonedCount = tableData.filter((item) => item.status === "abandoned").length;
 
   return (
     <div className="space-y-8">
@@ -70,9 +69,9 @@ export default async function PlaySessionsPage() {
           <p className="text-3xl font-bold text-white mt-2">{completedCount}</p>
         </div>
         <div className="rounded-2xl border border-slate-800 bg-slate-900 p-5">
-          <p className="text-slate-500 text-sm">진행/이탈</p>
+          <p className="text-slate-500 text-sm">진행 중</p>
           <p className="text-3xl font-bold text-white mt-2">
-            {activeCount} / <span>{abandonedCount}</span>
+            {activeCount}
           </p>
         </div>
       </div>
