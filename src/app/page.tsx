@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, Keyboard } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -30,16 +30,12 @@ export default function Home() {
         </h1>
         <form onSubmit={handleSubmit} className="w-full flex flex-col gap-4">
           <div className="text-left">
-            <label htmlFor="token" className="text-sm font-semibold text-slate-300 flex items-center gap-2 mb-2">
-              <Keyboard className="w-4 h-4 text-primary" />
-              게임 토큰 입력
-            </label>
             <input
               id="token"
               type="text"
               value={token}
               onChange={(event) => setToken(event.target.value)}
-              placeholder="예: camp-2026-a01"
+              placeholder="코드 입력"
               className="w-full px-4 py-3 rounded-xl bg-slate-900/50 border border-slate-700 text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
               autoCapitalize="off"
               autoCorrect="off"
