@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronRight, Volume2 } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -57,9 +57,6 @@ export function ClosingInstructionClient({ token, mission }: ClosingInstructionC
             <div className="h-0.5 w-8 bg-primary rounded-full" />
             <span className="text-primary font-black uppercase tracking-widest text-[10px]">Mission Clear</span>
           </div>
-          <h1 className="text-4xl font-black italic tracking-tighter sm:text-5xl leading-tight">
-            새로운 지령
-          </h1>
           <p className="text-slate-500 font-bold text-sm">정답을 맞히셨습니다. 다음 목적지를 확인하세요.</p>
         </header>
 
@@ -113,9 +110,6 @@ export function ClosingInstructionClient({ token, mission }: ClosingInstructionC
           {mission.closingInstruction && (
             <div className="p-8 sm:p-10 bg-gradient-to-br from-slate-900 to-slate-950 border-t border-slate-800/50">
               <div className="flex items-start gap-4">
-                <div className="bg-primary/20 p-2.5 rounded-xl flex-shrink-0">
-                  <Volume2 className="w-5 h-5 text-primary" />
-                </div>
                 <div className="flex-1 space-y-4">
                   <p className="text-white text-lg sm:text-xl font-bold leading-relaxed whitespace-pre-wrap">
                     {mission.closingInstruction}
@@ -132,7 +126,7 @@ export function ClosingInstructionClient({ token, mission }: ClosingInstructionC
             href={`/play/${token}/mission`}
             className="group w-full flex items-center justify-between bg-emerald-500 hover:bg-emerald-400 text-black px-10 py-6 rounded-2xl font-black transition-all shadow-xl shadow-emerald-500/20 hover:-translate-y-1 active:scale-95"
           >
-            <span className="text-xl italic tracking-tighter uppercase">지령 완수! 다음 미션 진행</span>
+            <span className="text-xl italic tracking-tighter uppercase">다음 미션 진행</span>
             <div className="bg-black/10 group-hover:bg-black/20 p-2 rounded-xl transition-colors">
               <ChevronRight className="w-6 h-6 stroke-[3px]" />
             </div>

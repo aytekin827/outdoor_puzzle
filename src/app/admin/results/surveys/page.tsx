@@ -1,6 +1,7 @@
 import { db } from "@/db";
 import { games, players, playSessions, postGameSurveys } from "@/db/schema";
 import { SurveysClientTable } from "./SurveysClientTable";
+import { SurveysAnalytics } from "./SurveysAnalytics";
 
 export const dynamic = "force-dynamic";
 
@@ -37,38 +38,30 @@ export default async function SurveysPage() {
     };
   });
 
-  const averageSatisfaction =
-    tableData.length > 0
-      ? (tableData.reduce((total, row) => total + row.satisfactionScore, 0) / tableData.length).toFixed(1)
-      : "-";
-  const averageDifficulty =
-    tableData.length > 0
-      ? (tableData.reduce((total, row) => total + row.difficultyScore, 0) / tableData.length).toFixed(1)
-      : "-";
-
   return (
-    <div className="space-y-8">
+    <div className="space-y-10">
       <div>
-        <h1 className="text-3xl font-bold text-white mb-2">설문 결과</h1>
-        <p className="text-slate-400 text-sm">게임 종료 후 수집된 연령대, 그룹 유형, 만족도, 난이도, 후기 데이터를 확인합니다.</p>
+        <div className="flex items-center gap-2 mb-2">
+           <div className="h-0.5 w-8 bg-primary rounded-full" />
+           <span className="text-primary font-black uppercase tracking-widest text-[10px]">Data Intelligence</span>
+        </div>
+        <h1 className="text-4xl font-black italic text-white tracking-tighter uppercase sm:text-5xl">
+          설문 데이터 분석
+        </h1>
+        <p className="text-slate-400 font-bold mt-2 text-sm max-w-xl leading-relaxed">
+          플레이어들이 남긴 만족도와 난이도를 시각화하여 게임의 밸런스와 재미를 종합적으로 분석합니다.
+        </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="rounded-2xl border border-slate-800 bg-slate-900 p-5">
-          <p className="text-slate-500 text-sm">총 설문 수</p>
-          <p className="text-3xl font-bold text-white mt-2">{tableData.length}</p>
-        </div>
-        <div className="rounded-2xl border border-slate-800 bg-slate-900 p-5">
-          <p className="text-slate-500 text-sm">평균 만족도</p>
-          <p className="text-3xl font-bold text-white mt-2">{averageSatisfaction}</p>
-        </div>
-        <div className="rounded-2xl border border-slate-800 bg-slate-900 p-5">
-          <p className="text-slate-500 text-sm">평균 난이도</p>
-          <p className="text-3xl font-bold text-white mt-2">{averageDifficulty}</p>
-        </div>
-      </div>
+      <SurveysAnalytics data={tableData} />
 
-      <SurveysClientTable data={tableData} />
+      <div className="pt-8 border-t border-slate-800">
+        <div className="flex flex-col mb-6">
+           <h2 className="text-xl font-bold text-white tracking-tight">전체 설문 데이터</h2>
+           <p className="text-xs text-slate-500 font-bold uppercase mt-1">Full Raw Dataset</p>
+        </div>
+        <SurveysClientTable data={tableData} />
+      </div>
     </div>
   );
 }
