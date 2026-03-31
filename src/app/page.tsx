@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, Keyboard, QrCode } from "lucide-react";
+import { ArrowRight, Keyboard } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -22,23 +22,12 @@ export default function Home() {
   return (
     <div className="flex-1 flex flex-col items-center justify-center p-6 text-center animate-in fade-in duration-1000">
       <div className="glass-panel p-10 w-full max-w-sm flex flex-col items-center border border-primary/20 shadow-[0_0_50px_rgba(59,130,246,0.15)]">
-        <div className="w-20 h-20 bg-primary/10 rounded-3xl flex items-center justify-center mb-8 rotate-12">
-          <QrCode className="w-10 h-10 text-primary -rotate-12" />
-        </div>
-
         <h2 className="text-primary font-bold tracking-[0.2em] text-xs mb-3 uppercase">Outdoor Escape</h2>
         <h1 className="text-4xl font-black text-white leading-tight mb-4 italic tracking-tighter">
           야외
           <br />
           방탈출
         </h1>
-
-        <p className="text-sm text-slate-400 leading-relaxed mb-8">
-          QR 스캔이 어렵다면 토큰을 직접 입력해서
-          <br />
-          바로 게임을 시작할 수 있습니다.
-        </p>
-
         <form onSubmit={handleSubmit} className="w-full flex flex-col gap-4">
           <div className="text-left">
             <label htmlFor="token" className="text-sm font-semibold text-slate-300 flex items-center gap-2 mb-2">
@@ -72,7 +61,7 @@ export default function Home() {
       </div>
 
       <div className="mt-12 text-slate-600 text-[10px] tracking-widest uppercase font-bold">
-        © 2026 wanjoon. All rights reserved.
+        © 2026 Minjae-dev. All rights reserved.
       </div>
     </div>
   );

@@ -165,19 +165,19 @@ export default function CompletePage() {
 
   const hasEpilogue = Boolean(
     result?.game?.epilogueType &&
-      ((result.game.epilogueType === "text" && result.game.epilogueContent) ||
-        (result.game.epilogueType === "slide" && epilogueSlides.length > 0)),
+    ((result.game.epilogueType === "text" && result.game.epilogueContent) ||
+      (result.game.epilogueType === "slide" && epilogueSlides.length > 0)),
   );
 
   const isValidSurvey = useMemo(
     () =>
       Boolean(
         form.ageRange &&
-          form.groupType &&
-          form.gender &&
-          form.satisfactionScore >= 1 &&
-          form.difficultyScore >= 1 &&
-          (form.groupType !== "other" || form.groupTypeOther.trim()),
+        form.groupType &&
+        form.gender &&
+        form.satisfactionScore >= 1 &&
+        form.difficultyScore >= 1 &&
+        (form.groupType !== "other" || form.groupTypeOther.trim()),
       ),
     [form],
   );
@@ -388,10 +388,10 @@ export default function CompletePage() {
                 제공해주신 의견은 더 나은 게임 환경을 만드는 데<br />
                 소중한 자료로 활용하겠습니다.
               </p>
-              
+
               <button
                 type="button"
-                onClick={() => router.push(`/play/${token}`)}
+                onClick={() => router.push(`/`)}
                 className="w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-4 px-6 rounded-xl transition-all border border-slate-700"
               >
                 처음 화면으로 돌아가기
@@ -536,7 +536,7 @@ export default function CompletePage() {
 
               <button
                 type="button"
-                onClick={() => router.push(`/play/${token}`)}
+                onClick={() => router.push(`/`)}
                 className="text-sm text-slate-500 hover:text-white transition-colors py-4 text-center"
               >
                 처음 화면으로 돌아가기
