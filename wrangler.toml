@@ -13,6 +13,7 @@ binding = "ASSETS"
 binding = "DB"
 database_name = "outdoor_puzzle"
 database_id = "99bc2714-eac9-44cc-92d0-ae12cdb69ae9"
+migrations_dir = "drizzle"
 
 # R2 bucket for uploading static files (prologue videos, slides, etc)
 [[r2_buckets]]
