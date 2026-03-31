@@ -50,7 +50,7 @@
 }
 
 .mobile-app-container {
-  @apply mx-auto w-full max-w-md min-h-[100dvh] bg-slate-950 shadow-2xl relative overflow-x-hidden flex flex-col;
+  @apply mx-auto w-full max-w-md md:max-w-2xl lg:max-w-3xl min-h-[100dvh] bg-slate-950 shadow-2xl relative overflow-x-hidden flex flex-col;
 }
 
 /* Stunning gradient background for dramatic effect */

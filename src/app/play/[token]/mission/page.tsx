@@ -222,7 +222,7 @@ export default function MissionPage() {
         </div>
       </div>
 
-      <div className="w-full max-w-sm mx-auto flex flex-col gap-6">
+      <div className="w-full max-w-lg md:max-w-xl mx-auto flex flex-col gap-6">
         <div className="glass-panel p-6 border-l-4 border-l-blue-500 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-24 h-24 bg-blue-500/10 rounded-full -mr-6 -mt-6 blur-xl" />
           <h2 className="flex items-center gap-2 text-blue-400 font-bold mb-2">
@@ -246,7 +246,7 @@ export default function MissionPage() {
 
         <div className="glass-panel p-6 border border-white/10 flex flex-col shadow-2xl">
           <h2 className="text-sm font-bold text-primary mb-1 uppercase tracking-widest">{mission.title}</h2>
-          <p className="text-white text-xl font-bold leading-relaxed mb-6">{mission.riddleQuestion}</p>
+          <p className="text-white text-xl md:text-2xl font-bold leading-relaxed mb-6">{mission.riddleQuestion}</p>
 
           {mission.imageUrl && (
             <div className="mb-6 rounded-2xl overflow-hidden border border-white/10 bg-black/20">
@@ -254,7 +254,7 @@ export default function MissionPage() {
               <img
                 src={mission.imageUrl}
                 alt={mission.imageAlt || mission.title || "Mission image"}
-                className="w-full max-h-72 object-cover"
+                className="w-full max-h-72 md:max-h-[500px] object-cover"
               />
               {mission.imageCaption && (
                 <div className="px-4 py-3 text-sm text-slate-300 border-t border-white/10 flex items-start gap-2">

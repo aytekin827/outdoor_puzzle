@@ -282,7 +282,7 @@ export default function CompletePage() {
       <div className="absolute inset-0 bg-yellow-500/5 mix-blend-overlay pointer-events-none" />
 
       {stage === "summary" ? (
-        <div className="glass-panel p-8 flex flex-col items-center w-full max-w-sm mx-auto relative overflow-hidden z-10 border border-yellow-500/20 shadow-[0_0_40px_rgba(234,179,8,0.1)]">
+        <div className="glass-panel p-8 flex flex-col items-center w-full max-w-md md:max-w-xl mx-auto relative overflow-hidden z-10 border border-yellow-500/20 shadow-[0_0_40px_rgba(234,179,8,0.1)]">
           <div className="w-24 h-24 bg-yellow-500/20 rounded-full flex items-center justify-center mb-6 shadow-inner ring-4 ring-yellow-500/30">
             <Award className="w-12 h-12 text-yellow-500" />
           </div>
@@ -341,7 +341,7 @@ export default function CompletePage() {
         <>
           {result?.game?.epilogueType === "slide" ? (
             <div
-              className="w-full max-w-sm mx-auto relative overflow-hidden rounded-3xl border border-white/10 shadow-2xl"
+              className="w-full max-w-md md:max-w-xl lg:max-w-2xl mx-auto relative overflow-hidden rounded-3xl border border-white/10 shadow-2xl"
               onClick={handleNextFromEpilogue}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -359,7 +359,7 @@ export default function CompletePage() {
               </div>
             </div>
           ) : (
-            <div className="glass-panel p-8 w-full max-w-sm mx-auto">
+            <div className="glass-panel p-8 w-full max-w-md md:max-w-xl mx-auto">
               <h1 className="text-3xl font-extrabold text-white mb-4">Epilogue</h1>
               <p className="text-slate-200 whitespace-pre-wrap leading-relaxed">{result?.game?.epilogueContent}</p>
               <button
@@ -376,7 +376,7 @@ export default function CompletePage() {
       ) : null}
 
       {stage === "survey" ? (
-        <div className="w-full max-w-sm mx-auto flex flex-col gap-6 py-4">
+        <div className="w-full max-w-md md:max-w-xl mx-auto flex flex-col gap-6 py-4">
           <div className="glass-panel p-6">
             <h1 className="text-2xl font-bold text-white mb-2">게임 종료 설문</h1>
             <p className="text-sm text-slate-400">운영 개선을 위해 간단한 만족도 조사를 남겨주세요.</p>
