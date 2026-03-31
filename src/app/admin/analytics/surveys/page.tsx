@@ -63,7 +63,7 @@ export default async function SurveysAnalyticsPage() {
     <div className="space-y-8">
       <div>
         <h1 className="text-3xl font-bold text-white mb-2">설문 분석</h1>
-        <p className="text-slate-400 text-sm">연령대, 그룹 유형, 성별 기준으로 만족도와 난이도 응답 차이를 비교합니다.</p>
+        <p className="text-slate-400 text-sm">연령대, 그룹 유형, 성별 기준으로 만족도와 난이도 응답 차이를 비교합니다</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
