@@ -1,6 +1,18 @@
 import { db } from "@/db";
-import { games, missions } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { 
+  completionPhotos, 
+  eventLogs, 
+  games, 
+  locationLogs, 
+  missionSessions, 
+  missions, 
+  playSessions, 
+  players, 
+  postGameSurveys, 
+  qrTokens, 
+  submissions 
+} from "@/db/schema";
+import { eq, inArray } from "drizzle-orm";
 import { Save, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -41,15 +53,43 @@ export default async function GameDetailPage({ params }: { params: Promise<{ gam
       epilogueContent,
       epilogueSlidesJson,
       isActive,
-    }).where(eq(games.id, game!.id)).run();
+    }).where(eq(games.id, game_id)).run();
 
     redirect("/admin/games");
   }
 
   async function handleDelete() {
     "use server";
-    // Usually you cascade delete missions etc, but this is a simplified MVP
-    await db.delete(games).where(eq(games.id, game!.id)).run();
+    
+    // 1. Get dependent IDs
+    const playSessionIds = (await db.select({ id: playSessions.id }).from(playSessions).where(eq(playSessions.gameId, game_id)).all()).map(s => s.id);
+    const missionIds = (await db.select({ id: missions.id }).from(missions).where(eq(missions.gameId, game_id)).all()).map(m => m.id);
+
+    // 2. Delete logs and analytics tied to sessions
+    if (playSessionIds.length > 0) {
+      await db.delete(eventLogs).where(inArray(eventLogs.playSessionId, playSessionIds)).run();
+      await db.delete(locationLogs).where(inArray(locationLogs.playSessionId, playSessionIds)).run();
+      await db.delete(completionPhotos).where(inArray(completionPhotos.playSessionId, playSessionIds)).run();
+      await db.delete(postGameSurveys).where(inArray(postGameSurveys.playSessionId, playSessionIds)).run();
+      await db.delete(submissions).where(inArray(submissions.playSessionId, playSessionIds)).run();
+      await db.delete(missionSessions).where(inArray(missionSessions.playSessionId, playSessionIds)).run();
+    }
+
+    // 3. Delete mission sessions and logs tied to missions (backup if any exist without playSessionId matches)
+    if (missionIds.length > 0) {
+      await db.delete(missionSessions).where(inArray(missionSessions.missionId, missionIds)).run();
+      await db.delete(submissions).where(inArray(submissions.missionId, missionIds)).run();
+    }
+
+    // 4. Delete sessions, players, missions, and tokens tied to game
+    await db.delete(playSessions).where(eq(playSessions.gameId, game_id)).run();
+    await db.delete(players).where(eq(players.gameId, game_id)).run();
+    await db.delete(missions).where(eq(missions.gameId, game_id)).run();
+    await db.delete(qrTokens).where(eq(qrTokens.gameId, game_id)).run();
+
+    // 5. Finally, delete the game itself
+    await db.delete(games).where(eq(games.id, game_id)).run();
+    
     redirect("/admin/games");
   }
 

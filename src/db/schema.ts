@@ -17,7 +17,7 @@ export const games = sqliteTable("games", {
 export const qrTokens = sqliteTable("qr_tokens", {
   id: text("id").primaryKey(),
   token: text("token").notNull().unique(),
-  gameId: text("game_id").notNull().references(() => games.id),
+  gameId: text("game_id").notNull().references(() => games.id, { onDelete: 'cascade' }),
   isUsed: integer("is_used", { mode: 'boolean' }).default(false),
   usedAt: integer("used_at"),
   createdAt: integer("created_at").notNull(),
@@ -25,8 +25,8 @@ export const qrTokens = sqliteTable("qr_tokens", {
 
 export const players = sqliteTable("players", {
   id: text("id").primaryKey(),
-  gameId: text("game_id").notNull().references(() => games.id),
-  qrTokenId: text("qr_token_id").notNull().references(() => qrTokens.id),
+  gameId: text("game_id").notNull().references(() => games.id, { onDelete: 'cascade' }),
+  qrTokenId: text("qr_token_id").notNull().references(() => qrTokens.id, { onDelete: 'cascade' }),
   nickname: text("nickname").notNull(),
   startedAt: integer("started_at"),
   completedAt: integer("completed_at"),
@@ -35,7 +35,7 @@ export const players = sqliteTable("players", {
 
 export const missions = sqliteTable("missions", {
   id: text("id").primaryKey(),
-  gameId: text("game_id").notNull().references(() => games.id),
+  gameId: text("game_id").notNull().references(() => games.id, { onDelete: 'cascade' }),
   orderIndex: integer("order_index").notNull(),
   title: text("title").notNull(),
   checkpointInstruction: text("checkpoint_instruction").notNull(),
@@ -51,14 +51,14 @@ export const missions = sqliteTable("missions", {
 
 export const playSessions = sqliteTable("play_sessions", {
   id: text("id").primaryKey(),
-  playerId: text("player_id").notNull().references(() => players.id),
-  gameId: text("game_id").notNull().references(() => games.id),
-  qrTokenId: text("qr_token_id").notNull().references(() => qrTokens.id),
+  playerId: text("player_id").notNull().references(() => players.id, { onDelete: 'cascade' }),
+  gameId: text("game_id").notNull().references(() => games.id, { onDelete: 'cascade' }),
+  qrTokenId: text("qr_token_id").notNull().references(() => qrTokens.id, { onDelete: 'cascade' }),
   status: text("status").notNull().default("ready"), // 'ready' | 'playing' | 'completed' | 'abandoned'
   startedAt: integer("started_at"),
   endedAt: integer("ended_at"),
   totalDurationMs: integer("total_duration_ms"),
-  lastMissionId: text("last_mission_id").references(() => missions.id),
+  lastMissionId: text("last_mission_id").references(() => missions.id, { onDelete: 'set null' }),
   hintCount: integer("hint_count").notNull().default(0),
   submissionCount: integer("submission_count").notNull().default(0),
   wrongSubmissionCount: integer("wrong_submission_count").notNull().default(0),
@@ -70,8 +70,8 @@ export const playSessions = sqliteTable("play_sessions", {
 
 export const missionSessions = sqliteTable("mission_sessions", {
   id: text("id").primaryKey(),
-  playSessionId: text("play_session_id").notNull().references(() => playSessions.id),
-  missionId: text("mission_id").notNull().references(() => missions.id),
+  playSessionId: text("play_session_id").notNull().references(() => playSessions.id, { onDelete: 'cascade' }),
+  missionId: text("mission_id").notNull().references(() => missions.id, { onDelete: 'cascade' }),
   orderIndex: integer("order_index").notNull(),
   startedAt: integer("started_at"),
   endedAt: integer("ended_at"),
@@ -86,9 +86,9 @@ export const missionSessions = sqliteTable("mission_sessions", {
 
 export const submissions = sqliteTable("submissions", {
   id: text("id").primaryKey(),
-  playerId: text("player_id").notNull().references(() => players.id),
-  playSessionId: text("play_session_id").references(() => playSessions.id),
-  missionId: text("mission_id").notNull().references(() => missions.id),
+  playerId: text("player_id").notNull().references(() => players.id, { onDelete: 'cascade' }),
+  playSessionId: text("play_session_id").references(() => playSessions.id, { onDelete: 'cascade' }),
+  missionId: text("mission_id").notNull().references(() => missions.id, { onDelete: 'cascade' }),
   submittedAnswer: text("submitted_answer").notNull(),
   isCorrect: integer("is_correct", { mode: 'boolean' }).notNull(),
   submittedAt: integer("submitted_at").notNull(),
@@ -96,7 +96,7 @@ export const submissions = sqliteTable("submissions", {
 
 export const postGameSurveys = sqliteTable("post_game_surveys", {
   id: text("id").primaryKey(),
-  playSessionId: text("play_session_id").notNull().unique().references(() => playSessions.id),
+  playSessionId: text("play_session_id").notNull().unique().references(() => playSessions.id, { onDelete: 'cascade' }),
   ageRange: text("age_range").notNull(),
   groupType: text("group_type").notNull(),
   groupTypeOther: text("group_type_other"),
@@ -109,7 +109,7 @@ export const postGameSurveys = sqliteTable("post_game_surveys", {
 
 export const completionPhotos = sqliteTable("completion_photos", {
   id: text("id").primaryKey(),
-  playSessionId: text("play_session_id").notNull().references(() => playSessions.id),
+  playSessionId: text("play_session_id").notNull().references(() => playSessions.id, { onDelete: 'cascade' }),
   assetKey: text("asset_key").notNull(),
   assetUrl: text("asset_url").notNull(),
   mimeType: text("mime_type"),
@@ -120,9 +120,9 @@ export const completionPhotos = sqliteTable("completion_photos", {
 
 export const locationLogs = sqliteTable("location_logs", {
   id: text("id").primaryKey(),
-  playSessionId: text("play_session_id").notNull().references(() => playSessions.id),
-  missionId: text("mission_id").references(() => missions.id),
-  missionSessionId: text("mission_session_id").references(() => missionSessions.id),
+  playSessionId: text("play_session_id").notNull().references(() => playSessions.id, { onDelete: 'cascade' }),
+  missionId: text("mission_id").references(() => missions.id, { onDelete: 'cascade' }),
+  missionSessionId: text("mission_session_id").references(() => missionSessions.id, { onDelete: 'cascade' }),
   eventType: text("event_type").notNull(),
   latitude: real("latitude").notNull(),
   longitude: real("longitude").notNull(),
@@ -132,9 +132,9 @@ export const locationLogs = sqliteTable("location_logs", {
 
 export const eventLogs = sqliteTable("event_logs", {
   id: text("id").primaryKey(),
-  playSessionId: text("play_session_id").notNull().references(() => playSessions.id),
-  missionId: text("mission_id").references(() => missions.id),
-  missionSessionId: text("mission_session_id").references(() => missionSessions.id),
+  playSessionId: text("play_session_id").notNull().references(() => playSessions.id, { onDelete: 'cascade' }),
+  missionId: text("mission_id").references(() => missions.id, { onDelete: 'cascade' }),
+  missionSessionId: text("mission_session_id").references(() => missionSessions.id, { onDelete: 'cascade' }),
   eventType: text("event_type").notNull(),
   payloadJson: text("payload_json"),
   createdAt: integer("created_at").notNull(),

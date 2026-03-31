@@ -1,5 +1,13 @@
 import { db } from "@/db";
-import { games, missions } from "@/db/schema";
+import { 
+  eventLogs, 
+  games, 
+  locationLogs, 
+  missionSessions, 
+  missions, 
+  playSessions, 
+  submissions 
+} from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { Save, Trash2 } from "lucide-react";
 import { redirect } from "next/navigation";
@@ -33,6 +41,10 @@ export default async function MissionDetailPage({ params, searchParams }: { para
     const imageCaption = formData.get("imageCaption") as string;
     const returnUrl = formData.get("returnTo") as string;
 
+    if (!gameId || !title || !riddleQuestion || !answer) {
+      throw new Error("필수 입력 항목이 누락되었습니다.");
+    }
+
     await db.update(missions).set({
       gameId,
       title,
@@ -40,12 +52,12 @@ export default async function MissionDetailPage({ params, searchParams }: { para
       checkpointInstruction,
       riddleQuestion,
       answer,
-      hint,
-      imageAssetKey,
-      imageUrl,
-      imageAlt,
-      imageCaption,
-    }).where(eq(missions.id, mission!.id)).run();
+      hint: hint || null,
+      imageAssetKey: imageAssetKey || null,
+      imageUrl: imageUrl || null,
+      imageAlt: imageAlt || null,
+      imageCaption: imageCaption || null,
+    }).where(eq(missions.id, mission_id)).run();
 
     redirect(returnUrl || "/admin/missions");
   }
@@ -53,7 +65,17 @@ export default async function MissionDetailPage({ params, searchParams }: { para
   async function handleDelete(formData: FormData) {
     "use server";
     const returnUrl = formData.get("returnTo") as string;
-    await db.delete(missions).where(eq(missions.id, mission!.id)).run();
+    
+    // 1. Clear references and delete logs tied to this mission
+    await db.update(playSessions).set({ lastMissionId: null }).where(eq(playSessions.lastMissionId, mission_id)).run();
+    await db.delete(missionSessions).where(eq(missionSessions.missionId, mission_id)).run();
+    await db.delete(submissions).where(eq(submissions.missionId, mission_id)).run();
+    await db.delete(locationLogs).where(eq(locationLogs.missionId, mission_id)).run();
+    await db.delete(eventLogs).where(eq(eventLogs.missionId, mission_id)).run();
+
+    // 2. Finally delete the mission
+    await db.delete(missions).where(eq(missions.id, mission_id)).run();
+    
     redirect(returnUrl || `/admin/games/${mission!.gameId}/detail`);
   }
 
@@ -70,46 +92,46 @@ export default async function MissionDetailPage({ params, searchParams }: { para
 
       <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl">
         <div className="p-6 border-b border-slate-800 bg-slate-900/50">
-          <h1 className="text-2xl font-bold text-white">미션(Mission) 수정</h1>
+          <h1 className="text-2xl font-bold text-white">미션 수정</h1>
           <p className="text-slate-400 text-sm mt-1">ID: {mission.id}</p>
         </div>
 
         <form action={handleUpdate} className="p-6 grid grid-cols-1 sm:grid-cols-2 gap-6">
           <input type="hidden" name="returnTo" value={returnTo || ""} />
           <div className="flex flex-col gap-2 sm:col-span-2">
-            <label className="text-sm font-semibold text-slate-400">Attached Game</label>
+            <label className="text-sm font-semibold text-slate-400">연결된 게임</label>
             <select name="gameId" defaultValue={mission.gameId} required className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white focus:border-primary focus:outline-none transition-colors">
               {allGames.map(g => <option key={g.id} value={g.id}>{g.title}</option>)}
             </select>
           </div>
 
           <div className="flex flex-col gap-2">
-            <label className="text-sm font-semibold text-slate-400">Mission Title</label>
+            <label className="text-sm font-semibold text-slate-400">미션 제목</label>
             <input name="title" defaultValue={mission.title} required className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white focus:border-primary focus:outline-none transition-colors" />
           </div>
 
           <div className="flex flex-col gap-2">
-            <label className="text-sm font-semibold text-slate-400">Order Index</label>
+            <label className="text-sm font-semibold text-slate-400">정렬 순서</label>
             <input type="number" name="orderIndex" defaultValue={mission.orderIndex} required className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white focus:border-primary focus:outline-none transition-colors" />
           </div>
 
           <div className="flex flex-col gap-2 sm:col-span-2">
-            <label className="text-sm font-semibold text-slate-400">Checkpoint Location / Instruction</label>
+            <label className="text-sm font-semibold text-slate-400">체크포인트 위치 안내 (GPS 도달 시 표시)</label>
             <textarea name="checkpointInstruction" defaultValue={mission.checkpointInstruction} required className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white h-20 resize-none flex-1 focus:border-primary focus:outline-none transition-colors" />
           </div>
 
           <div className="flex flex-col gap-2 sm:col-span-2">
-            <label className="text-sm font-semibold text-slate-400">Riddle / Question</label>
+            <label className="text-sm font-semibold text-slate-400">문제 / 퀴즈 내용</label>
             <textarea name="riddleQuestion" defaultValue={mission.riddleQuestion} required className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white h-20 resize-none flex-1 focus:border-primary focus:outline-none transition-colors" />
           </div>
 
           <div className="flex flex-col gap-2">
-            <label className="text-sm font-semibold text-slate-400">Exact Answer</label>
+            <label className="text-sm font-semibold text-slate-400">정답 (정확히 일치해야 함)</label>
             <input name="answer" defaultValue={mission.answer} required className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white focus:border-primary focus:outline-none transition-colors" />
           </div>
 
           <div className="flex flex-col gap-2">
-            <label className="text-sm font-semibold text-slate-400">Hint (Optional)</label>
+            <label className="text-sm font-semibold text-slate-400">힌트 (선택 사항)</label>
             <input name="hint" defaultValue={mission.hint || ""} className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white focus:border-primary focus:outline-none transition-colors" />
           </div>
 
@@ -122,7 +144,7 @@ export default async function MissionDetailPage({ params, searchParams }: { para
 
           <div className="sm:col-span-2 pt-6 border-t border-slate-800">
             <button type="submit" className="w-full px-8 py-3 bg-white text-black hover:bg-slate-200 dark:bg-white dark:text-black dark:hover:bg-slate-200 font-bold rounded-lg transition-colors flex items-center justify-center gap-2 shadow-lg shadow-white/10">
-              <Save className="w-5 h-5" /> Update Mission
+              <Save className="w-5 h-5" /> 미션 정보 수정
             </button>
           </div>
         </form>
