@@ -40,12 +40,19 @@ export const missions = sqliteTable("missions", {
   title: text("title").notNull(),
   checkpointInstruction: text("checkpoint_instruction").notNull(),
   riddleQuestion: text("riddle_question").notNull(),
+  missionType: text("mission_type").default("text"), // 'text' | 'video' | 'slide'
+  missionVideoUrl: text("mission_video_url"),
+  missionSlidesJson: text("mission_slides_json"),
   answer: text("answer").notNull(),
   hint: text("hint"),
   imageAssetKey: text("image_asset_key"),
   imageUrl: text("image_url"),
   imageAlt: text("image_alt"),
   imageCaption: text("image_caption"),
+  closingInstruction: text("closing_instruction"),
+  closingInstructionType: text("closing_instruction_type").default("text"), // 'text' | 'video' | 'slide'
+  closingInstructionVideoUrl: text("closing_instruction_video_url"),
+  closingInstructionSlidesJson: text("closing_instruction_slides_json"),
   createdAt: integer("created_at").notNull(),
 });
 

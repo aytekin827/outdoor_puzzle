@@ -22,6 +22,13 @@ type MissionState = {
     imageUrl?: string | null;
     imageAlt?: string | null;
     imageCaption?: string | null;
+    missionType?: string | null;
+    missionVideoUrl?: string | null;
+    missionSlidesJson?: string | null;
+    closingInstruction?: string | null;
+    closingInstructionType?: string | null;
+    closingInstructionVideoUrl?: string | null;
+    closingInstructionSlidesJson?: string | null;
   } | null;
   totalMissions: number;
 };
@@ -34,6 +41,35 @@ type LocationSnapshot = {
 
 type PermissionState = "idle" | "granted" | "denied" | "unsupported" | "error";
 
+function MissionSlides({ slides }: { slides: string[] }) {
+  const [index, setIndex] = useState(0);
+  if (!slides || slides.length === 0) return null;
+
+  return (
+    <div className="relative group">
+      <div className="aspect-[4/3] w-full bg-black/40 flex items-center justify-center overflow-hidden">
+        <img
+          src={slides[index]}
+          alt={`Slide ${index + 1}`}
+          className="w-full h-full object-cover animate-in fade-in zoom-in-95 duration-500"
+        />
+      </div>
+      
+      {slides.length > 1 && (
+        <div className="absolute bottom-4 left-0 w-full flex justify-center gap-2">
+          {slides.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setIndex(i)}
+              className={`h-1.5 rounded-full transition-all ${i === index ? "bg-primary w-6" : "bg-white/30 w-1.5"}`}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function MissionPage() {
   const { token } = useParams();
   const router = useRouter();
@@ -45,6 +81,7 @@ export default function MissionPage() {
   const [message, setMessage] = useState({ type: "", text: "" });
   const [showHint, setShowHint] = useState(false);
   const [permissionState, setPermissionState] = useState<PermissionState>("idle");
+  const [showClosing, setShowClosing] = useState(false);
   const lastMissionLoggedRef = useRef<string | null>(null);
 
   const fetchCurrentLocation = async (): Promise<LocationSnapshot | null> => {
@@ -167,19 +204,26 @@ export default function MissionPage() {
       if (data.isFinished) {
         router.push(`/play/${token}/complete`);
       } else if (data.isCorrect) {
-        setMessage({ type: "success", text: "정답입니다. 다음 미션으로 이동합니다." });
         setAnswer("");
-        lastMissionLoggedRef.current = null;
-        setTimeout(() => {
-          setLoading(true);
-          fetch("/api/game/current-mission")
-            .then((response) => response.json())
-            .then((newData) => {
-              setMissionState(newData);
-              setMessage({ type: "", text: "" });
-              setLoading(false);
-            });
-        }, 1200);
+        const mission = missionState.currentMission;
+        
+        // Check if there's any multimedia or text content in closing instruction
+        const hasClosing = mission.closingInstruction || 
+                          (mission.closingInstructionType === "video" && mission.closingInstructionVideoUrl) ||
+                          (mission.closingInstructionType === "slide" && mission.closingInstructionSlidesJson && mission.closingInstructionSlidesJson !== "[]");
+
+        if (hasClosing) {
+          setMessage({ type: "success", text: "정답입니다! 잠시 후 새로운 지령 페이지로 이동합니다." });
+          setTimeout(() => {
+            router.push(`/play/${token}/mission/closing?missionId=${mission.id}`);
+          }, 1500);
+        } else {
+          setMessage({ type: "success", text: "정답입니다. 다음 미션으로 이동합니다." });
+          lastMissionLoggedRef.current = null;
+          setTimeout(() => {
+            handleNextMission();
+          }, 1200);
+        }
       } else {
         setMessage({ type: "error", text: "정답이 아닙니다. 다시 시도해보세요." });
       }
@@ -188,6 +232,23 @@ export default function MissionPage() {
       setMessage({ type: "error", text: "정답 제출에 실패했습니다." });
     } finally {
       setSubmitting(false);
+    }
+  };
+
+  const handleNextMission = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch("/api/game/current-mission");
+      const data = await res.json();
+      setMissionState(data);
+      setMessage({ type: "", text: "" });
+      setShowClosing(false);
+      setShowHint(false);
+    } catch (error) {
+      console.error(error);
+      setMessage({ type: "error", text: "다음 미션을 불러오지 못했습니다." });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -246,24 +307,46 @@ export default function MissionPage() {
 
         <div className="glass-panel p-6 border border-white/10 flex flex-col shadow-2xl">
           <h2 className="text-sm font-bold text-primary mb-1 uppercase tracking-widest">{mission.title}</h2>
-          <p className="text-white text-xl md:text-2xl font-bold leading-relaxed mb-6">{mission.riddleQuestion}</p>
+          <p className="text-white text-xl md:text-2xl font-bold leading-relaxed mb-6 whitespace-pre-wrap">{mission.riddleQuestion}</p>
 
-          {mission.imageUrl && (
-            <div className="mb-6 rounded-2xl overflow-hidden border border-white/10 bg-black/20">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={mission.imageUrl}
-                alt={mission.imageAlt || mission.title || "Mission image"}
-                className="w-full max-h-72 md:max-h-[500px] object-cover"
-              />
-              {mission.imageCaption && (
-                <div className="px-4 py-3 text-sm text-slate-300 border-t border-white/10 flex items-start gap-2">
-                  <ImageIcon className="w-4 h-4 mt-0.5 text-slate-500" />
-                  <span>{mission.imageCaption}</span>
-                </div>
-              )}
-            </div>
-          )}
+          {/* Multimedia Content */}
+          <div className="mb-6 rounded-2xl overflow-hidden border border-white/10 bg-black/20">
+            {mission.missionType === "video" && mission.missionVideoUrl && (
+              <div className="aspect-video w-full bg-black relative flex items-center justify-center">
+                {mission.missionVideoUrl.includes("youtube.com") || mission.missionVideoUrl.includes("youtu.be") ? (
+                  <iframe
+                    className="w-full h-full"
+                    src={`https://www.youtube-nocookie.com/embed/${mission.missionVideoUrl.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/)?.[1]}?autoplay=0&rel=0&modestbranding=1`}
+                    title="Mission Content Video"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                ) : (
+                  <video src={mission.missionVideoUrl} controls className="w-full h-full" playsInline />
+                )}
+              </div>
+            )}
+
+            {mission.missionType === "slide" && mission.missionSlidesJson && (
+              <MissionSlides slides={JSON.parse(mission.missionSlidesJson)} />
+            )}
+
+            {(mission.missionType === "text" || !mission.missionType) && mission.imageUrl && (
+              <>
+                <img
+                  src={mission.imageUrl}
+                  alt={mission.imageAlt || mission.title || "Mission image"}
+                  className="w-full max-h-72 md:max-h-[500px] object-cover"
+                />
+                {mission.imageCaption && (
+                  <div className="px-4 py-3 text-sm text-slate-300 border-t border-white/10 flex items-start gap-2">
+                    <ImageIcon className="w-4 h-4 mt-0.5 text-slate-500" />
+                    <span>{mission.imageCaption}</span>
+                  </div>
+                )}
+              </>
+            )}
+          </div>
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             <div className="relative">

@@ -1,17 +1,18 @@
 import { db } from "@/db";
-import { 
-  eventLogs, 
-  games, 
-  locationLogs, 
-  missionSessions, 
-  missions, 
-  playSessions, 
-  submissions 
+import {
+  eventLogs,
+  games,
+  locationLogs,
+  missionSessions,
+  missions,
+  playSessions,
+  submissions
 } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { Save, Trash2 } from "lucide-react";
 import { redirect } from "next/navigation";
-import { MissionImageEditor } from "../../MissionImageEditor";
+import { ClosingInstructionEditor } from "../../ClosingInstructionEditor";
+import { MissionContentEditor } from "../../MissionContentEditor";
 
 export const dynamic = 'force-dynamic';
 
@@ -33,12 +34,19 @@ export default async function MissionDetailPage({ params, searchParams }: { para
     const orderIndex = parseInt(formData.get("orderIndex") as string, 10);
     const checkpointInstruction = formData.get("checkpointInstruction") as string;
     const riddleQuestion = formData.get("riddleQuestion") as string;
+    const missionType = formData.get("missionType") as string;
+    const missionVideoUrl = formData.get("missionVideoUrl") as string;
+    const missionSlidesJson = formData.get("missionSlidesJson") as string;
     const answer = formData.get("answer") as string;
     const hint = formData.get("hint") as string;
     const imageAssetKey = formData.get("imageAssetKey") as string;
     const imageUrl = formData.get("imageUrl") as string;
     const imageAlt = formData.get("imageAlt") as string;
     const imageCaption = formData.get("imageCaption") as string;
+    const closingInstruction = formData.get("closingInstruction") as string;
+    const closingInstructionType = formData.get("closingInstructionType") as string;
+    const closingInstructionVideoUrl = formData.get("closingInstructionVideoUrl") as string;
+    const closingInstructionSlidesJson = formData.get("closingInstructionSlidesJson") as string;
     const returnUrl = formData.get("returnTo") as string;
 
     if (!gameId || !title || !riddleQuestion || !answer) {
@@ -51,12 +59,19 @@ export default async function MissionDetailPage({ params, searchParams }: { para
       orderIndex,
       checkpointInstruction,
       riddleQuestion,
+      missionType: missionType || "text",
+      missionVideoUrl: missionVideoUrl || null,
+      missionSlidesJson: missionSlidesJson || null,
       answer,
       hint: hint || null,
       imageAssetKey: imageAssetKey || null,
       imageUrl: imageUrl || null,
       imageAlt: imageAlt || null,
       imageCaption: imageCaption || null,
+      closingInstruction: closingInstruction || null,
+      closingInstructionType: closingInstructionType || "text",
+      closingInstructionVideoUrl: closingInstructionVideoUrl || null,
+      closingInstructionSlidesJson: closingInstructionSlidesJson || null,
     }).where(eq(missions.id, mission_id)).run();
 
     redirect(returnUrl || "/admin/missions");
@@ -65,7 +80,7 @@ export default async function MissionDetailPage({ params, searchParams }: { para
   async function handleDelete(formData: FormData) {
     "use server";
     const returnUrl = formData.get("returnTo") as string;
-    
+
     // 1. Clear references and delete logs tied to this mission
     await db.update(playSessions).set({ lastMissionId: null }).where(eq(playSessions.lastMissionId, mission_id)).run();
     await db.delete(missionSessions).where(eq(missionSessions.missionId, mission_id)).run();
@@ -75,7 +90,7 @@ export default async function MissionDetailPage({ params, searchParams }: { para
 
     // 2. Finally delete the mission
     await db.delete(missions).where(eq(missions.id, mission_id)).run();
-    
+
     redirect(returnUrl || `/admin/games/${mission!.gameId}/detail`);
   }
 
@@ -116,14 +131,16 @@ export default async function MissionDetailPage({ params, searchParams }: { para
           </div>
 
           <div className="flex flex-col gap-2 sm:col-span-2">
-            <label className="text-sm font-semibold text-slate-400">체크포인트 위치 안내 (GPS 도달 시 표시)</label>
+            <label className="text-sm font-semibold text-slate-400">체크포인트 위치 안내</label>
             <textarea name="checkpointInstruction" defaultValue={mission.checkpointInstruction} required className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white h-20 resize-none flex-1 focus:border-primary focus:outline-none transition-colors" />
           </div>
 
-          <div className="flex flex-col gap-2 sm:col-span-2">
-            <label className="text-sm font-semibold text-slate-400">문제 / 퀴즈 내용</label>
-            <textarea name="riddleQuestion" defaultValue={mission.riddleQuestion} required className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white h-20 resize-none flex-1 focus:border-primary focus:outline-none transition-colors" />
-          </div>
+          <MissionContentEditor
+            initialType={mission.missionType || "text"}
+            initialVideoUrl={mission.missionVideoUrl || ""}
+            initialSlidesJson={mission.missionSlidesJson || ""}
+            initialContent={mission.riddleQuestion || ""}
+          />
 
           <div className="flex flex-col gap-2">
             <label className="text-sm font-semibold text-slate-400">정답 (정확히 일치해야 함)</label>
@@ -135,11 +152,11 @@ export default async function MissionDetailPage({ params, searchParams }: { para
             <input name="hint" defaultValue={mission.hint || ""} className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white focus:border-primary focus:outline-none transition-colors" />
           </div>
 
-          <MissionImageEditor
-            initialImageUrl={mission.imageUrl || ""}
-            initialImageAssetKey={mission.imageAssetKey || ""}
-            initialImageAlt={mission.imageAlt || ""}
-            initialImageCaption={mission.imageCaption || ""}
+          <ClosingInstructionEditor
+            initialType={mission.closingInstructionType || "text"}
+            initialVideoUrl={mission.closingInstructionVideoUrl || ""}
+            initialSlidesJson={mission.closingInstructionSlidesJson || ""}
+            initialContent={mission.closingInstruction || ""}
           />
 
           <div className="sm:col-span-2 pt-6 border-t border-slate-800">
