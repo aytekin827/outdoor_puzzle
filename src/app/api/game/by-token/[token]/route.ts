@@ -32,7 +32,10 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ toke
     }
 
     return NextResponse.json({ 
-      qrToken: { isUsed: qrToken.isUsed }, 
+      qrToken: { 
+        isUsed: qrToken.isUsed,
+        usedAt: qrToken.usedAt,
+      }, 
       game,
       player 
     });

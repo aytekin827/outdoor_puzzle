@@ -39,8 +39,8 @@ export function getDb(context?: any) {
       const sqlite = new Database('sqlite.db');
       sqlite.pragma('foreign_keys = ON');
       return drizzle(sqlite, { schema });
-    } catch (e) {
-      console.warn("Using D1 Database without local better-sqlite3 fallback (Expected in Edge)");
+    } catch (e: any) {
+      console.warn("Using D1 Database without local better-sqlite3 fallback (Expected in Edge). Error:", e.message);
     }
   }
 }
