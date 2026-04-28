@@ -1,6 +1,7 @@
 "use client";
 
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, List } from "lucide-react";
+
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -122,15 +123,25 @@ export function ClosingInstructionClient({ token, mission }: ClosingInstructionC
 
         {/* Footer Actions */}
         <div className="mt-4 pb-12">
+        <div className="flex flex-col gap-4">
           <Link
-            href={`/play/${token}/missions`}
+            href={`/play/${token}/mission`}
             className="group w-full flex items-center justify-between bg-emerald-500 hover:bg-emerald-400 text-black px-10 py-6 rounded-2xl font-black transition-all shadow-xl shadow-emerald-500/20 hover:-translate-y-1 active:scale-95"
           >
-            <span className="text-xl italic tracking-tighter uppercase">미션 목록으로</span>
+            <span className="text-xl italic tracking-tighter uppercase">다음 미션으로 가기</span>
             <div className="bg-black/10 group-hover:bg-black/20 p-2 rounded-xl transition-colors">
               <ChevronRight className="w-6 h-6 stroke-[3px]" />
             </div>
           </Link>
+
+          <Link
+            href={`/play/${token}/missions`}
+            className="group w-full flex items-center justify-between bg-slate-800 hover:bg-slate-700 text-white px-10 py-5 rounded-2xl font-bold transition-all border border-white/10 hover:-translate-y-1 active:scale-95"
+          >
+            <span className="text-lg tracking-tight">미션 목록</span>
+            <List className="w-5 h-5 text-slate-400 group-hover:text-white transition-colors" />
+          </Link>
+        </div>
           <p className="text-center mt-6 text-xs text-slate-600 font-bold uppercase tracking-widest flex items-center justify-center gap-2">
             <span className="w-1.5 h-1.5 bg-slate-800 rounded-full" />
             Outdoor Mystery Puzzle Adventure Game
