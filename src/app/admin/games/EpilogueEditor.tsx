@@ -89,7 +89,7 @@ export function EpilogueEditor({
 
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-lg font-bold text-white">Epilogue</h2>
+          <h2 className="text-lg font-bold text-white">에필로그(Epilogue) 설정</h2>
           <p className="text-xs text-slate-400 mt-1">게임 종료 후 노출할 마무리 콘텐츠를 설정합니다.</p>
         </div>
 
@@ -97,9 +97,8 @@ export function EpilogueEditor({
           <button
             type="button"
             onClick={() => setEpilogueType("text")}
-            className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-bold transition-all ${
-              epilogueType === "text" ? "bg-slate-800 text-white shadow-sm" : "text-slate-400 hover:text-slate-300"
-            }`}
+            className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-bold transition-all ${epilogueType === "text" ? "bg-slate-800 text-white shadow-sm" : "text-slate-400 hover:text-slate-300"
+              }`}
           >
             <FileText className="w-4 h-4" />
             Text
@@ -107,9 +106,8 @@ export function EpilogueEditor({
           <button
             type="button"
             onClick={() => setEpilogueType("slide")}
-            className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-bold transition-all ${
-              epilogueType === "slide" ? "bg-slate-800 text-white shadow-sm" : "text-slate-400 hover:text-slate-300"
-            }`}
+            className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-bold transition-all ${epilogueType === "slide" ? "bg-slate-800 text-white shadow-sm" : "text-slate-400 hover:text-slate-300"
+              }`}
           >
             <ImageIcon className="w-4 h-4" />
             Slides
