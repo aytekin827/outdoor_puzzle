@@ -30,20 +30,35 @@ export default function ProloguePage() {
 
   const handleNext = () => {
     if (!game) return;
+    const finishPrologue = async () => {
+      try {
+        await fetch("/api/game/prologue-complete", { method: "POST" });
+        router.push(`/play/${token}/missions`);
+      } catch (err) {
+        console.error(err);
+        router.push(`/play/${token}/missions`);
+      }
+    };
+
     if (game.prologueType === "slide") {
       const slides = JSON.parse(game.prologueSlidesJson || "[]");
       if (slideIndex < slides.length - 1) {
         setSlideIndex(prev => prev + 1);
       } else {
-        router.push(`/play/${token}/mission`);
+        finishPrologue();
       }
     } else {
-      router.push(`/play/${token}/mission`);
+      finishPrologue();
     }
   };
 
-  const handleSkip = () => {
-    router.push(`/play/${token}/mission`);
+  const handleSkip = async () => {
+    try {
+      await fetch("/api/game/prologue-complete", { method: "POST" });
+      router.push(`/play/${token}/missions`);
+    } catch (err) {
+      router.push(`/play/${token}/missions`);
+    }
   };
 
   if (loading) {
@@ -103,7 +118,7 @@ export default function ProloguePage() {
               controls 
               autoPlay 
               className="w-full h-full object-cover animate-in fade-in duration-1000"
-              onEnded={() => router.push(`/play/${token}/mission`)}
+              onEnded={handleSkip}
             />
           )
         ) : game?.prologueType === "slide" && slides.length > 0 ? (

@@ -37,7 +37,7 @@ export default function StartPage() {
     setStarting(true);
     try {
       await fetch("/api/game/start", { method: "POST" });
-      router.push(`/play/${token}/prologue`);
+      router.push(`/play/${token}/missions`);
     } catch (err) {
       console.error(err);
       setStarting(false);

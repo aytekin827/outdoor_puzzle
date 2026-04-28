@@ -213,15 +213,14 @@ export default function MissionPage() {
                           (mission.closingInstructionType === "slide" && mission.closingInstructionSlidesJson && mission.closingInstructionSlidesJson !== "[]");
 
         if (hasClosing) {
-          setMessage({ type: "success", text: "정답입니다! 잠시 후 새로운 지령 페이지로 이동합니다." });
           setTimeout(() => {
             router.push(`/play/${token}/mission/closing?missionId=${mission.id}`);
           }, 1500);
         } else {
-          setMessage({ type: "success", text: "정답입니다. 다음 미션으로 이동합니다." });
+          setMessage({ type: "success", text: "정답입니다! 미션 목록으로 이동합니다." });
           lastMissionLoggedRef.current = null;
           setTimeout(() => {
-            handleNextMission();
+            router.push(`/play/${token}/missions`);
           }, 1200);
         }
       } else {

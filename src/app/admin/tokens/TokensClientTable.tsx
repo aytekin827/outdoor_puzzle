@@ -1,7 +1,9 @@
 "use client";
 
 import { DataTable } from "@/components/DataTable";
-import { CheckCircle, Clock, QrCode } from "lucide-react";
+import { CheckCircle, Clock, QrCode, ExternalLink } from "lucide-react";
+import Link from "next/link";
+
 
 export function TokensClientTable({ data }: { data: any[] }) {
   // Get unique games for filtering
@@ -75,6 +77,21 @@ export function TokensClientTable({ data }: { data: any[] }) {
             >
               <QrCode className="w-4 h-4" /> 복사
             </button>
+          )
+        },
+        {
+          key: "play_link" as any,
+          label: "플레이 링크",
+          render: (_val: any, row: any) => (
+            <Link
+              href={`/play/${row.token}`}
+              target="_blank"
+              onClick={(e) => e.stopPropagation()}
+              className="p-2 bg-slate-800 hover:bg-emerald-500 hover:text-white rounded-lg text-emerald-400 transition-all flex items-center gap-2 group"
+              title="플레이하기"
+            >
+              <ExternalLink className="w-4 h-4" /> 플레이
+            </Link>
           )
         }
       ]}

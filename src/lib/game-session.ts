@@ -218,3 +218,23 @@ export async function logLocationEvent(options: LogLocationOptions) {
     }).where(eq(playSessions.id, options.playSessionId)).run();
   }
 }
+
+export async function logEvent(playSessionId: string, eventType: string, payload?: any) {
+  const now = Date.now();
+  await db.insert(eventLogs).values({
+    id: crypto.randomUUID(),
+    playSessionId,
+    eventType,
+    payloadJson: payload ? JSON.stringify(payload) : null,
+    createdAt: now,
+  }).run();
+}
+
+export async function isPrologueCompleted(playSessionId: string) {
+  const result = await db
+    .select()
+    .from(eventLogs)
+    .where(and(eq(eventLogs.playSessionId, playSessionId), eq(eventLogs.eventType, "prologue_completed")))
+    .all();
+  return result.length > 0;
+}

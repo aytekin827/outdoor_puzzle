@@ -123,10 +123,10 @@ export function ClosingInstructionClient({ token, mission }: ClosingInstructionC
         {/* Footer Actions */}
         <div className="mt-4 pb-12">
           <Link
-            href={`/play/${token}/mission`}
+            href={`/play/${token}/missions`}
             className="group w-full flex items-center justify-between bg-emerald-500 hover:bg-emerald-400 text-black px-10 py-6 rounded-2xl font-black transition-all shadow-xl shadow-emerald-500/20 hover:-translate-y-1 active:scale-95"
           >
-            <span className="text-xl italic tracking-tighter uppercase">다음 미션 진행</span>
+            <span className="text-xl italic tracking-tighter uppercase">미션 목록으로</span>
             <div className="bg-black/10 group-hover:bg-black/20 p-2 rounded-xl transition-colors">
               <ChevronRight className="w-6 h-6 stroke-[3px]" />
             </div>
