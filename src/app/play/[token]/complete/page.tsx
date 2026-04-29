@@ -101,6 +101,7 @@ export default function CompletePage() {
   const [result, setResult] = useState<ResultPayload | null>(null);
   const [stage, setStage] = useState<Stage>("summary");
   const [slideIndex, setSlideIndex] = useState(0);
+  const [showEpilogueText, setShowEpilogueText] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [photoUrl, setPhotoUrl] = useState("");
   const [photoUploaded, setPhotoUploaded] = useState(false);

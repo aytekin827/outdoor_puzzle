@@ -31,7 +31,7 @@ export async function GET() {
         type: "prologue",
         title: "프롤로그",
         description: game?.description || "게임의 시작을 알리는 이야기입니다.",
-        imageUrl: game?.prologueType === 'slide' ? JSON.parse(game.prologueSlidesJson || '[]')[0] : null,
+        imageUrl: game?.prologueType === 'slide' ? JSON.parse(game.prologueSlidesJson || '[]')[0]?.imageUrl : null,
         isCompleted: prologueDone,
         isLocked: false,
       },
@@ -59,7 +59,7 @@ export async function GET() {
         type: "epilogue",
         title: "에필로그",
         description: "모든 미션을 완료했습니다! 최종 결말을 확인하세요.",
-        imageUrl: game?.epilogueType === 'slide' ? JSON.parse(game.epilogueSlidesJson || '[]')[0] : null,
+        imageUrl: game?.epilogueType === 'slide' ? JSON.parse(game.epilogueSlidesJson || '[]')[0]?.imageUrl : null,
         isCompleted: playSession.status === 'completed',
         isLocked: !gameMissions.every(m => completedMissionIds.has(m.id)),
       }
