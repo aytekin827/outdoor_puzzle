@@ -165,9 +165,9 @@ export default function CompletePage() {
 
   const isValidSurvey = useMemo(
     () => Boolean(
-      form.ageRange && 
-      form.groupType && 
-      form.gender && 
+      form.ageRange &&
+      form.groupType &&
+      form.gender &&
       form.satisfactionScore >= 1 &&
       form.difficultyScore >= 1 &&
       (form.groupType !== "other" || form.groupTypeOther.trim())
@@ -248,12 +248,14 @@ export default function CompletePage() {
                 <div className="absolute inset-0 z-50 flex items-center justify-center p-8 animate-in fade-in slide-in-from-bottom-4">
                   <div className="w-full max-w-lg bg-black/40 backdrop-blur-md rounded-3xl border border-white/10 p-8 shadow-2xl" onClick={(e) => e.stopPropagation()}>
                     <p className="text-white text-lg leading-relaxed text-center whitespace-pre-wrap">{currentEpilogueSlide.description}</p>
-                    <div className="mt-8 flex justify-center">
-                      <button onClick={handleNextFromEpilogue} className="bg-emerald-500 text-black px-6 py-3 rounded-xl font-black flex items-center gap-2">
-                        {slideIndex < epilogueSlides.length - 1 ? "다음 슬라이드" : "설문 참여하기"}
-                        <ArrowRight className="w-4 h-4" />
-                      </button>
-                    </div>
+                    {slideIndex < epilogueSlides.length - 1 && (
+                      <div className="mt-8 flex justify-center">
+                        <button onClick={handleNextFromEpilogue} className="bg-emerald-500 text-black px-6 py-3 rounded-xl font-black flex items-center gap-2">
+                          다음 슬라이드
+                          <ArrowRight className="w-4 h-4" />
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
               )}
@@ -324,15 +326,15 @@ export default function CompletePage() {
 
                 {/* 만족도 및 난이도 */}
                 <div className="grid grid-cols-1 gap-6">
-                  <StarRating 
-                    label="게임 만족도" 
-                    value={form.satisfactionScore} 
-                    onChange={(val) => updateField("satisfactionScore", val)} 
+                  <StarRating
+                    label="게임 만족도"
+                    value={form.satisfactionScore}
+                    onChange={(val) => updateField("satisfactionScore", val)}
                   />
-                  <StarRating 
-                    label="게임 난이도" 
-                    value={form.difficultyScore} 
-                    onChange={(val) => updateField("difficultyScore", val)} 
+                  <StarRating
+                    label="게임 난이도"
+                    value={form.difficultyScore}
+                    onChange={(val) => updateField("difficultyScore", val)}
                   />
                 </div>
 
