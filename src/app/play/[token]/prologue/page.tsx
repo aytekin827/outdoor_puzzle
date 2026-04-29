@@ -159,7 +159,7 @@ export default function ProloguePage() {
                       onClick={handleNext}
                       className="bg-emerald-500 hover:bg-emerald-400 text-black px-6 py-3 rounded-xl font-black text-sm flex items-center gap-2 transition-all active:scale-95"
                     >
-                      {slideIndex < slides.length - 1 ? "다음 슬라이드" : "이름 설정하기"}
+                      {slideIndex < slides.length - 1 ? "다음 슬라이드" : (player?.nickname ? "나가기" : "이름 설정하기")}
                       <ArrowRight className="w-4 h-4" />
                     </button>
                   </div>

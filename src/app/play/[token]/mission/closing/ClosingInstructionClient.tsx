@@ -34,29 +34,7 @@ export function ClosingInstructionClient({ token, mission }: ClosingInstructionC
     return [];
   })();
 
-  const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
-  const [showText, setShowText] = useState(false);
-
   const hasSlides = mission.closingInstructionType === "slide" && slides.length > 0;
-  const currentSlide = hasSlides ? slides[currentSlideIndex] : null;
-
-  const handleNext = () => {
-    if (!hasSlides) {
-      return;
-    }
-
-    if (!showText && currentSlide?.description) {
-      setShowText(true);
-      return;
-    }
-
-    if (currentSlideIndex < slides.length - 1) {
-      setCurrentSlideIndex(prev => prev + 1);
-      setShowText(false);
-    } else {
-      // All slides done, go to next mission list
-    }
-  };
 
   return (
     <div className="h-screen bg-black text-white flex flex-col relative overflow-hidden font-sans">
@@ -79,68 +57,63 @@ export function ClosingInstructionClient({ token, mission }: ClosingInstructionC
       </header>
 
       {/* Main Content Area */}
-      <main className="flex-1 relative overflow-hidden" onClick={handleNext}>
+      <main className="flex-1 overflow-y-auto p-6 space-y-12 hide-scrollbar">
         {hasSlides ? (
-          <div className="absolute inset-0 w-full h-full">
-            {/* Background Image */}
-            <img
-              key={currentSlide?.imageUrl}
-              src={currentSlide?.imageUrl}
-              alt="Mission location"
-              className="absolute inset-0 w-full h-full object-cover animate-in fade-in duration-700"
-            />
-
-            {/* Overlay Gradient */}
-            <div className={`absolute inset-0 bg-black/60 transition-opacity duration-500 ${showText ? "opacity-100" : "opacity-0"}`} />
-
-            {/* Text Overlay */}
-            {showText && currentSlide?.description && (
-              <div className="absolute inset-0 z-50 flex items-center justify-center p-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                <div 
-                  className="w-full max-w-lg max-h-[70vh] overflow-y-auto hide-scrollbar bg-black/40 backdrop-blur-md rounded-3xl border border-white/10 p-8 shadow-2xl"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <p className="text-white text-lg md:text-xl leading-relaxed whitespace-pre-wrap font-medium text-center">
-                    {currentSlide.description}
-                  </p>
-                  
-                  <div className="mt-8 flex justify-center">
-                    <button 
-                      onClick={handleNext}
-                      className="bg-emerald-500 hover:bg-emerald-400 text-black px-6 py-3 rounded-xl font-black text-sm flex items-center gap-2 transition-all active:scale-95"
-                    >
-                      {currentSlideIndex < slides.length - 1 ? "다음 슬라이드" : "미션 목록으로"}
-                      <ChevronRight className="w-4 h-4" />
-                    </button>
+          <div className="w-full max-w-lg mx-auto space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
+            {slides.map((slide, index) => (
+              <div key={index} className="space-y-6">
+                {slide.description && (
+                  <div className="glass-panel p-8">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="h-px flex-1 bg-emerald-500/30" />
+                      <span className="text-emerald-500 font-black text-[10px] tracking-widest uppercase">Part {index + 1}</span>
+                      <div className="h-px flex-1 bg-emerald-500/30" />
+                    </div>
+                    <p className="text-white text-lg md:text-xl leading-relaxed whitespace-pre-wrap font-medium text-center">
+                      {slide.description}
+                    </p>
                   </div>
-                </div>
+                )}
+                
+                {slide.imageUrl && (
+                  <div className="w-full rounded-[2.5rem] overflow-hidden shadow-2xl border border-white/10 bg-slate-900/50">
+                    <img 
+                      src={slide.imageUrl} 
+                      alt={`Instruction ${index + 1}`} 
+                      className="w-full h-auto object-contain"
+                    />
+                  </div>
+                )}
               </div>
-            )}
-
-            {/* Click Guide */}
-            {!showText && (
-              <div className="absolute bottom-12 left-0 right-0 text-center animate-bounce">
-                <span className="bg-black/60 text-white/90 text-[10px] px-4 py-2 rounded-full inline-flex items-center gap-2 backdrop-blur-md border border-white/10 font-bold uppercase tracking-wider">
-                  탭하여 다음 안내 확인
-                </span>
-              </div>
-            )}
+            ))}
           </div>
         ) : (
-          <div className="flex-1 flex flex-col items-center justify-center p-8 text-center space-y-6 overflow-y-auto">
-             {mission.imageUrl && (
-               <div className="w-full max-w-md rounded-2xl overflow-hidden shadow-2xl border border-white/10 animate-in fade-in zoom-in-95 duration-700 mb-4">
-                 <img src={mission.imageUrl} alt="Mission guidance" className="w-full h-auto object-contain bg-slate-900" />
-               </div>
-             )}
-             <div className="glass-panel p-8 max-w-md animate-in fade-in slide-in-from-bottom-4 duration-700">
-                <h2 className="text-2xl font-black text-white mb-4">정답입니다!</h2>
-                <p className="text-slate-300 leading-relaxed whitespace-pre-wrap">
-                  {mission.closingInstruction || "다음 목적지로 이동해 주세요."}
-                </p>
-             </div>
+          <div className="w-full max-w-lg mx-auto flex flex-col gap-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+            <div className="glass-panel p-8 text-center">
+              <h2 className="text-2xl font-black text-white mb-6 flex items-center justify-center gap-3">
+                <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                정답입니다!
+                <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              </h2>
+              <p className="text-slate-200 text-lg md:text-xl leading-relaxed whitespace-pre-wrap font-medium">
+                {mission.closingInstruction || "다음 목적지로 이동해 주세요."}
+              </p>
+            </div>
+
+            {mission.imageUrl && (
+              <div className="w-full rounded-[2.5rem] overflow-hidden shadow-2xl border border-white/10 bg-slate-900/50">
+                <img 
+                  src={mission.imageUrl} 
+                  alt="Mission guidance" 
+                  className="w-full h-auto object-contain" 
+                />
+              </div>
+            )}
           </div>
         )}
+        
+        {/* Bottom Spacer */}
+        <div className="h-20" />
       </main>
 
       {/* Fixed Footer */}
