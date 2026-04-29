@@ -76,12 +76,12 @@ function MissionSlides({ slides }: { slides: { imageUrl: string; description: st
         {/* Overlay for text */}
         <div className={`absolute inset-0 bg-black/60 backdrop-blur-[2px] transition-opacity duration-500 flex items-center justify-center p-6 ${showText ? "opacity-100" : "opacity-0 pointer-events-none"}`}>
           <div className="max-h-full overflow-y-auto hide-scrollbar text-center animate-in fade-in slide-in-from-bottom-4 duration-500">
-             <p className="text-white text-base md:text-lg font-medium leading-relaxed whitespace-pre-wrap">
-               {currentSlide.description}
-             </p>
+            <p className="text-white text-base md:text-lg font-medium leading-relaxed whitespace-pre-wrap">
+              {currentSlide.description}
+            </p>
           </div>
         </div>
-        
+
         {/* Click Guide */}
         {!showText && currentSlide.description && (
           <div className="absolute bottom-10 left-0 right-0 text-center animate-pulse pointer-events-none">
