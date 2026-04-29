@@ -17,6 +17,7 @@ type MissionState = {
     orderIndex: number;
     title: string;
     checkpointInstruction: string;
+    riddlePassage?: string | null;
     riddleQuestion: string;
     hint?: string | null;
     imageUrl?: string | null;
@@ -366,8 +367,14 @@ export default function MissionPage() {
               </div>
             )}
 
-
-            <p className="text-white text-xl md:text-2xl font-bold leading-relaxed mb-6 whitespace-pre-wrap">{mission.riddleQuestion}</p>
+            {mission.riddlePassage && (
+              <p className="text-white/80 text-lg md:text-xl font-light leading-relaxed mb-4 whitespace-pre-wrap">
+                {mission.riddlePassage}
+              </p>
+            )}
+            <p className="text-white text-xl md:text-2xl font-black leading-relaxed mb-6 whitespace-pre-wrap">
+              {mission.riddleQuestion}
+            </p>
 
             {/* Multimedia Content */}
             <div className="mb-6 rounded-2xl overflow-hidden bg-black/20">

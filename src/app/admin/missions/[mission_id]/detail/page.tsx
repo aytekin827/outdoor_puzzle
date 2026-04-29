@@ -34,6 +34,7 @@ export default async function MissionDetailPage({ params, searchParams }: { para
     const gameId = formData.get("gameId") as string;
     const title = formData.get("title") as string;
     const orderIndex = parseInt(formData.get("orderIndex") as string, 10);
+    const riddlePassage = formData.get("riddlePassage") as string;
     const riddleQuestion = formData.get("riddleQuestion") as string;
     const missionType = formData.get("missionType") as string;
     const missionVideoUrl = formData.get("missionVideoUrl") as string;
@@ -61,6 +62,7 @@ export default async function MissionDetailPage({ params, searchParams }: { para
       gameId,
       title,
       orderIndex,
+      riddlePassage: riddlePassage || null,
       riddleQuestion,
       missionType: missionType || "text",
       missionVideoUrl: missionVideoUrl || null,
@@ -143,7 +145,7 @@ export default async function MissionDetailPage({ params, searchParams }: { para
             <textarea name="description" defaultValue={mission.description || ""} className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white h-20 resize-none flex-1 focus:border-primary focus:outline-none transition-colors" placeholder="예: 동상의 비밀을 찾아라" />
           </div>
 
-          <MissionImageEditor 
+          <MissionImageEditor
             initialImageUrl={mission.imageUrl}
             initialImageAssetKey={mission.imageAssetKey}
             initialImageAlt={mission.imageAlt}
@@ -159,16 +161,17 @@ export default async function MissionDetailPage({ params, searchParams }: { para
             initialType={mission.missionType || "text"}
             initialVideoUrl={mission.missionVideoUrl || ""}
             initialSlidesJson={mission.missionSlidesJson || ""}
-            initialContent={mission.riddleQuestion || ""}
+            initialQuestion={mission.riddleQuestion || ""}
+            initialPassage={mission.riddlePassage || ""}
           />
 
           <div className="flex flex-col gap-2">
-            <label className="text-sm font-semibold text-slate-400">정답 (정확히 일치해야 함)</label>
+            <label className="text-sm font-semibold text-slate-400">정답</label>
             <input name="answer" defaultValue={mission.answer} required className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white focus:border-primary focus:outline-none transition-colors" />
           </div>
 
           <div className="flex flex-col gap-2">
-            <label className="text-sm font-semibold text-slate-400">힌트 (선택 사항)</label>
+            <label className="text-sm font-semibold text-slate-400">힌트 (선택)</label>
             <input name="hint" defaultValue={mission.hint || ""} className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white focus:border-primary focus:outline-none transition-colors" />
           </div>
 

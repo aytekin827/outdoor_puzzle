@@ -12,10 +12,17 @@ interface MissionContentEditorProps {
   initialType?: string;
   initialVideoUrl?: string;
   initialSlidesJson?: string;
-  initialContent?: string;
+  initialQuestion?: string;
+  initialPassage?: string;
 }
 
-export function MissionContentEditor({ initialType, initialVideoUrl, initialSlidesJson, initialContent }: MissionContentEditorProps) {
+export function MissionContentEditor({ 
+  initialType, 
+  initialVideoUrl, 
+  initialSlidesJson, 
+  initialQuestion,
+  initialPassage 
+}: MissionContentEditorProps) {
   const [missionType, setMissionType] = useState<string>(initialType || "text");
   const [slides, setSlides] = useState<Slide[]>(() => {
     if (initialSlidesJson) {
@@ -163,17 +170,28 @@ export function MissionContentEditor({ initialType, initialVideoUrl, initialSlid
         </div>
       )}
 
-      <div className="flex flex-col gap-2">
-        <label className="text-sm font-semibold text-slate-400">메인 지문/질문 텍스트</label>
-        <textarea
-          name="riddleQuestion"
-          defaultValue={initialContent || ""}
-          required
-          className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white h-32 resize-none focus:border-primary focus:outline-none transition-colors text-sm"
-          placeholder="문제를 입력하세요 (예: 다음을 읽고 물음에 답하시오...)"
-        />
+      <div className="space-y-4">
+        <div className="flex flex-col gap-2">
+          <label className="text-sm font-semibold text-slate-400">지문 (Passage)</label>
+          <textarea
+            name="riddlePassage"
+            defaultValue={initialPassage || ""}
+            className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white h-32 resize-none focus:border-primary focus:outline-none transition-colors text-sm font-light"
+            placeholder="지문을 입력하세요 (예: 옛날 옛적에...)"
+          />
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <label className="text-sm font-semibold text-slate-400">질문 (Question)</label>
+          <textarea
+            name="riddleQuestion"
+            defaultValue={initialQuestion || ""}
+            required
+            className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white h-24 resize-none focus:border-primary focus:outline-none transition-colors text-sm font-bold"
+            placeholder="질문을 입력하세요 (예: 주인공의 이름은 무엇인가요?)"
+          />
+        </div>
       </div>
     </div>
   );
 }
-

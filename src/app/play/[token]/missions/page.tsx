@@ -208,17 +208,6 @@ export default function MissionListPage() {
         <div className="shrink-0 w-6 h-full" />
       </div>
 
-      <footer className="p-8 text-center">
-        <div className="inline-flex items-center gap-4 bg-slate-900/50 px-4 py-2 rounded-full border border-white/5">
-          {missions.map((m, i) => (
-            <div
-              key={m.id}
-              className={`w-1.5 h-1.5 rounded-full transition-all ${m.isCompleted ? 'bg-emerald-500' : m.isLocked ? 'bg-slate-800' : 'bg-primary scale-150'}`}
-            />
-          ))}
-        </div>
-      </footer>
-
       <style jsx global>{`
         .hide-scrollbar::-webkit-scrollbar {
           display: none;

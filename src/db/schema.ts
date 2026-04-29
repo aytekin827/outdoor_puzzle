@@ -40,6 +40,7 @@ export const missions = sqliteTable("missions", {
   title: text("title").notNull(),
   checkpointInstruction: text("checkpoint_instruction").notNull(),
   riddleQuestion: text("riddle_question").notNull(),
+  riddlePassage: text("riddle_passage"),
   missionType: text("mission_type").default("text"), // 'text' | 'video' | 'slide'
   missionVideoUrl: text("mission_video_url"),
   missionSlidesJson: text("mission_slides_json"),

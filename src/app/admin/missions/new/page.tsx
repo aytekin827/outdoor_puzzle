@@ -18,6 +18,7 @@ export default async function NewMissionPage({ searchParams }: { searchParams: P
     const title = formData.get("title") as string;
     const orderIndexStr = formData.get("orderIndex") as string;
     const orderIndex = parseInt(orderIndexStr || "0", 10);
+    const riddlePassage = formData.get("riddlePassage") as string;
     const riddleQuestion = formData.get("riddleQuestion") as string;
     const missionType = formData.get("missionType") as string;
     const missionVideoUrl = formData.get("missionVideoUrl") as string;
@@ -48,6 +49,7 @@ export default async function NewMissionPage({ searchParams }: { searchParams: P
       orderIndex,
       title,
       checkpointInstruction: "",
+      riddlePassage: riddlePassage || null,
       riddleQuestion,
       missionType: missionType || "text",
       missionVideoUrl: missionVideoUrl || null,
@@ -115,12 +117,12 @@ export default async function NewMissionPage({ searchParams }: { searchParams: P
           <MissionContentEditor />
 
           <div className="flex flex-col gap-2">
-            <label className="text-sm font-semibold text-slate-400">정답 (정확히 일치해야 함)</label>
+            <label className="text-sm font-semibold text-slate-400">정답</label>
             <input name="answer" required className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white focus:border-primary focus:outline-none transition-colors" placeholder="1234" />
           </div>
 
           <div className="flex flex-col gap-2">
-            <label className="text-sm font-semibold text-slate-400">힌트 (선택 사항)</label>
+            <label className="text-sm font-semibold text-slate-400">힌트 (선택)</label>
             <input name="hint" className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white focus:border-primary focus:outline-none transition-colors" placeholder="정답을 유추할 수 있는 힌트" />
           </div>
 
