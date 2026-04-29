@@ -4,7 +4,8 @@ import {
   ArrowLeft,
   ArrowRight,
   Loader2,
-  Send
+  Send,
+  Star
 } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -44,8 +45,47 @@ type ResultPayload = {
     groupType?: string;
     groupTypeOther?: string;
     gender?: string;
+    satisfactionScore?: number;
+    difficultyScore?: number;
+    comment?: string;
   } | null;
 };
+
+function StarRating({
+  label,
+  value,
+  onChange,
+}: {
+  label: string;
+  value: number;
+  onChange: (nextValue: number) => void;
+}) {
+  return (
+    <div className="flex flex-col gap-3">
+      <label className="text-sm font-semibold text-slate-300">
+        {label} {value}/5
+      </label>
+      <div className="flex items-center gap-2">
+        {Array.from({ length: 5 }, (_, index) => {
+          const score = index + 1;
+          const active = score <= value;
+
+          return (
+            <button
+              key={score}
+              type="button"
+              onClick={() => onChange(score)}
+              className={`transition-transform hover:scale-110 ${active ? "text-yellow-400" : "text-slate-600 hover:text-slate-300"}`}
+              aria-label={`${label} ${score}점`}
+            >
+              <Star className={`w-8 h-8 ${active ? "fill-current" : ""}`} />
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
 
 export default function CompletePage() {
   const { token } = useParams<{ token: string }>();
@@ -62,6 +102,9 @@ export default function CompletePage() {
     groupType: "",
     groupTypeOther: "",
     gender: "",
+    satisfactionScore: 5,
+    difficultyScore: 3,
+    comment: "",
   });
 
   const formRef = useRef<HTMLFormElement>(null);
@@ -92,6 +135,9 @@ export default function CompletePage() {
             groupType: data.survey.groupType || "",
             groupTypeOther: data.survey.groupTypeOther || "",
             gender: data.survey.gender || "",
+            satisfactionScore: data.survey.satisfactionScore || 5,
+            difficultyScore: data.survey.difficultyScore || 3,
+            comment: data.survey.comment || "",
           });
         }
       } catch (error) {
@@ -118,11 +164,18 @@ export default function CompletePage() {
   const hasEpilogue = Boolean(result?.game?.epilogueType === "slide" && epilogueSlides.length > 0);
 
   const isValidSurvey = useMemo(
-    () => Boolean(form.ageRange && form.groupType && form.gender && (form.groupType !== "other" || form.groupTypeOther.trim())),
+    () => Boolean(
+      form.ageRange && 
+      form.groupType && 
+      form.gender && 
+      form.satisfactionScore >= 1 &&
+      form.difficultyScore >= 1 &&
+      (form.groupType !== "other" || form.groupTypeOther.trim())
+    ),
     [form]
   );
 
-  const updateField = (field: string, value: string) => {
+  const updateField = (field: string, value: any) => {
     setForm((current) => ({ ...current, [field]: value }));
   };
 
@@ -214,26 +267,47 @@ export default function CompletePage() {
             <div className="w-full max-w-lg mx-auto flex flex-col gap-6 py-4 pb-20">
               <div className="glass-panel p-6 text-center">
                 <h1 className="text-2xl font-bold text-white mb-2">게임 종료 설문</h1>
-                <p className="text-sm text-slate-400">플레이해 주셔서 감사합니다! 간단한 정보를 입력해 주세요.</p>
+                <p className="text-sm text-slate-400">플레이해 주셔서 감사합니다! 더 나은 게임을 위해 소중한 의견을 부탁드립니다.</p>
               </div>
-              <form ref={formRef} onSubmit={handleSurveySubmit} className="glass-panel p-6 flex flex-col gap-5">
-                {[
-                  { label: "연령대", field: "ageRange", options: ageOptions },
-                  { label: "그룹 유형", field: "groupType", options: groupOptions, labels: groupOptionLabels },
-                  { label: "성별", field: "gender", options: genderOptions }
-                ].map((s) => (
-                  <div key={s.field} className="flex flex-col gap-2">
-                    <label className="text-sm font-semibold text-slate-300">{s.label}</label>
+              <form ref={formRef} onSubmit={handleSurveySubmit} className="glass-panel p-6 flex flex-col gap-6">
+                {/* 인구통계학 정보 */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="flex flex-col gap-2">
+                    <label className="text-sm font-semibold text-slate-300">연령대</label>
                     <select
-                      value={(form as any)[s.field]}
-                      onChange={(e) => updateField(s.field, e.target.value)}
+                      value={form.ageRange}
+                      onChange={(e) => updateField("ageRange", e.target.value)}
                       className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white focus:border-emerald-500/50 outline-none"
                     >
                       <option value="">선택해주세요</option>
-                      {s.options.map((opt) => <option key={opt} value={opt}>{(s as any).labels?.[opt] || opt}</option>)}
+                      {ageOptions.map((opt) => <option key={opt} value={opt}>{opt}</option>)}
                     </select>
                   </div>
-                ))}
+                  <div className="flex flex-col gap-2">
+                    <label className="text-sm font-semibold text-slate-300">성별</label>
+                    <select
+                      value={form.gender}
+                      onChange={(e) => updateField("gender", e.target.value)}
+                      className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white focus:border-emerald-500/50 outline-none"
+                    >
+                      <option value="">선택해주세요</option>
+                      {genderOptions.map((opt) => <option key={opt} value={opt}>{opt}</option>)}
+                    </select>
+                  </div>
+                </div>
+
+                <div className="flex flex-col gap-2">
+                  <label className="text-sm font-semibold text-slate-300">그룹 유형</label>
+                  <select
+                    value={form.groupType}
+                    onChange={(e) => updateField("groupType", e.target.value)}
+                    className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white focus:border-emerald-500/50 outline-none"
+                  >
+                    <option value="">선택해주세요</option>
+                    {groupOptions.map((opt) => <option key={opt} value={opt}>{groupOptionLabels[opt] || opt}</option>)}
+                  </select>
+                </div>
+
                 {form.groupType === "other" && (
                   <div className="flex flex-col gap-2">
                     <label className="text-sm font-semibold text-slate-300">기타 그룹 설명</label>
@@ -245,6 +319,33 @@ export default function CompletePage() {
                     />
                   </div>
                 )}
+
+                <div className="h-px bg-white/5 my-2" />
+
+                {/* 만족도 및 난이도 */}
+                <div className="grid grid-cols-1 gap-6">
+                  <StarRating 
+                    label="게임 만족도" 
+                    value={form.satisfactionScore} 
+                    onChange={(val) => updateField("satisfactionScore", val)} 
+                  />
+                  <StarRating 
+                    label="게임 난이도" 
+                    value={form.difficultyScore} 
+                    onChange={(val) => updateField("difficultyScore", val)} 
+                  />
+                </div>
+
+                {/* 한 줄 후기 */}
+                <div className="flex flex-col gap-2">
+                  <label className="text-sm font-semibold text-slate-300">후기</label>
+                  <textarea
+                    value={form.comment}
+                    onChange={(e) => updateField("comment", e.target.value)}
+                    className="bg-slate-950 border border-slate-800 p-4 rounded-xl text-white focus:border-emerald-500/50 outline-none h-32 resize-none"
+                    placeholder="플레이하시면서 좋았던 점이나 개선할 점을 자유롭게 남겨주세요."
+                  />
+                </div>
               </form>
             </div>
           )}
