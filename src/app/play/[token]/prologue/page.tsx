@@ -180,7 +180,18 @@ export default function ProloguePage() {
           <div className="flex-1 flex items-center justify-center p-6 text-center text-white">
             <div className="glass-panel p-8">
               <h2 className="text-xl font-bold mb-4">프롤로그가 없습니다</h2>
-              <button onClick={() => setIsEnteringNickname(true)} className="mt-4 px-8 py-4 bg-emerald-500 text-black font-black rounded-xl">임무 시작하기</button>
+              <button 
+                onClick={() => {
+                  if (player?.nickname) {
+                    finishPrologue(player.nickname);
+                  } else {
+                    setIsEnteringNickname(true);
+                  }
+                }} 
+                className="mt-4 px-8 py-4 bg-emerald-500 text-black font-black rounded-xl active:scale-95 transition-transform"
+              >
+                {player?.nickname ? "나가기" : "임무 시작하기"}
+              </button>
             </div>
           </div>
         )}
