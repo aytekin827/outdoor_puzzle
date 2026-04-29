@@ -49,6 +49,8 @@ export const missions = sqliteTable("missions", {
   imageUrl: text("image_url"),
   imageAlt: text("image_alt"),
   imageCaption: text("image_caption"),
+  checkpointImageUrl: text("checkpoint_image_url"),
+  checkpointImageAssetKey: text("checkpoint_image_asset_key"),
   description: text("description"),
   closingInstruction: text("closing_instruction"),
   closingInstructionType: text("closing_instruction_type").default("text"), // 'text' | 'video' | 'slide'

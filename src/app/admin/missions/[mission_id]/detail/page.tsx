@@ -14,6 +14,7 @@ import { redirect } from "next/navigation";
 import { ClosingInstructionEditor } from "../../ClosingInstructionEditor";
 import { MissionContentEditor } from "../../MissionContentEditor";
 import { MissionImageEditor } from "../../MissionImageEditor";
+import { CheckpointImageEditor } from "../../CheckpointImageEditor";
 
 export const dynamic = 'force-dynamic';
 
@@ -43,6 +44,8 @@ export default async function MissionDetailPage({ params, searchParams }: { para
     const imageUrl = formData.get("imageUrl") as string;
     const imageAlt = formData.get("imageAlt") as string;
     const imageCaption = formData.get("imageCaption") as string;
+    const checkpointImageUrl = formData.get("checkpointImageUrl") as string;
+    const checkpointImageAssetKey = formData.get("checkpointImageAssetKey") as string;
     const closingInstruction = formData.get("closingInstruction") as string;
     const closingInstructionType = formData.get("closingInstructionType") as string;
     const closingInstructionVideoUrl = formData.get("closingInstructionVideoUrl") as string;
@@ -68,6 +71,8 @@ export default async function MissionDetailPage({ params, searchParams }: { para
       imageUrl: imageUrl || null,
       imageAlt: imageAlt || null,
       imageCaption: imageCaption || null,
+      checkpointImageUrl: checkpointImageUrl || null,
+      checkpointImageAssetKey: checkpointImageAssetKey || null,
       description: description || null,
       closingInstruction: closingInstruction || null,
       closingInstructionType: closingInstructionType || "text",
@@ -143,6 +148,11 @@ export default async function MissionDetailPage({ params, searchParams }: { para
             initialImageAssetKey={mission.imageAssetKey}
             initialImageAlt={mission.imageAlt}
             initialImageCaption={mission.imageCaption}
+          />
+
+          <CheckpointImageEditor
+            initialImageUrl={mission.checkpointImageUrl}
+            initialImageAssetKey={mission.checkpointImageAssetKey}
           />
 
           <MissionContentEditor

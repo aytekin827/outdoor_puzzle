@@ -22,6 +22,7 @@ type MissionState = {
     imageUrl?: string | null;
     imageAlt?: string | null;
     imageCaption?: string | null;
+    checkpointImageUrl?: string | null;
     missionType?: string | null;
     missionVideoUrl?: string | null;
     missionSlidesJson?: string | null;
@@ -355,7 +356,17 @@ export default function MissionPage() {
           </div> */}
 
           <div className="glass-panel p-6 border border-white/10 flex flex-col shadow-2xl">
-            <h2 className="text-sm font-bold text-primary mb-1 uppercase tracking-widest">{mission.title}</h2>
+            {mission.checkpointImageUrl && (
+              <div className="mb-6 -mx-6 -mt-6 overflow-hidden rounded-t-2xl border-b border-white/5">
+                <img
+                  src={mission.checkpointImageUrl}
+                  alt="Checkpoint guide"
+                  className="w-full h-auto max-h-72 object-cover"
+                />
+              </div>
+            )}
+
+
             <p className="text-white text-xl md:text-2xl font-bold leading-relaxed mb-6 whitespace-pre-wrap">{mission.riddleQuestion}</p>
 
             {/* Multimedia Content */}
