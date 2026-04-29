@@ -15,6 +15,7 @@ export default function ProloguePage() {
 
   const [loading, setLoading] = useState(true);
   const [game, setGame] = useState<any>(null);
+  const [player, setPlayer] = useState<any>(null);
   const [slideIndex, setSlideIndex] = useState(0);
   const [showText, setShowText] = useState(false);
   const [nickname, setNickname] = useState("");
@@ -28,6 +29,10 @@ export default function ProloguePage() {
         if (!res.ok) throw new Error("Load failed");
         const data = await res.json();
         setGame(data.game);
+        setPlayer(data.player);
+        if (data.player?.nickname) {
+          setNickname(data.player.nickname);
+        }
       } catch (err) {
         console.error(err);
       } finally {
@@ -49,13 +54,13 @@ export default function ProloguePage() {
     }
   })();
 
-  const finishPrologue = async () => {
+  const finishPrologue = async (finalNickname: string) => {
     setSubmitting(true);
     try {
       await fetch("/api/game/prologue-complete", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ nickname })
+        body: JSON.stringify({ nickname: finalNickname })
       });
       router.push(`/play/${token}/missions`);
     } catch (err) {
@@ -68,7 +73,11 @@ export default function ProloguePage() {
 
   const handleNext = () => {
     if (slides.length === 0) {
-      setIsEnteringNickname(true);
+      if (player?.nickname) {
+        finishPrologue(player.nickname);
+      } else {
+        setIsEnteringNickname(true);
+      }
       return;
     }
 
@@ -85,12 +94,20 @@ export default function ProloguePage() {
       setSlideIndex(prev => prev + 1);
       setShowText(false);
     } else {
-      setIsEnteringNickname(true);
+      if (player?.nickname) {
+        finishPrologue(player.nickname);
+      } else {
+        setIsEnteringNickname(true);
+      }
     }
   };
 
   const handleSkip = () => {
-    setIsEnteringNickname(true);
+    if (player?.nickname) {
+      finishPrologue(player.nickname);
+    } else {
+      setIsEnteringNickname(true);
+    }
   };
 
   if (loading) {
@@ -190,7 +207,7 @@ export default function ProloguePage() {
                   className="px-4 py-4 rounded-xl bg-slate-900 border border-slate-700 text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-transparent transition-all text-center text-lg font-black"
                 />
                 <button
-                  onClick={finishPrologue}
+                  onClick={() => finishPrologue(nickname)}
                   disabled={!nickname.trim() || submitting}
                   className="group relative flex items-center justify-center gap-2 w-full bg-emerald-500 hover:bg-emerald-400 text-black font-black py-4 px-6 rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-emerald-500/20 active:scale-95"
                 >

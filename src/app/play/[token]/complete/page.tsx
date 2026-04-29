@@ -6,8 +6,7 @@ import {
   Camera,
   CheckCircle2,
   Loader2,
-  Send,
-  Star,
+  Star
 } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -322,23 +321,23 @@ export default function CompletePage() {
                 alt="Epilogue background"
                 className="absolute inset-0 w-full h-full object-cover animate-in fade-in duration-700"
               />
-              
+
               {/* Overlay Gradient (only when text is shown) */}
               <div className={`absolute inset-0 bg-black/60 transition-opacity duration-500 ${showEpilogueText ? "opacity-100" : "opacity-0"}`} />
 
               {/* Text Content */}
               {showEpilogueText && currentEpilogueSlide.description && (
                 <div className="absolute inset-0 z-50 flex items-center justify-center p-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                  <div 
+                  <div
                     className="w-full max-w-lg max-h-[70vh] overflow-y-auto hide-scrollbar bg-black/40 backdrop-blur-md rounded-3xl border border-white/10 p-8 shadow-2xl"
                     onClick={(e) => e.stopPropagation()} // Allow scrolling without triggering next
                   >
                     <p className="text-white text-lg md:text-xl leading-relaxed whitespace-pre-wrap font-medium text-center">
                       {currentEpilogueSlide.description}
                     </p>
-                    
+
                     <div className="mt-8 flex justify-center">
-                      <button 
+                      <button
                         onClick={handleNextFromEpilogue}
                         className="bg-emerald-500 hover:bg-emerald-400 text-black px-6 py-3 rounded-xl font-black text-sm flex items-center gap-2 transition-all active:scale-95"
                       >
@@ -490,7 +489,7 @@ export default function CompletePage() {
       </main>
 
       {/* Fixed Footer */}
-      <footer className="z-50 p-4 pb-8 bg-gradient-to-t from-black via-black/95 to-transparent border-t border-white/5">
+      {/* <footer className="z-50 p-4 pb-8 bg-gradient-to-t from-black via-black/95 to-transparent border-t border-white/5">
         <div className="max-w-lg md:max-w-xl mx-auto w-full flex flex-col gap-4">
           {stage === "epilogue" ? (
             <button
@@ -525,7 +524,7 @@ export default function CompletePage() {
             <span className="w-1 h-1 bg-slate-800 rounded-full" />
           </p>
         </div>
-      </footer>
+      </footer> */}
 
       <style jsx global>{`
         .hide-scrollbar::-webkit-scrollbar {
