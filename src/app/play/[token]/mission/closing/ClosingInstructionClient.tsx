@@ -127,8 +127,13 @@ export function ClosingInstructionClient({ token, mission }: ClosingInstructionC
             )}
           </div>
         ) : (
-          <div className="flex-1 flex flex-col items-center justify-center p-8 text-center space-y-6">
-             <div className="glass-panel p-8 max-w-md">
+          <div className="flex-1 flex flex-col items-center justify-center p-8 text-center space-y-6 overflow-y-auto">
+             {mission.imageUrl && (
+               <div className="w-full max-w-md rounded-2xl overflow-hidden shadow-2xl border border-white/10 animate-in fade-in zoom-in-95 duration-700 mb-4">
+                 <img src={mission.imageUrl} alt="Mission guidance" className="w-full h-auto object-contain bg-slate-900" />
+               </div>
+             )}
+             <div className="glass-panel p-8 max-w-md animate-in fade-in slide-in-from-bottom-4 duration-700">
                 <h2 className="text-2xl font-black text-white mb-4">정답입니다!</h2>
                 <p className="text-slate-300 leading-relaxed whitespace-pre-wrap">
                   {mission.closingInstruction || "다음 목적지로 이동해 주세요."}

@@ -43,27 +43,62 @@ type LocationSnapshot = {
 
 type PermissionState = "idle" | "granted" | "denied" | "unsupported" | "error";
 
-function MissionSlides({ slides }: { slides: string[] }) {
+function MissionSlides({ slides }: { slides: { imageUrl: string; description: string }[] }) {
   const [index, setIndex] = useState(0);
+  const [showText, setShowText] = useState(false);
+
   if (!slides || slides.length === 0) return null;
+  const currentSlide = slides[index];
+
+  const handleNext = (e: React.MouseEvent) => {
+    // If text is shown, go to next slide or wrap around
+    if (showText) {
+      setIndex((prev) => (prev + 1) % slides.length);
+      setShowText(false);
+    } else if (currentSlide.description) {
+      setShowText(true);
+    } else {
+      setIndex((prev) => (prev + 1) % slides.length);
+    }
+  };
 
   return (
-    <div className="relative group">
-      <div className="aspect-[4/3] w-full bg-black/40 flex items-center justify-center overflow-hidden">
+    <div className="relative group cursor-pointer overflow-hidden rounded-2xl border border-white/5 bg-black/20 shadow-2xl" onClick={handleNext}>
+      <div className="aspect-[4/3] w-full relative flex items-center justify-center overflow-hidden">
+        {/* Background Image */}
         <img
-          src={slides[index]}
+          key={currentSlide.imageUrl}
+          src={currentSlide.imageUrl}
           alt={`Slide ${index + 1}`}
-          className="w-full h-full object-cover animate-in fade-in zoom-in-95 duration-500"
+          className="w-full h-full object-cover animate-in fade-in duration-700"
         />
+
+        {/* Overlay for text */}
+        <div className={`absolute inset-0 bg-black/60 backdrop-blur-[2px] transition-opacity duration-500 flex items-center justify-center p-6 ${showText ? "opacity-100" : "opacity-0 pointer-events-none"}`}>
+          <div className="max-h-full overflow-y-auto hide-scrollbar text-center animate-in fade-in slide-in-from-bottom-4 duration-500">
+             <p className="text-white text-base md:text-lg font-medium leading-relaxed whitespace-pre-wrap">
+               {currentSlide.description}
+             </p>
+          </div>
+        </div>
+        
+        {/* Click Guide */}
+        {!showText && currentSlide.description && (
+          <div className="absolute bottom-10 left-0 right-0 text-center animate-pulse pointer-events-none">
+            <span className="bg-black/40 backdrop-blur-md text-white/70 text-[10px] px-3 py-1 rounded-full border border-white/10 uppercase tracking-widest font-bold">
+              TAP TO READ
+            </span>
+          </div>
+        )}
       </div>
 
       {slides.length > 1 && (
-        <div className="absolute bottom-4 left-0 w-full flex justify-center gap-2">
+        <div className="absolute bottom-4 left-0 w-full flex justify-center gap-2 z-50">
           {slides.map((_, i) => (
             <button
               key={i}
-              onClick={() => setIndex(i)}
-              className={`h-1.5 rounded-full transition-all ${i === index ? "bg-primary w-6" : "bg-white/30 w-1.5"}`}
+              onClick={(e) => { e.stopPropagation(); setIndex(i); setShowText(false); }}
+              className={`h-1.5 rounded-full transition-all ${i === index ? "bg-emerald-500 w-6" : "bg-white/20 w-1.5 hover:bg-white/40"}`}
             />
           ))}
         </div>
