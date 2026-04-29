@@ -17,7 +17,6 @@ export default async function NewMissionPage({ searchParams }: { searchParams: P
     const title = formData.get("title") as string;
     const orderIndexStr = formData.get("orderIndex") as string;
     const orderIndex = parseInt(orderIndexStr || "0", 10);
-    const checkpointInstruction = formData.get("checkpointInstruction") as string;
     const riddleQuestion = formData.get("riddleQuestion") as string;
     const missionType = formData.get("missionType") as string;
     const missionVideoUrl = formData.get("missionVideoUrl") as string;
@@ -45,7 +44,7 @@ export default async function NewMissionPage({ searchParams }: { searchParams: P
       gameId,
       orderIndex,
       title,
-      checkpointInstruction,
+      checkpointInstruction: "",
       riddleQuestion,
       missionType: missionType || "text",
       missionVideoUrl: missionVideoUrl || null,
@@ -97,10 +96,7 @@ export default async function NewMissionPage({ searchParams }: { searchParams: P
             <input type="number" name="orderIndex" required className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white focus:border-primary focus:outline-none transition-colors" placeholder="1" />
           </div>
 
-          <div className="flex flex-col gap-2 sm:col-span-2">
-            <label className="text-sm font-semibold text-slate-400">체크포인트 위치 안내 (플레이어용 상세 가이드)</label>
-            <textarea name="checkpointInstruction" required className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white h-20 resize-none focus:border-primary focus:outline-none transition-colors" placeholder="예: 입구에 있는 커다란 나무 쪽으로 이동하세요..." />
-          </div>
+
 
           <div className="flex flex-col gap-2 sm:col-span-2">
             <label className="text-sm font-semibold text-slate-400">미션 간단설명 (리스트 카드용)</label>

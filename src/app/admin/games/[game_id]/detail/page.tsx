@@ -170,7 +170,7 @@ export default async function GameDetailPage({ params }: { params: Promise<{ gam
                       #{m.orderIndex} {m.title}
                     </p>
                     <p className="text-xs text-slate-400 truncate line-clamp-2">
-                      {m.checkpointInstruction}
+                      {m.description || "설명이 없습니다."}
                     </p>
                   </Link>
                 </li>

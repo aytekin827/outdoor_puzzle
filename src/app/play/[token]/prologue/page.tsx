@@ -82,7 +82,7 @@ export default function ProloguePage() {
     }
 
     const currentSlide = slides[slideIndex];
-    
+
     // If text is not shown and there is a description, show it first
     if (!showText && currentSlide.description) {
       setShowText(true);
@@ -139,27 +139,27 @@ export default function ProloguePage() {
               alt="Prologue background"
               className="absolute inset-0 w-full h-full object-cover animate-in fade-in duration-700"
             />
-            
+
             {/* Overlay Gradient (only when text is shown) */}
             <div className={`absolute inset-0 bg-black/60 transition-opacity duration-500 ${showText ? "opacity-100" : "opacity-0"}`} />
 
             {/* Text Content */}
             {showText && currentSlide.description && (
               <div className="absolute inset-0 z-50 flex items-center justify-center p-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                <div 
+                <div
                   className="w-full max-w-lg max-h-[70vh] overflow-y-auto hide-scrollbar bg-black/40 backdrop-blur-md rounded-3xl border border-white/10 p-8 shadow-2xl"
                   onClick={(e) => e.stopPropagation()} // Allow scrolling without triggering next
                 >
                   <p className="text-white text-lg md:text-xl leading-relaxed whitespace-pre-wrap font-medium">
                     {currentSlide.description}
                   </p>
-                  
+
                   <div className="mt-8 flex justify-center">
-                    <button 
+                    <button
                       onClick={handleNext}
                       className="bg-emerald-500 hover:bg-emerald-400 text-black px-6 py-3 rounded-xl font-black text-sm flex items-center gap-2 transition-all active:scale-95"
                     >
-                      {slideIndex < slides.length - 1 ? "다음 슬라이드" : (player?.nickname ? "나가기" : "이름 설정하기")}
+                      {slideIndex < slides.length - 1 ? "다음 슬라이드" : (player?.nickname ? "임무 시작하기" : "이름 설정하기")}
                       <ArrowRight className="w-4 h-4" />
                     </button>
                   </div>
@@ -180,14 +180,14 @@ export default function ProloguePage() {
           <div className="flex-1 flex items-center justify-center p-6 text-center text-white">
             <div className="glass-panel p-8">
               <h2 className="text-xl font-bold mb-4">프롤로그가 없습니다</h2>
-              <button 
+              <button
                 onClick={() => {
                   if (player?.nickname) {
                     finishPrologue(player.nickname);
                   } else {
                     setIsEnteringNickname(true);
                   }
-                }} 
+                }}
                 className="mt-4 px-8 py-4 bg-emerald-500 text-black font-black rounded-xl active:scale-95 transition-transform"
               >
                 {player?.nickname ? "나가기" : "임무 시작하기"}
