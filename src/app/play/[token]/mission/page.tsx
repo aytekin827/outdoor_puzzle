@@ -6,8 +6,7 @@ import {
   HelpCircle,
   Image as ImageIcon,
   Key,
-  Loader2,
-  MapPin,
+  Loader2
 } from "lucide-react";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -147,7 +146,7 @@ export default function MissionPage() {
   useEffect(() => {
     async function fetchMission() {
       try {
-        const url = requestedMissionId 
+        const url = requestedMissionId
           ? `/api/game/current-mission?missionId=${requestedMissionId}`
           : "/api/game/current-mission";
         const res = await fetch(url);
@@ -299,14 +298,14 @@ export default function MissionPage() {
       <main className="flex-1 overflow-y-auto hide-scrollbar p-6 animate-in fade-in duration-500 pb-20">
 
         <div className="w-full max-w-lg md:max-w-xl mx-auto flex flex-col gap-6">
-          <div className="glass-panel p-6 border-l-4 border-l-blue-500 relative overflow-hidden">
+          {/* <div className="glass-panel p-6 border-l-4 border-l-blue-500 relative overflow-hidden">
             <div className="absolute top-0 right-0 w-24 h-24 bg-blue-500/10 rounded-full -mr-6 -mt-6 blur-xl" />
             <h2 className="flex items-center gap-2 text-blue-400 font-bold mb-2">
               <MapPin className="w-5 h-5 flex-shrink-0" />
               체크포인트
             </h2>
             <p className="text-slate-200 text-lg font-medium leading-relaxed">{mission.checkpointInstruction}</p>
-            {/* <p className="text-xs text-slate-500 mt-3">
+            <p className="text-xs text-slate-500 mt-3">
             위치 기록:{" "}
             {permissionState === "granted"
               ? "허용됨"
@@ -317,8 +316,8 @@ export default function MissionPage() {
                   : permissionState === "error"
                     ? "오류"
                     : "확인 중"}
-          </p> */}
-          </div>
+          </p>
+          </div> */}
 
           <div className="glass-panel p-6 border border-white/10 flex flex-col shadow-2xl">
             <h2 className="text-sm font-bold text-primary mb-1 uppercase tracking-widest">{mission.title}</h2>
@@ -416,8 +415,8 @@ export default function MissionPage() {
             <button
               type="submit"
               disabled={submitting || !answer.trim() || missionState.isSolved}
-              className={`w-full font-extrabold py-4 px-6 rounded-xl transition-all disabled:opacity-50 shadow-lg flex items-center justify-center h-[56px] ${missionState.isSolved 
-                ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 cursor-not-allowed' 
+              className={`w-full font-extrabold py-4 px-6 rounded-xl transition-all disabled:opacity-50 shadow-lg flex items-center justify-center h-[56px] ${missionState.isSolved
+                ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 cursor-not-allowed'
                 : 'bg-primary hover:bg-primary/90 text-primary-foreground hover:shadow-primary/20'}`}
             >
               {submitting ? <Loader2 className="w-6 h-6 animate-spin" /> : (missionState.isSolved ? "미션 완료됨" : "정답 제출")}
