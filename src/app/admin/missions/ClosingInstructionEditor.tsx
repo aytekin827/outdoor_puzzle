@@ -1,30 +1,34 @@
 "use client";
 
-import { ArrowDown, ArrowUp, FileVideo, Image as ImageIcon, Loader2, Trash2, UploadCloud, Youtube, MessageSquare } from "lucide-react";
+import { ArrowDown, ArrowUp, Image as ImageIcon, Loader2, Trash2, UploadCloud, MessageSquare } from "lucide-react";
 import { useState } from "react";
+
+interface Slide {
+  imageUrl: string;
+  description: string;
+}
 
 interface ClosingInstructionEditorProps {
   initialType?: string;
-  initialVideoUrl?: string;
   initialSlidesJson?: string;
   initialContent?: string;
 }
 
-export function ClosingInstructionEditor({ initialType, initialVideoUrl, initialSlidesJson, initialContent }: ClosingInstructionEditorProps) {
+export function ClosingInstructionEditor({ initialType, initialSlidesJson, initialContent }: ClosingInstructionEditorProps) {
   const [closingInstructionType, setClosingInstructionType] = useState<string>(initialType || "text");
-  const [slides, setSlides] = useState<string[]>(() => {
+  const [slides, setSlides] = useState<Slide[]>(() => {
     if (initialSlidesJson) {
-      try { return JSON.parse(initialSlidesJson); } catch (_) { return []; }
+      try {
+        const parsed = JSON.parse(initialSlidesJson);
+        if (Array.isArray(parsed)) {
+          return parsed.map(s => typeof s === 'string' ? { imageUrl: s, description: "" } : s);
+        }
+      } catch (_) {}
     }
     return [];
   });
 
-  const isYoutube = initialVideoUrl?.includes("youtube.com") || initialVideoUrl?.includes("youtu.be");
-  const [videoSource, setVideoSource] = useState<"r2" | "youtube">(isYoutube ? "youtube" : "r2");
-  const [videoUrl, setVideoUrl] = useState<string>(initialVideoUrl || "");
-
   const [uploadingSlide, setUploadingSlide] = useState(false);
-  const [uploadingVideo, setUploadingVideo] = useState(false);
 
   const uploadFile = async (file: File): Promise<string | null> => {
     const formData = new FormData();
@@ -47,20 +51,17 @@ export function ClosingInstructionEditor({ initialType, initialVideoUrl, initial
     for (let i = 0; i < e.target.files.length; i++) {
       const file = e.target.files[i];
       const url = await uploadFile(file);
-      if (url) newSlides.push(url);
+      if (url) newSlides.push({ imageUrl: url, description: "" });
     }
     setSlides(newSlides);
     setUploadingSlide(false);
-    e.target.value = ""; // reset
+    e.target.value = "";
   };
 
-  const handleVideoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files || e.target.files.length === 0) return;
-    setUploadingVideo(true);
-    const url = await uploadFile(e.target.files[0]);
-    if (url) setVideoUrl(url);
-    setUploadingVideo(false);
-    e.target.value = ""; // reset
+  const updateSlideDescription = (index: number, description: string) => {
+    const newSlides = [...slides];
+    newSlides[index] = { ...newSlides[index], description };
+    setSlides(newSlides);
   };
 
   const moveSlide = (index: number, direction: -1 | 1) => {
@@ -78,9 +79,7 @@ export function ClosingInstructionEditor({ initialType, initialVideoUrl, initial
 
   return (
     <div className="border-t border-slate-800 pt-6 pb-2 space-y-6 sm:col-span-2">
-      {/* Hidden inputs to pass state to server action */}
       <input type="hidden" name="closingInstructionType" value={closingInstructionType} />
-      <input type="hidden" name="closingInstructionVideoUrl" value={closingInstructionType === "video" ? videoUrl : ""} />
       <input type="hidden" name="closingInstructionSlidesJson" value={JSON.stringify(slides)} />
 
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -102,14 +101,7 @@ export function ClosingInstructionEditor({ initialType, initialVideoUrl, initial
             onClick={() => setClosingInstructionType("slide")}
             className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-bold transition-all ${closingInstructionType === "slide" ? "bg-slate-800 text-white shadow-sm" : "text-slate-400 hover:text-slate-300"}`}
           >
-            <ImageIcon className="w-3.5 h-3.5" /> 이미지/슬라이드
-          </button>
-          <button
-            type="button"
-            onClick={() => setClosingInstructionType("video")}
-            className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-bold transition-all ${closingInstructionType === "video" ? "bg-slate-800 text-white shadow-sm" : "text-slate-400 hover:text-slate-300"}`}
-          >
-            <FileVideo className="w-3.5 h-3.5" /> 비디오
+            <ImageIcon className="w-3.5 h-3.5" /> 이미지 + 텍스트 설명
           </button>
         </div>
       </div>
@@ -119,7 +111,7 @@ export function ClosingInstructionEditor({ initialType, initialVideoUrl, initial
           <div className="flex justify-between items-end">
             <div>
               <p className="text-slate-200 font-bold mb-1 text-sm">이미지/슬라이드 관리</p>
-              <p className="text-[10px] text-slate-400">여러 장의 이미지를 업로드하고 순서를 조정할 수 있습니다.</p>
+              <p className="text-[10px] text-slate-400">배경 이미지와 그 위에 표시될 텍스트를 설정합니다.</p>
             </div>
             <div>
               <label className="bg-emerald-500 hover:bg-emerald-400 text-black px-3 py-1.5 rounded-lg text-xs font-bold cursor-pointer transition-colors flex items-center gap-2">
@@ -130,29 +122,42 @@ export function ClosingInstructionEditor({ initialType, initialVideoUrl, initial
             </div>
           </div>
 
-          <div className="space-y-2 mt-4 max-h-60 overflow-y-auto pr-2">
+          <div className="space-y-4 mt-4 max-h-96 overflow-y-auto pr-2 custom-scrollbar">
             {slides.length === 0 ? (
               <div className="text-center py-6 border-2 border-dashed border-slate-800 rounded-xl">
                 <p className="text-slate-500 text-xs">업로드된 이미지가 없습니다.</p>
               </div>
             ) : (
-              slides.map((url, i) => (
-                <div key={i} className="flex items-center gap-3 bg-slate-950 border border-slate-800 p-2 rounded-lg group hover:border-slate-600 transition-colors">
-                  <div className="w-12 h-10 bg-slate-900 rounded overflow-hidden flex-shrink-0 border border-slate-700">
-                    <img src={url} alt={`Slide ${i + 1}`} className="w-full h-full object-cover" />
-                  </div>
-                  <div className="flex-1 truncate font-mono text-[10px] text-slate-400">{url}</div>
-
-                  <div className="flex items-center gap-1 opacity-100 sm:opacity-50 group-hover:opacity-100 transition-opacity">
-                    <button type="button" onClick={() => moveSlide(i, -1)} disabled={i === 0} className="p-1 text-slate-400 hover:text-white disabled:opacity-30 hover:bg-slate-800 rounded">
-                      <ArrowUp className="w-3.5 h-3.5" />
-                    </button>
-                    <button type="button" onClick={() => moveSlide(i, 1)} disabled={i === slides.length - 1} className="p-1 text-slate-400 hover:text-white disabled:opacity-30 hover:bg-slate-800 rounded">
-                      <ArrowDown className="w-3.5 h-3.5" />
-                    </button>
-                    <button type="button" onClick={() => removeSlide(i)} className="p-1 text-red-400 hover:bg-red-500/20 rounded transition-colors ml-1">
-                      <Trash2 className="w-3.5 h-3.5" />
-                    </button>
+              slides.map((slide, i) => (
+                <div key={i} className="flex flex-col gap-3 bg-slate-950 border border-slate-800 p-4 rounded-xl group hover:border-slate-600 transition-colors shadow-lg">
+                  <div className="flex items-start gap-4">
+                    <div className="w-24 h-24 bg-slate-900 rounded-lg overflow-hidden flex-shrink-0 border border-slate-700 shadow-inner">
+                      <img src={slide.imageUrl} alt={`Slide ${i + 1}`} className="w-full h-full object-cover" />
+                    </div>
+                    
+                    <div className="flex-1 flex flex-col gap-2">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Slide #{i+1}</span>
+                        <div className="flex items-center gap-1 opacity-100 sm:opacity-50 group-hover:opacity-100 transition-opacity">
+                          <button type="button" onClick={() => moveSlide(i, -1)} disabled={i === 0} className="p-1.5 text-slate-400 hover:text-white disabled:opacity-30 hover:bg-slate-800 rounded-md transition-colors">
+                            <ArrowUp className="w-4 h-4" />
+                          </button>
+                          <button type="button" onClick={() => moveSlide(i, 1)} disabled={i === slides.length - 1} className="p-1.5 text-slate-400 hover:text-white disabled:opacity-30 hover:bg-slate-800 rounded-md transition-colors">
+                            <ArrowDown className="w-4 h-4" />
+                          </button>
+                          <button type="button" onClick={() => removeSlide(i)} className="p-1.5 text-red-400 hover:bg-red-500/20 rounded-md transition-colors ml-1">
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </div>
+                      
+                      <textarea
+                        value={slide.description}
+                        onChange={(e) => updateSlideDescription(i, e.target.value)}
+                        placeholder="이 슬라이드에 표시될 텍스트 설명을 입력하세요..."
+                        className="w-full bg-slate-900/50 border border-slate-800 rounded-lg p-2.5 text-xs text-white placeholder:text-slate-600 focus:border-emerald-500/50 focus:outline-none transition-all resize-none h-16"
+                      />
+                    </div>
                   </div>
                 </div>
               ))
@@ -161,62 +166,13 @@ export function ClosingInstructionEditor({ initialType, initialVideoUrl, initial
         </div>
       )}
 
-      {closingInstructionType === "video" && (
-        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-5 space-y-4">
-          <p className="text-slate-200 font-bold mb-1 text-sm">비디오 소스</p>
-          <div className="flex gap-4">
-            <label className={`flex-1 flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition-all ${videoSource === "youtube" ? "bg-red-500/10 border-red-500/50 text-white" : "bg-slate-950 border-slate-800 text-slate-400 hover:border-slate-600"}`}>
-              <input type="radio" value="youtube" checked={videoSource === "youtube"} onChange={() => setVideoSource("youtube")} className="hidden" />
-              <Youtube className={`w-5 h-5 ${videoSource === "youtube" ? "text-red-500" : ""}`} />
-              <p className="font-bold text-xs">YouTube</p>
-            </label>
-            <label className={`flex-1 flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition-all ${videoSource === "r2" ? "bg-emerald-500/10 border-emerald-500/50 text-white" : "bg-slate-950 border-slate-800 text-slate-400 hover:border-slate-600"}`}>
-              <input type="radio" value="r2" checked={videoSource === "r2"} onChange={() => setVideoSource("r2")} className="hidden" />
-              <UploadCloud className={`w-5 h-5 ${videoSource === "r2" ? "text-emerald-500" : ""}`} />
-              <p className="font-bold text-xs">직접 업로드</p>
-            </label>
-          </div>
-
-          <div className="mt-4">
-            {videoSource === "youtube" ? (
-              <input
-                type="text"
-                value={videoUrl}
-                onChange={(e) => setVideoUrl(e.target.value)}
-                className="bg-slate-950 border border-slate-800 p-2.5 rounded-lg text-white text-sm focus:border-red-500 focus:outline-none transition-colors w-full"
-                placeholder="https://www.youtube.com/watch?v=..."
-              />
-            ) : (
-              <div className="flex flex-col gap-3 p-4 border-2 border-dashed border-slate-800 rounded-xl bg-slate-950/50 items-center justify-center min-h-[100px]">
-                {videoUrl && !videoUrl.includes("youtube") ? (
-                  <div className="text-center w-full">
-                    <FileVideo className="w-8 h-8 text-emerald-500 mx-auto mb-2" />
-                    <p className="text-[10px] font-mono text-emerald-400 truncate px-4">{videoUrl}</p>
-                    <label className="text-[10px] bg-slate-800 hover:bg-slate-700 text-white px-3 py-1.5 rounded cursor-pointer transition-colors inline-block mt-2">
-                      {uploadingVideo ? "업로드 중..." : "변경"}
-                      <input type="file" accept="video/*" onChange={handleVideoUpload} className="hidden" disabled={uploadingVideo} />
-                    </label>
-                  </div>
-                ) : (
-                  <label className="bg-emerald-500 hover:bg-emerald-400 text-black px-4 py-2 rounded-xl text-xs font-bold cursor-pointer transition-colors flex items-center justify-center gap-2">
-                    {uploadingVideo ? <Loader2 className="w-4 h-4 animate-spin" /> : <UploadCloud className="w-4 h-4" />}
-                    {uploadingVideo ? "업로드 중..." : "비디오 선택"}
-                    <input type="file" accept="video/*" onChange={handleVideoUpload} className="hidden" disabled={uploadingVideo} />
-                  </label>
-                )}
-              </div>
-            )}
-          </div>
-        </div>
-      )}
-
       <div className="flex flex-col gap-2">
-        <label className="text-sm font-semibold text-slate-400">지령 텍스트 내용</label>
+        <label className="text-sm font-semibold text-slate-400">지령 텍스트 내용 (기본)</label>
         <textarea
           name="closingInstruction"
           defaultValue={initialContent || ""}
-          className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white h-24 resize-none focus:border-primary focus:outline-none transition-colors text-sm"
-          placeholder="미션 완료 시 표시될 텍스트 지령을 입력하세요."
+          className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white h-24 resize-none focus:border-primary focus:outline-none transition-colors text-sm shadow-inner"
+          placeholder="텍스트 전용 모드이거나 슬라이드가 없을 때 표시될 텍스트 지령을 입력하세요."
         />
       </div>
     </div>

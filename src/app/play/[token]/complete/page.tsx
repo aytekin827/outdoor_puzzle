@@ -126,9 +126,7 @@ export default function CompletePage() {
         // Determine initial stage: Epilogue first, then Survey
         const parsedSlides = data.game?.epilogueSlidesJson ? JSON.parse(data.game.epilogueSlidesJson) : [];
         const epilogueExists = Boolean(
-          data.game?.epilogueType &&
-          ((data.game.epilogueType === "text" && data.game.epilogueContent) ||
-            (data.game.epilogueType === "slide" && parsedSlides.length > 0))
+          data.game?.epilogueType === "slide" && parsedSlides.length > 0
         );
 
         if (epilogueExists) {
@@ -164,23 +162,22 @@ export default function CompletePage() {
     loadResult();
   }, []);
 
-  const epilogueSlides = useMemo(() => {
+  const epilogueSlides: { imageUrl: string; description: string }[] = useMemo(() => {
     if (!result?.game?.epilogueSlidesJson) {
       return [];
     }
 
     try {
       const parsed = JSON.parse(result.game.epilogueSlidesJson);
-      return Array.isArray(parsed) ? parsed : [];
+      if (!Array.isArray(parsed)) return [];
+      return parsed.map((s: any) => typeof s === 'string' ? { imageUrl: s, description: "" } : s);
     } catch {
       return [];
     }
   }, [result?.game?.epilogueSlidesJson]);
 
   const hasEpilogue = Boolean(
-    result?.game?.epilogueType &&
-    ((result.game.epilogueType === "text" && result.game.epilogueContent) ||
-      (result.game.epilogueType === "slide" && epilogueSlides.length > 0)),
+    result?.game?.epilogueType === "slide" && epilogueSlides.length > 0
   );
 
   const isValidSurvey = useMemo(
@@ -204,8 +201,6 @@ export default function CompletePage() {
     );
   }
 
-  const timeSpentMs = result?.timeSpentMs || 0;
-
   const updateField = (field: string, value: string | number) => {
     setForm((current) => ({
       ...current,
@@ -213,20 +208,25 @@ export default function CompletePage() {
     }));
   };
 
-  const handleNextFromSummary = () => {
-    if (hasEpilogue) {
-      setStage("epilogue");
-      return;
-    }
-    setStage("survey");
-  };
-
   const handleNextFromEpilogue = () => {
-    if (result?.game?.epilogueType === "slide" && slideIndex < epilogueSlides.length - 1) {
-      setSlideIndex((current) => current + 1);
+    if (!hasEpilogue) {
+      setStage("survey");
       return;
     }
-    setStage("survey");
+
+    const currentSlide = epilogueSlides[slideIndex];
+
+    if (!showEpilogueText && currentSlide.description) {
+      setShowEpilogueText(true);
+      return;
+    }
+
+    if (slideIndex < epilogueSlides.length - 1) {
+      setSlideIndex((current) => current + 1);
+      setShowEpilogueText(false);
+    } else {
+      setStage("survey");
+    }
   };
 
   const handleSurveySubmit = async (event: React.FormEvent) => {
@@ -287,6 +287,8 @@ export default function CompletePage() {
     }
   };
 
+  const currentEpilogueSlide = epilogueSlides[slideIndex];
+
   return (
     <div className="flex-1 flex flex-col relative overflow-hidden h-full bg-transparent">
       {/* Fixed Header */}
@@ -306,35 +308,53 @@ export default function CompletePage() {
       </header>
 
       {/* Scrollable Content Area */}
-      <main className="flex-1 overflow-y-auto hide-scrollbar animate-in fade-in duration-500">
-        <div className="p-6">
+      <main className="flex-1 overflow-y-auto hide-scrollbar animate-in fade-in duration-500 relative">
+        <div className="p-6 h-full min-h-screen">
           <div className="absolute inset-0 bg-yellow-500/5 mix-blend-overlay pointer-events-none" />
 
           {stage === "epilogue" && hasEpilogue ? (
-            <div className="w-full max-w-lg md:max-w-xl mx-auto">
-              {result?.game?.epilogueType === "slide" ? (
-                <div
-                  className="relative overflow-hidden rounded-3xl border border-white/10 shadow-2xl"
-                  onClick={handleNextFromEpilogue}
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    key={slideIndex}
-                    src={epilogueSlides[slideIndex]}
-                    alt={`Epilogue slide ${slideIndex + 1}`}
-                    className="w-full aspect-[3/4] object-cover animate-in fade-in duration-500"
-                  />
-                  <div className="absolute inset-x-0 bottom-8 text-center pointer-events-none">
-                    <span className="bg-black/60 text-white/90 text-sm px-4 py-2 rounded-full inline-flex items-center gap-2 backdrop-blur-md">
-                      화면을 눌러 계속하기
-                      <ArrowRight className="w-4 h-4" />
-                    </span>
+            <div className="absolute inset-0 w-full h-full" onClick={handleNextFromEpilogue}>
+              {/* Background Image */}
+              <img
+                key={currentEpilogueSlide.imageUrl}
+                src={currentEpilogueSlide.imageUrl}
+                alt="Epilogue background"
+                className="absolute inset-0 w-full h-full object-cover animate-in fade-in duration-700"
+              />
+              
+              {/* Overlay Gradient (only when text is shown) */}
+              <div className={`absolute inset-0 bg-black/60 transition-opacity duration-500 ${showEpilogueText ? "opacity-100" : "opacity-0"}`} />
+
+              {/* Text Content */}
+              {showEpilogueText && currentEpilogueSlide.description && (
+                <div className="absolute inset-0 z-50 flex items-center justify-center p-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                  <div 
+                    className="w-full max-w-lg max-h-[70vh] overflow-y-auto hide-scrollbar bg-black/40 backdrop-blur-md rounded-3xl border border-white/10 p-8 shadow-2xl"
+                    onClick={(e) => e.stopPropagation()} // Allow scrolling without triggering next
+                  >
+                    <p className="text-white text-lg md:text-xl leading-relaxed whitespace-pre-wrap font-medium text-center">
+                      {currentEpilogueSlide.description}
+                    </p>
+                    
+                    <div className="mt-8 flex justify-center">
+                      <button 
+                        onClick={handleNextFromEpilogue}
+                        className="bg-emerald-500 hover:bg-emerald-400 text-black px-6 py-3 rounded-xl font-black text-sm flex items-center gap-2 transition-all active:scale-95"
+                      >
+                        {slideIndex < epilogueSlides.length - 1 ? "다음 슬라이드" : "설문 참여하기"}
+                        <ArrowRight className="w-4 h-4" />
+                      </button>
+                    </div>
                   </div>
                 </div>
-              ) : (
-                <div className="glass-panel p-8">
-                  <h1 className="text-2xl font-extrabold text-white mb-4">에필로그</h1>
-                  <p className="text-slate-200 whitespace-pre-wrap leading-relaxed">{result?.game?.epilogueContent}</p>
+              )}
+
+              {/* Click Guide */}
+              {!showEpilogueText && (
+                <div className="absolute bottom-12 left-0 right-0 text-center animate-bounce">
+                  <span className="bg-black/60 text-white/90 text-[10px] px-4 py-2 rounded-full inline-flex items-center gap-2 backdrop-blur-md border border-white/10 font-bold uppercase tracking-wider">
+                    탭하여 계속하기
+                  </span>
                 </div>
               )}
             </div>
@@ -343,8 +363,8 @@ export default function CompletePage() {
           {stage === "survey" ? (
             <div className="w-full max-w-lg md:max-w-xl mx-auto flex flex-col gap-6 py-4 pb-20">
               <div className="glass-panel p-6">
-                <h1 className="text-2xl font-bold text-white mb-2">게임 종료 설문</h1>
-                <p className="text-sm text-slate-400">마지막으로 간단한 만족도 조사를 부탁드립니다.</p>
+                <h1 className="text-2xl font-bold text-white mb-2 text-center">게임 종료 설문</h1>
+                <p className="text-sm text-slate-400 text-center">마지막으로 간단한 만족도 조사를 부탁드립니다.</p>
               </div>
 
               <div className="glass-panel p-6 flex flex-col gap-4">
@@ -355,21 +375,21 @@ export default function CompletePage() {
 
                 {photoUrl ? (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img src={photoUrl} alt="Completion photo" className="w-full rounded-xl border border-white/10 object-cover max-h-72" />
+                  <img src={photoUrl} alt="Completion photo" className="w-full rounded-xl border border-white/10 object-cover max-h-72 shadow-2xl" />
                 ) : (
-                  <div className="rounded-xl border border-dashed border-slate-700 min-h-40 flex items-center justify-center text-slate-500 text-sm">
+                  <div className="rounded-xl border border-dashed border-slate-700 min-h-40 flex items-center justify-center text-slate-500 text-sm bg-slate-900/50">
                     아직 업로드된 인증샷이 없습니다.
                   </div>
                 )}
 
-                <label className="w-full bg-white/10 text-white hover:bg-white/20 font-bold py-4 px-6 rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer border border-white/10">
+                <label className="w-full bg-white/10 text-white hover:bg-white/20 font-bold py-4 px-6 rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer border border-white/10 shadow-lg">
                   {uploading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Camera className="w-5 h-5" />}
                   {uploading ? "업로드 중..." : photoUploaded ? "다른 사진으로 변경" : "인증샷 업로드"}
                   <input type="file" accept="image/*" onChange={handlePhotoUpload} className="hidden" disabled={uploading} />
                 </label>
 
                 {photoUploaded ? (
-                  <div className="text-sm text-emerald-300 flex items-center gap-2 justify-center">
+                  <div className="text-sm text-emerald-300 flex items-center gap-2 justify-center font-bold">
                     <CheckCircle2 className="w-4 h-4" />
                     인증샷 전송 완료
                   </div>
@@ -386,7 +406,7 @@ export default function CompletePage() {
                   <select
                     value={form.ageRange}
                     onChange={(event) => updateField("ageRange", event.target.value)}
-                    className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white"
+                    className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white focus:border-emerald-500/50 focus:outline-none transition-colors"
                   >
                     <option value="">선택해주세요</option>
                     {ageOptions.map((option) => (
@@ -402,7 +422,7 @@ export default function CompletePage() {
                   <select
                     value={form.groupType}
                     onChange={(event) => updateField("groupType", event.target.value)}
-                    className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white"
+                    className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white focus:border-emerald-500/50 focus:outline-none transition-colors"
                   >
                     <option value="">선택해주세요</option>
                     {groupOptions.map((option) => (
@@ -419,7 +439,7 @@ export default function CompletePage() {
                     <input
                       value={form.groupTypeOther}
                       onChange={(event) => updateField("groupTypeOther", event.target.value)}
-                      className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white"
+                      className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white focus:border-emerald-500/50 focus:outline-none transition-colors"
                       placeholder="직접 입력해주세요"
                     />
                   </div>
@@ -430,7 +450,7 @@ export default function CompletePage() {
                   <select
                     value={form.gender}
                     onChange={(event) => updateField("gender", event.target.value)}
-                    className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white"
+                    className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white focus:border-emerald-500/50 focus:outline-none transition-colors"
                   >
                     <option value="">선택해주세요</option>
                     {genderOptions.map((option) => (
@@ -458,7 +478,7 @@ export default function CompletePage() {
                   <textarea
                     value={form.comment}
                     onChange={(event) => updateField("comment", event.target.value)}
-                    className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white h-28 resize-none"
+                    className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white h-28 resize-none focus:border-emerald-500/50 focus:outline-none transition-colors"
                     placeholder="느낀 점이나 개선 의견을 남겨주세요"
                   />
                 </div>
