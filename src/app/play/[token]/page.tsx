@@ -10,7 +10,6 @@ export default function PlayLandingPage() {
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [nickname, setNickname] = useState("");
   const [claiming, setClaiming] = useState(false);
   const [game, setGame] = useState<{ title: string; description: string } | null>(null);
 
@@ -38,7 +37,7 @@ export default function PlayLandingPage() {
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ token })
             });
-            
+
             if (resumeRes.ok) {
               router.push(`/play/${token}/missions`);
               return;
@@ -46,7 +45,7 @@ export default function PlayLandingPage() {
           } catch (err) {
             console.error("Failed to resume session:", err);
           }
-          
+
           setError("유효하지 않은 코드입니다.");
           return;
         }
@@ -62,16 +61,15 @@ export default function PlayLandingPage() {
     checkToken();
   }, [token]);
 
-  const handleClaim = async (e: React.FormEvent) => {
+  const handleClaim = async (e: React.MouseEvent | React.FormEvent) => {
     e.preventDefault();
-    if (!nickname.trim()) return;
 
     setClaiming(true);
     try {
       const res = await fetch("/api/session/claim", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token, nickname: nickname.trim() })
+        body: JSON.stringify({ token })
       });
       const data = await res.json();
 
@@ -81,8 +79,8 @@ export default function PlayLandingPage() {
         return;
       }
 
-      // Navigate to start screen
-      router.push(`/play/${token}/start`);
+      // Navigate directly to prologue
+      router.push(`/play/${token}/prologue`);
     } catch (err) {
       setError("입장 중 오류가 발생했습니다.");
       setClaiming(false);
@@ -114,42 +112,30 @@ export default function PlayLandingPage() {
     <div className="flex-1 flex flex-col p-6 animate-in fade-in duration-700 justify-center">
       <div className="glass-panel p-8 w-full max-w-sm md:max-w-lg lg:max-w-xl mx-auto flex flex-col">
         <div className="mb-8 text-center">
-          <h2 className="text-primary font-bold tracking-widest text-sm mb-2 uppercase">Outdoor Escape</h2>
+          <h2 className="text-primary font-bold tracking-widest text-sm mb-2 uppercase italic">secret trail</h2>
           <h1 className="text-3xl font-extrabold text-white leading-tight">{game?.title}</h1>
-          <p className="text-slate-400 mt-2 text-sm">{game?.description}</p>
         </div>
 
-        <form onSubmit={handleClaim} className="flex flex-col gap-4">
-          <div className="flex flex-col gap-2">
-            <label htmlFor="nickname" className="text-sm font-medium text-slate-300">
-              닉네임 입력
-            </label>
-            <input
-              id="nickname"
-              type="text"
-              required
-              maxLength={12}
-              value={nickname}
-              onChange={(e) => setNickname(e.target.value)}
-              placeholder="멋진 닉네임을 지어주세요"
-              className="px-4 py-3 rounded-xl bg-slate-900/50 border border-slate-700 text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 flex-1 focus:ring-primary focus:border-transparent transition-all"
-            />
-          </div>
+        <div className="flex flex-col gap-6 items-center">
+          <p className="text-slate-300 text-center leading-relaxed">
+            {game?.description}<br />
+            준비가 되셨나요?
+          </p>
           <button
-            type="submit"
-            disabled={!nickname.trim() || claiming}
-            className="mt-4 group relative flex items-center justify-center gap-2 w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-4 px-6 rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden"
+            onClick={handleClaim}
+            disabled={claiming}
+            className="group relative flex items-center justify-center gap-2 w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-4 px-6 rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden"
           >
             {claiming ? (
               <Loader2 className="w-5 h-5 animate-spin" />
             ) : (
               <>
-                <span>게임 준비 완료</span>
+                <span>게임 시작하기</span>
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </>
             )}
           </button>
-        </form>
+        </div>
       </div>
     </div>
   );

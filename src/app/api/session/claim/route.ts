@@ -7,10 +7,11 @@ import { createPlaySessionForPlayer } from "@/lib/game-session";
 
 export async function POST(req: NextRequest) {
   try {
-    const { token, nickname } = await req.json();
+    let { token, nickname } = await req.json();
+    nickname = nickname?.trim() || "탐험가";
 
-    if (!token || !nickname) {
-      return NextResponse.json({ error: "Missing token or nickname" }, { status: 400 });
+    if (!token) {
+      return NextResponse.json({ error: "Missing token" }, { status: 400 });
     }
 
     const qrTokenResult = await db.select().from(qrTokens).where(eq(qrTokens.token, token)).all();

@@ -22,11 +22,9 @@ export default function Home() {
   return (
     <div className="flex-1 flex flex-col items-center justify-center p-6 text-center animate-in fade-in duration-1000">
       <div className="glass-panel p-10 w-full max-w-sm flex flex-col items-center border border-primary/20 shadow-[0_0_50px_rgba(59,130,246,0.15)]">
-        <h2 className="text-primary font-bold tracking-[0.2em] text-xs mb-3 uppercase">Outdoor Escape</h2>
-        <h1 className="text-4xl font-black text-white leading-tight mb-4 italic tracking-tighter">
-          야외
-          <br />
-          방탈출
+        <h2 className="text-primary font-bold tracking-[0.2em] text-xs mb-3 italic uppercase">Secret Trail</h2>
+        <h1 className="text-4xl font-black text-white leading-tight mb-4 tracking-tighter">
+          시크릿 트레일
         </h1>
         <form onSubmit={handleSubmit} className="w-full flex flex-col gap-4">
           <div className="text-left">
@@ -57,7 +55,7 @@ export default function Home() {
       </div>
 
       <div className="mt-12 text-slate-600 text-[10px] tracking-widest uppercase font-bold">
-        © 2026 Minjae-dev. All rights reserved.
+        © 2026 Secret-Trail. All rights reserved.
       </div>
     </div>
   );

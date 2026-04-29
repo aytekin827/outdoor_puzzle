@@ -1,9 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useRouter, useParams } from "next/navigation";
-import { Loader2, Lock, CheckCircle2, ChevronRight, Map } from "lucide-react";
-import { useRef } from "react";
+import { CheckCircle2, ChevronRight, Loader2, Lock, Map } from "lucide-react";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 
 type MissionItem = {
   id: string;
@@ -20,7 +19,7 @@ export default function MissionListPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [missions, setMissions] = useState<MissionItem[]>([]);
-  
+
   // Drag-to-scroll state
   const scrollRef = useRef<HTMLDivElement>(null);
   const isDragging = useRef(false);
@@ -69,11 +68,11 @@ export default function MissionListPage() {
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!isDragging.current || !scrollRef.current) return;
     e.preventDefault();
-    
+
     const x = e.pageX - scrollRef.current.offsetLeft;
     const walk = (x - startX.current) * 1.5; // Slightly lower multiplier for better control
     moveDistance.current = Math.abs(x - startX.current);
-    
+
     // Use requestAnimationFrame for smoother updates
     requestAnimationFrame(() => {
       if (scrollRef.current) {
@@ -85,9 +84,9 @@ export default function MissionListPage() {
   const handleCardClick = (mission: MissionItem) => {
     // If the mouse moved more than 10px, don't trigger click
     if (moveDistance.current > 10) return;
-    
+
     if (mission.isLocked) return;
-    
+
     if (mission.type === "prologue") {
       router.push(`/play/${token}/prologue`);
     } else if (mission.type === "epilogue") {
@@ -110,13 +109,13 @@ export default function MissionListPage() {
       <header className="p-6 pb-2">
         <div className="flex items-center gap-2 text-primary mb-1">
           <Map className="w-4 h-4" />
-          <span className="text-[10px] font-black uppercase tracking-[0.2em]">Mission Map</span>
+          <span className="text-[10px] font-black uppercase italic tracking-[0.2em]">Mission Map</span>
         </div>
-        <h1 className="text-3xl font-black text-white italic tracking-tighter">임무 목록</h1>
+        <h1 className="text-3xl font-black text-white tracking-tighter">임무 목록</h1>
       </header>
 
       {/* Horizontal Slider Container */}
-      <div 
+      <div
         ref={scrollRef}
         onMouseDown={handleMouseDown}
         onMouseLeave={handleMouseLeave}
@@ -125,8 +124,8 @@ export default function MissionListPage() {
         className="flex-1 overflow-x-auto overflow-y-hidden snap-x snap-mandatory hide-scrollbar flex items-center px-6 gap-6 cursor-grab active:cursor-grabbing"
       >
         {missions.map((mission, index) => (
-          <div 
-            key={mission.id} 
+          <div
+            key={mission.id}
             className="snap-center shrink-0 w-[85vw] max-w-[340px] aspect-[3/4] relative pointer-events-auto"
           >
             <button
@@ -143,8 +142,8 @@ export default function MissionListPage() {
               {/* Image Section */}
               <div className="relative h-[55%] w-full overflow-hidden bg-slate-800 pointer-events-none">
                 {mission.imageUrl ? (
-                  <img 
-                    src={mission.imageUrl} 
+                  <img
+                    src={mission.imageUrl}
                     alt={mission.title}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
@@ -153,12 +152,12 @@ export default function MissionListPage() {
                     <Map className="w-12 h-12 text-slate-700" />
                   </div>
                 )}
-                
+
                 {/* Status Badges Overlay */}
                 <div className="absolute top-4 left-4 flex gap-2">
                   <div className={`
                     px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest backdrop-blur-md
-                    ${mission.isCompleted ? 'bg-emerald-500/80 text-white' : 
+                    ${mission.isCompleted ? 'bg-emerald-500/80 text-white' :
                       mission.isLocked ? 'bg-slate-950/60 text-slate-400' : 'bg-primary/80 text-white'}
                   `}>
                     {mission.isCompleted ? 'Clear' : mission.isLocked ? 'Locked' : 'Active'}
@@ -180,11 +179,11 @@ export default function MissionListPage() {
                   <span className="text-primary font-black text-sm italic">#0{index + 1}</span>
                   <div className="h-px flex-1 bg-white/5" />
                 </div>
-                
+
                 <h3 className="text-xl font-black text-white mb-2 leading-tight uppercase tracking-tight">
                   {mission.isLocked ? '비밀 임무' : mission.title}
                 </h3>
-                
+
                 <p className="text-slate-400 text-sm leading-relaxed line-clamp-3">
                   {mission.isLocked ? '이전 단계를 완료하여 임무를 해제하세요.' : (mission.description || '임무에 대한 설명이 없습니다.')}
                 </p>
@@ -212,7 +211,7 @@ export default function MissionListPage() {
       <footer className="p-8 text-center">
         <div className="inline-flex items-center gap-4 bg-slate-900/50 px-4 py-2 rounded-full border border-white/5">
           {missions.map((m, i) => (
-            <div 
+            <div
               key={m.id}
               className={`w-1.5 h-1.5 rounded-full transition-all ${m.isCompleted ? 'bg-emerald-500' : m.isLocked ? 'bg-slate-800' : 'bg-primary scale-150'}`}
             />

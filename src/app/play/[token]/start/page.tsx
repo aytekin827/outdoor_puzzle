@@ -79,7 +79,7 @@ export default function StartPage() {
           disabled={starting}
           className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-4 px-6 rounded-xl transition-all shadow-lg hover:shadow-primary/25 disabled:opacity-50 flex items-center justify-center gap-2"
         >
-          {starting ? <Loader2 className="w-5 h-5 animate-spin" /> : "미션 시작하기"}
+          {starting ? <Loader2 className="w-5 h-5 animate-spin" /> : "시작하기"}
         </button>
       </div>
     </div>
