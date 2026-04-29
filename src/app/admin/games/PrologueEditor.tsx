@@ -91,7 +91,7 @@ export function PrologueEditor({ initialSlidesJson }: PrologueEditorProps) {
           <div>
             <label className="bg-emerald-500 hover:bg-emerald-400 text-black px-4 py-2 rounded-lg text-sm font-bold cursor-pointer transition-colors flex items-center gap-2 shadow-lg shadow-emerald-500/20">
               {uploadingSlide ? <Loader2 className="w-4 h-4 animate-spin" /> : <UploadCloud className="w-4 h-4" />}
-              {uploadingSlide ? "업로드 중..." : "이미지 추가"}
+              {uploadingSlide ? "업로드 중..." : "Upload"}
               <input type="file" multiple accept="image/*" onChange={handleSlideUpload} className="hidden" disabled={uploadingSlide} />
             </label>
           </div>
@@ -128,7 +128,7 @@ export function PrologueEditor({ initialSlidesJson }: PrologueEditorProps) {
                     </button>
                   </div>
                 </div>
-                
+
                 <div className="flex flex-col gap-2">
                   <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">슬라이드 설명 (텍스트)</label>
                   <textarea

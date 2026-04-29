@@ -116,7 +116,7 @@ export function MissionContentEditor({ initialType, initialVideoUrl, initialSlid
             <p className="text-slate-200 font-bold mb-1 text-sm">슬라이드 관리 (이미지 + 탭 시 나타날 설명)</p>
             <label className="bg-emerald-500 hover:bg-emerald-400 text-black px-3 py-1.5 rounded-lg text-xs font-bold cursor-pointer transition-colors flex items-center gap-2">
               {uploadingSlide ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <UploadCloud className="w-3.5 h-3.5" />}
-              {uploadingSlide ? "업로드 중..." : "이미지 추가"}
+              {uploadingSlide ? "업로드 중..." : "Upload"}
               <input type="file" multiple accept="image/*" onChange={handleSlideUpload} className="hidden" disabled={uploadingSlide} />
             </label>
           </div>
@@ -149,7 +149,7 @@ export function MissionContentEditor({ initialType, initialVideoUrl, initialSlid
                       </button>
                     </div>
                   </div>
-                  
+
                   <textarea
                     placeholder="이미지 탭 시 노출될 텍스트 설명 (비워두면 이미지만 표시)"
                     value={slide.description}

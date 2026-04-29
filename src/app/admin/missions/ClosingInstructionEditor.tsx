@@ -23,7 +23,7 @@ export function ClosingInstructionEditor({ initialType, initialSlidesJson, initi
         if (Array.isArray(parsed)) {
           return parsed.map(s => typeof s === 'string' ? { imageUrl: s, description: "" } : s);
         }
-      } catch (_) {}
+      } catch (_) { }
     }
     return [];
   });
@@ -116,7 +116,7 @@ export function ClosingInstructionEditor({ initialType, initialSlidesJson, initi
             <div>
               <label className="bg-emerald-500 hover:bg-emerald-400 text-black px-3 py-1.5 rounded-lg text-xs font-bold cursor-pointer transition-colors flex items-center gap-2">
                 {uploadingSlide ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <UploadCloud className="w-3.5 h-3.5" />}
-                {uploadingSlide ? "업로드 중..." : "이미지 추가"}
+                {uploadingSlide ? "업로드 중..." : "Upload"}
                 <input type="file" multiple accept="image/*" onChange={handleSlideUpload} className="hidden" disabled={uploadingSlide} />
               </label>
             </div>
@@ -134,10 +134,10 @@ export function ClosingInstructionEditor({ initialType, initialSlidesJson, initi
                     <div className="w-24 h-24 bg-slate-900 rounded-lg overflow-hidden flex-shrink-0 border border-slate-700 shadow-inner">
                       <img src={slide.imageUrl} alt={`Slide ${i + 1}`} className="w-full h-full object-cover" />
                     </div>
-                    
+
                     <div className="flex-1 flex flex-col gap-2">
                       <div className="flex items-center justify-between">
-                        <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Slide #{i+1}</span>
+                        <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Slide #{i + 1}</span>
                         <div className="flex items-center gap-1 opacity-100 sm:opacity-50 group-hover:opacity-100 transition-opacity">
                           <button type="button" onClick={() => moveSlide(i, -1)} disabled={i === 0} className="p-1.5 text-slate-400 hover:text-white disabled:opacity-30 hover:bg-slate-800 rounded-md transition-colors">
                             <ArrowUp className="w-4 h-4" />
@@ -150,7 +150,7 @@ export function ClosingInstructionEditor({ initialType, initialSlidesJson, initi
                           </button>
                         </div>
                       </div>
-                      
+
                       <textarea
                         value={slide.description}
                         onChange={(e) => updateSlideDescription(i, e.target.value)}

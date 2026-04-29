@@ -83,7 +83,7 @@ export function MissionImageEditor({
         <div className="flex items-center gap-2">
           <label className="bg-emerald-500 hover:bg-emerald-400 text-black px-4 py-2 rounded-lg text-sm font-bold cursor-pointer transition-colors flex items-center gap-2 shadow-lg shadow-emerald-500/20">
             {uploading ? <Loader2 className="w-4 h-4 animate-spin" /> : <UploadCloud className="w-4 h-4" />}
-            {uploading ? "Uploading..." : "Upload Image"}
+            {uploading ? "Uploading..." : "Upload"}
             <input type="file" accept="image/*" onChange={handleUpload} className="hidden" disabled={uploading} />
           </label>
           {hasImage && (
