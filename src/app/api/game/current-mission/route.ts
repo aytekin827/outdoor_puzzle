@@ -12,7 +12,7 @@ import {
   logLocationEvent,
 } from "@/lib/game-session";
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
     const { player, playSession } = await getPlayerSessionContext();
     if (!player) {
@@ -24,10 +24,15 @@ export async function GET() {
       return NextResponse.json({ error: "Session not found" }, { status: 404 });
     }
 
+    const { searchParams } = new URL(req.url);
+    const requestedMissionId = searchParams.get("missionId");
+
     const gameMissions = await getOrderedGameMissions(player.gameId);
     const completedMissionIds = await getCompletedMissionIds(session.id, player.id);
 
-    const currentMission = gameMissions.find(m => !completedMissionIds.has(m.id));
+    let currentMission = requestedMissionId 
+      ? gameMissions.find(m => m.id === requestedMissionId)
+      : gameMissions.find(m => !completedMissionIds.has(m.id));
     const now = Date.now();
 
     if (currentMission) {
@@ -42,11 +47,17 @@ export async function GET() {
       }).where(eq(playSessions.id, session.id)).run();
     }
 
+    const isSolved = currentMission ? completedMissionIds.has(currentMission.id) : false;
+
     return NextResponse.json({ 
-      currentMission: currentMission || null,
+      currentMission: currentMission ? {
+        ...currentMission,
+        answer: isSolved ? currentMission.answer : undefined
+      } : null,
       totalMissions: gameMissions.length,
       completedCount: gameMissions.filter(m => completedMissionIds.has(m.id)).length,
-      isCompleted: !currentMission
+      isCompleted: !requestedMissionId && !currentMission,
+      isSolved
     });
 
   } catch (err) {

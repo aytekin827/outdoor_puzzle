@@ -58,7 +58,11 @@ export async function getPlayerSessionContext() {
   if (!playSession) {
     playSession = await getLatestPlaySession(player.id);
     if (playSession) {
-      cookieStore.set("playSessionId", playSession.id, { httpOnly: true, path: "/" });
+      cookieStore.set("playSessionId", playSession.id, {
+        httpOnly: true,
+        path: "/",
+        maxAge: 365 * 24 * 60 * 60,
+      });
     }
   }
 

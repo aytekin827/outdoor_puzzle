@@ -53,9 +53,10 @@ export async function POST(req: NextRequest) {
 
     // Set cookie
     const cookieStore = await cookies();
-    cookieStore.set("playerId", playerId, { httpOnly: true, path: "/" });
+    const maxAge = 365 * 24 * 60 * 60; // 1 year
+    cookieStore.set("playerId", playerId, { httpOnly: true, path: "/", maxAge });
     if (playSession) {
-      cookieStore.set("playSessionId", playSession.id, { httpOnly: true, path: "/" });
+      cookieStore.set("playSessionId", playSession.id, { httpOnly: true, path: "/", maxAge });
     }
     
     return NextResponse.json({ success: true, playerId, playSessionId: playSession?.id ?? null });

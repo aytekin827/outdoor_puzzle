@@ -1,18 +1,16 @@
 "use client";
 
 import {
+  ArrowLeft,
   ArrowRight,
-  Award,
   Camera,
   CheckCircle2,
-  Clock,
   Loader2,
   Send,
   Star,
-  Target,
 } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 const ageOptions = ["10대", "20대", "30대", "40대", "50대", "60대+"];
 const groupOptions = ["교회", "학교", "단체", "친구", "가족", "커플", "other"];
@@ -116,12 +114,28 @@ export default function CompletePage() {
     comment: "",
   });
 
+  const formRef = useRef<HTMLFormElement>(null);
+
   useEffect(() => {
     async function loadResult() {
       try {
         const response = await fetch("/api/game/result");
         const data = await response.json();
         setResult(data);
+
+        // Determine initial stage: Epilogue first, then Survey
+        const parsedSlides = data.game?.epilogueSlidesJson ? JSON.parse(data.game.epilogueSlidesJson) : [];
+        const epilogueExists = Boolean(
+          data.game?.epilogueType &&
+          ((data.game.epilogueType === "text" && data.game.epilogueContent) ||
+            (data.game.epilogueType === "slide" && parsedSlides.length > 0))
+        );
+
+        if (epilogueExists) {
+          setStage("epilogue");
+        } else {
+          setStage("survey");
+        }
 
         if (data.survey) {
           setSubmitted(true);
@@ -191,10 +205,6 @@ export default function CompletePage() {
   }
 
   const timeSpentMs = result?.timeSpentMs || 0;
-  const minutes = Math.floor(timeSpentMs / 60000);
-  const seconds = Math.floor((timeSpentMs % 60000) / 1000);
-  const totalAttempts =
-    result?.missionStats?.reduce((total, mission) => total + mission.attempts, 0) || 0;
 
   const updateField = (field: string, value: string | number) => {
     setForm((current) => ({
@@ -237,7 +247,7 @@ export default function CompletePage() {
         throw new Error("Survey save failed");
       }
 
-      setSubmitted(true);
+      router.push(`/play/${token}/missions`);
     } catch (error) {
       console.error(error);
       alert("설문 저장에 실패했습니다.");
@@ -278,127 +288,60 @@ export default function CompletePage() {
   };
 
   return (
-    <div className="flex-1 flex flex-col justify-center p-6 relative animate-in slide-in-from-bottom-10 fade-in duration-700">
-      <div className="absolute inset-0 bg-yellow-500/5 mix-blend-overlay pointer-events-none" />
-
-      {stage === "summary" ? (
-        <div className="glass-panel p-8 flex flex-col items-center w-full max-w-md md:max-w-xl mx-auto relative overflow-hidden z-10 border border-yellow-500/20 shadow-[0_0_40px_rgba(234,179,8,0.1)]">
-          <div className="w-24 h-24 bg-yellow-500/20 rounded-full flex items-center justify-center mb-6 shadow-inner ring-4 ring-yellow-500/30">
-            <Award className="w-12 h-12 text-yellow-500" />
-          </div>
-
-          <h2 className="text-primary font-bold tracking-widest text-sm mb-2 uppercase">MISSION COMPLETED</h2>
-          <h1 className="text-3xl font-extrabold text-white mb-2 text-center leading-tight">게임 완료</h1>
-          <p className="text-slate-300 text-center mb-8">
-            <span className="font-bold text-white">{result?.nickname}</span> 님의 플레이 기록이 저장되었습니다.
-          </p>
-
-          <div className="w-full grid grid-cols-2 gap-4 mb-8">
-            <div className="bg-black/30 p-4 rounded-xl flex flex-col items-center border border-white/5">
-              <Clock className="w-6 h-6 text-blue-400 mb-2" />
-              <span className="text-xs text-slate-400 mb-1">총 소요 시간</span>
-              <span className="text-xl font-bold text-white">
-                {minutes}분 {seconds}초
-              </span>
-            </div>
-            <div className="bg-black/30 p-4 rounded-xl flex flex-col items-center border border-white/5">
-              <Target className="w-6 h-6 text-rose-400 mb-2" />
-              <span className="text-xs text-slate-400 mb-1">총 시도 횟수</span>
-              <span className="text-xl font-bold text-white">{totalAttempts}회</span>
-            </div>
-          </div>
-
-          <div className="w-full">
-            <h3 className="text-sm font-semibold text-slate-300 mb-3 ml-1">미션별 시도 기록</h3>
-            <div className="space-y-2">
-              {result?.missionStats?.map((mission, index) => (
-                <div
-                  key={mission.missionId || index}
-                  className="flex items-center justify-between text-sm bg-slate-900/50 p-3 rounded-lg border border-slate-800"
-                >
-                  <span className="text-slate-200 truncate pr-2 flex-1">
-                    <span className="text-slate-500 mr-2">{index + 1}.</span>
-                    {mission.title}
-                  </span>
-                  <span className="font-medium text-slate-400 flex-shrink-0">{mission.attempts}회 시도</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
+    <div className="flex-1 flex flex-col relative overflow-hidden h-full bg-transparent">
+      {/* Fixed Header */}
+      <header className="z-50 flex items-center justify-between h-16 px-6 border-b border-white/5 backdrop-blur-md bg-black/40">
+        <div className="flex items-center gap-4">
           <button
-            type="button"
-            onClick={handleNextFromSummary}
-            className="mt-8 w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-4 px-6 rounded-xl transition-all flex items-center justify-center gap-2"
+            onClick={() => router.push(`/play/${token}/missions`)}
+            className="p-2 -ml-2 hover:bg-white/10 rounded-full transition-colors group"
           >
-            다음으로 이동
-            <ArrowRight className="w-5 h-5" />
+            <ArrowLeft className="w-6 h-6 text-slate-400 group-hover:text-white transition-colors" />
           </button>
         </div>
-      ) : null}
 
-      {stage === "epilogue" && hasEpilogue ? (
-        <>
-          {result?.game?.epilogueType === "slide" ? (
-            <div
-              className="w-full max-w-md md:max-w-xl lg:max-w-2xl mx-auto relative overflow-hidden rounded-3xl border border-white/10 shadow-2xl"
-              onClick={handleNextFromEpilogue}
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                key={slideIndex}
-                src={epilogueSlides[slideIndex]}
-                alt={`Epilogue slide ${slideIndex + 1}`}
-                className="w-full min-h-[70dvh] object-cover animate-in fade-in duration-500"
-              />
-              <div className="absolute inset-x-0 bottom-8 text-center pointer-events-none">
-                <span className="bg-black/60 text-white/90 text-sm px-4 py-2 rounded-full inline-flex items-center gap-2 backdrop-blur-md">
-                  화면을 눌러 계속하기
-                  <ArrowRight className="w-4 h-4" />
-                </span>
-              </div>
-            </div>
-          ) : (
-            <div className="glass-panel p-8 w-full max-w-md md:max-w-xl mx-auto">
-              <h1 className="text-3xl font-extrabold text-white mb-4">Epilogue</h1>
-              <p className="text-slate-200 whitespace-pre-wrap leading-relaxed">{result?.game?.epilogueContent}</p>
-              <button
-                type="button"
-                onClick={handleNextFromEpilogue}
-                className="mt-8 w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-4 px-6 rounded-xl transition-all flex items-center justify-center gap-2"
-              >
-                설문으로 이동
-                <ArrowRight className="w-5 h-5" />
-              </button>
-            </div>
-          )}
-        </>
-      ) : null}
+        <div className="glass-panel px-3 py-1.5 font-black text-[11px] tracking-[0.2em] text-slate-300 border-white/5 uppercase">
+          {stage === "epilogue" ? "Epilogue" : "Survey"}
+        </div>
+      </header>
 
-      {stage === "survey" ? (
-        <div className="w-full max-w-md md:max-w-xl mx-auto flex flex-col gap-6 py-4">
-          {submitted ? (
-            <div className="glass-panel p-10 flex flex-col items-center text-center animate-in zoom-in duration-500">
-              <div className="w-20 h-20 bg-emerald-500/20 rounded-full flex items-center justify-center mb-6 shadow-[0_0_20px_rgba(16,185,129,0.2)]">
-                <CheckCircle2 className="w-10 h-10 text-emerald-500" />
-              </div>
-              <h1 className="text-2xl font-bold text-white mb-3">설문 제출 완료</h1>
-              <p className="text-slate-300 mb-8 leading-relaxed">
-                설문에 참여해주셔서 감사합니다.<br />
-                제공해주신 의견은 더 나은 게임 환경을 만드는 데<br />
-                소중한 자료로 활용하겠습니다.
-              </p>
+      {/* Scrollable Content Area */}
+      <main className="flex-1 overflow-y-auto hide-scrollbar animate-in fade-in duration-500">
+        <div className="p-6">
+          <div className="absolute inset-0 bg-yellow-500/5 mix-blend-overlay pointer-events-none" />
 
-              <button
-                type="button"
-                onClick={() => router.push(`/`)}
-                className="w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-4 px-6 rounded-xl transition-all border border-slate-700"
-              >
-                처음 화면으로 돌아가기
-              </button>
+          {stage === "epilogue" && hasEpilogue ? (
+            <div className="w-full max-w-lg md:max-w-xl mx-auto">
+              {result?.game?.epilogueType === "slide" ? (
+                <div
+                  className="relative overflow-hidden rounded-3xl border border-white/10 shadow-2xl"
+                  onClick={handleNextFromEpilogue}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    key={slideIndex}
+                    src={epilogueSlides[slideIndex]}
+                    alt={`Epilogue slide ${slideIndex + 1}`}
+                    className="w-full aspect-[3/4] object-cover animate-in fade-in duration-500"
+                  />
+                  <div className="absolute inset-x-0 bottom-8 text-center pointer-events-none">
+                    <span className="bg-black/60 text-white/90 text-sm px-4 py-2 rounded-full inline-flex items-center gap-2 backdrop-blur-md">
+                      화면을 눌러 계속하기
+                      <ArrowRight className="w-4 h-4" />
+                    </span>
+                  </div>
+                </div>
+              ) : (
+                <div className="glass-panel p-8">
+                  <h1 className="text-2xl font-extrabold text-white mb-4">에필로그</h1>
+                  <p className="text-slate-200 whitespace-pre-wrap leading-relaxed">{result?.game?.epilogueContent}</p>
+                </div>
+              )}
             </div>
-          ) : (
-            <>
+          ) : null}
+
+          {stage === "survey" ? (
+            <div className="w-full max-w-lg md:max-w-xl mx-auto flex flex-col gap-6 py-4 pb-20">
               <div className="glass-panel p-6">
                 <h1 className="text-2xl font-bold text-white mb-2">게임 종료 설문</h1>
                 <p className="text-sm text-slate-400">마지막으로 간단한 만족도 조사를 부탁드립니다.</p>
@@ -433,7 +376,11 @@ export default function CompletePage() {
                 ) : null}
               </div>
 
-              <form onSubmit={handleSurveySubmit} className="glass-panel p-6 flex flex-col gap-5">
+              <form
+                ref={formRef}
+                onSubmit={handleSurveySubmit}
+                className="glass-panel p-6 flex flex-col gap-5 mb-10"
+              >
                 <div className="flex flex-col gap-2">
                   <label className="text-sm font-semibold text-slate-300">연령대</label>
                   <select
@@ -515,36 +462,59 @@ export default function CompletePage() {
                     placeholder="느낀 점이나 개선 의견을 남겨주세요"
                   />
                 </div>
-
-                <div className="pt-4">
-                  <button
-                    type="submit"
-                    disabled={!isValidSurvey || saving}
-                    className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-5 px-6 rounded-xl transition-all disabled:opacity-50 flex items-center justify-center gap-2 shadow-lg shadow-primary/20"
-                  >
-                    {saving ? (
-                      <Loader2 className="w-5 h-5 animate-spin" />
-                    ) : (
-                      <>
-                        <Send className="w-5 h-5" />
-                        설문 완료 및 게임 종료
-                      </>
-                    )}
-                  </button>
-                </div>
               </form>
-
-              <button
-                type="button"
-                onClick={() => router.push(`/`)}
-                className="text-sm text-slate-500 hover:text-white transition-colors py-4 text-center"
-              >
-                처음 화면으로 돌아가기
-              </button>
-            </>
-          )}
+            </div>
+          ) : null}
         </div>
-      ) : null}
+      </main>
+
+      {/* Fixed Footer */}
+      <footer className="z-50 p-4 pb-8 bg-gradient-to-t from-black via-black/95 to-transparent border-t border-white/5">
+        <div className="max-w-lg md:max-w-xl mx-auto w-full flex flex-col gap-4">
+          {stage === "epilogue" ? (
+            <button
+              type="button"
+              onClick={handleNextFromEpilogue}
+              className="w-full bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold py-4 px-6 rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 active:scale-95"
+            >
+              설문으로 이동
+              <ArrowRight className="w-5 h-5" />
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={() => formRef.current?.requestSubmit()}
+              disabled={!isValidSurvey || saving}
+              className="w-full bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold py-4 px-6 rounded-xl transition-all disabled:opacity-50 flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 active:scale-95"
+            >
+              {saving ? (
+                <Loader2 className="w-6 h-6 animate-spin" />
+              ) : (
+                <>
+                  설문 완료
+                  <Send className="w-5 h-5" />
+                </>
+              )}
+            </button>
+          )}
+
+          <p className="text-[10px] text-slate-600 font-black uppercase tracking-[0.3em] flex items-center justify-center gap-3">
+            <span className="w-1 h-1 bg-slate-800 rounded-full" />
+            Secret Trail
+            <span className="w-1 h-1 bg-slate-800 rounded-full" />
+          </p>
+        </div>
+      </footer>
+
+      <style jsx global>{`
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .hide-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}</style>
     </div>
   );
 }

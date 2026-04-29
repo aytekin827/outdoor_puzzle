@@ -31,28 +31,23 @@ export default function PlayLandingPage() {
         }
 
         if (data.qrToken.isUsed) {
-          const usedAt = data.qrToken.usedAt;
-          const oneDayInMs = 24 * 60 * 60 * 1000;
-          
-          if (usedAt && Date.now() - usedAt < oneDayInMs) {
-            // Try to resume session for this token
-            try {
-              const resumeRes = await fetch("/api/session/resume", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ token })
-              });
-              
-              if (resumeRes.ok) {
-                router.push(`/play/${token}/missions`);
-                return;
-              }
-            } catch (err) {
-              console.error("Failed to resume session:", err);
+          // Try to resume session for this token
+          try {
+            const resumeRes = await fetch("/api/session/resume", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ token })
+            });
+            
+            if (resumeRes.ok) {
+              router.push(`/play/${token}/missions`);
+              return;
             }
+          } catch (err) {
+            console.error("Failed to resume session:", err);
           }
           
-          setError("이미 사용된 코드입니다. (사용 후 24시간이 경과했거나 유효하지 않습니다)");
+          setError("유효하지 않은 코드입니다.");
           return;
         }
 

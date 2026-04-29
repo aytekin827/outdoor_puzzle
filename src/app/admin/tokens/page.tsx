@@ -13,6 +13,7 @@ export default async function TokensPage() {
     token: qrTokens.token,
     gameId: qrTokens.gameId,
     isUsed: qrTokens.isUsed,
+    usedAt: qrTokens.usedAt,
     createdAt: qrTokens.createdAt,
     gameTitle: games.title,
   })
@@ -20,6 +21,12 @@ export default async function TokensPage() {
     .leftJoin(games, eq(qrTokens.gameId, games.id))
     .orderBy(desc(qrTokens.createdAt))
     .all();
+
+  const data = tokensRaw.map(t => ({
+    ...t,
+    usedAt_date: t.usedAt,
+    usedAt_time: t.usedAt,
+  }));
 
   return (
     <div className="space-y-6 animate-in fade-in duration-500">
@@ -33,7 +40,7 @@ export default async function TokensPage() {
         </Link>
       </div>
 
-      <TokensClientTable data={tokensRaw} />
+      <TokensClientTable data={data} />
     </div>
   );
 }

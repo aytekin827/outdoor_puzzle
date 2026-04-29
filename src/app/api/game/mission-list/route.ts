@@ -53,7 +53,16 @@ export async function GET() {
           isCompleted: completedMissionIds.has(m.id),
           isLocked,
         };
-      })
+      }),
+      {
+        id: "epilogue",
+        type: "epilogue",
+        title: "에필로그",
+        description: "모든 미션을 완료했습니다! 최종 결말을 확인하세요.",
+        imageUrl: game?.epilogueType === 'slide' ? JSON.parse(game.epilogueSlidesJson || '[]')[0] : null,
+        isCompleted: playSession.status === 'completed',
+        isLocked: !gameMissions.every(m => completedMissionIds.has(m.id)),
+      }
     ];
 
     return NextResponse.json({ missions });

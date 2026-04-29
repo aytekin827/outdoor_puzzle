@@ -67,6 +67,16 @@ export function TokensClientTable({ data }: { data: any[] }) {
           render: (val: any) => new Date(val).toLocaleDateString()
         },
         {
+          key: "usedAt_date",
+          label: "사용 일자",
+          render: (val: any) => val ? new Date(val).toLocaleDateString() : <span className="text-slate-600">-</span>
+        },
+        {
+          key: "usedAt_time",
+          label: "사용 시간",
+          render: (val: any) => val ? new Date(val).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : <span className="text-slate-600">-</span>
+        },
+        {
           key: "id" as any,
           label: "QR코드",
           render: (_val: any, row: any) => (

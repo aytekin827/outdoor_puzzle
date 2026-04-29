@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/db";
 import { qrTokens, players, playSessions } from "@/db/schema";
-import { eq, and } from "drizzle-orm";
+import { eq, and, desc } from "drizzle-orm";
 import { cookies } from "next/headers";
 
 export async function POST(req: NextRequest) {
@@ -23,12 +23,9 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Token not yet used" }, { status: 400 });
     }
 
-    // Check 1 day limit
-    const oneDayInMs = 24 * 60 * 60 * 1000;
     const now = Date.now();
-    if (now - qrToken.usedAt > oneDayInMs) {
-      return NextResponse.json({ error: "Token expired (1 day limit)" }, { status: 403 });
-    }
+    // One year in seconds
+    const maxAge = 365 * 24 * 60 * 60;
 
     // Find the player associated with this token
     const playerResult = await db.select().from(players).where(eq(players.qrTokenId, qrToken.id)).all();
@@ -57,9 +54,9 @@ export async function POST(req: NextRequest) {
 
     // Set cookies to restore session
     const cookieStore = await cookies();
-    cookieStore.set("playerId", player.id, { httpOnly: true, path: "/" });
+    cookieStore.set("playerId", player.id, { httpOnly: true, path: "/", maxAge });
     if (playSession) {
-      cookieStore.set("playSessionId", playSession.id, { httpOnly: true, path: "/" });
+      cookieStore.set("playSessionId", playSession.id, { httpOnly: true, path: "/", maxAge });
     }
     
     return NextResponse.json({ success: true, playerId: player.id, playSessionId: playSession?.id });

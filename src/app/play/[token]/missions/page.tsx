@@ -7,7 +7,7 @@ import { useRef } from "react";
 
 type MissionItem = {
   id: string;
-  type: "prologue" | "mission";
+  type: "prologue" | "mission" | "epilogue";
   title: string;
   description: string;
   imageUrl: string | null;
@@ -90,8 +90,10 @@ export default function MissionListPage() {
     
     if (mission.type === "prologue") {
       router.push(`/play/${token}/prologue`);
+    } else if (mission.type === "epilogue") {
+      router.push(`/play/${token}/complete`);
     } else {
-      router.push(`/play/${token}/mission`);
+      router.push(`/play/${token}/mission?missionId=${mission.id}`);
     }
   };
 
