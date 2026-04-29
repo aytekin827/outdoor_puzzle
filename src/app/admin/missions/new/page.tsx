@@ -3,6 +3,7 @@ import { games, missions } from "@/db/schema";
 import { redirect } from "next/navigation";
 import { ClosingInstructionEditor } from "../ClosingInstructionEditor";
 import { MissionContentEditor } from "../MissionContentEditor";
+import { MissionImageEditor } from "../MissionImageEditor";
 
 export const dynamic = 'force-dynamic';
 
@@ -31,6 +32,7 @@ export default async function NewMissionPage({ searchParams }: { searchParams: P
     const closingInstructionType = formData.get("closingInstructionType") as string;
     const closingInstructionVideoUrl = formData.get("closingInstructionVideoUrl") as string;
     const closingInstructionSlidesJson = formData.get("closingInstructionSlidesJson") as string;
+    const description = formData.get("description") as string;
     const returnUrl = formData.get("returnTo") as string;
 
     // Validate required fields to prevent DB errors
@@ -54,6 +56,7 @@ export default async function NewMissionPage({ searchParams }: { searchParams: P
       imageUrl: imageUrl || null,
       imageAlt: imageAlt || null,
       imageCaption: imageCaption || null,
+      description: description || null,
       closingInstruction: closingInstruction || null,
       closingInstructionType: closingInstructionType || "text",
       closingInstructionVideoUrl: closingInstructionVideoUrl || null,
@@ -95,9 +98,16 @@ export default async function NewMissionPage({ searchParams }: { searchParams: P
           </div>
 
           <div className="flex flex-col gap-2 sm:col-span-2">
-            <label className="text-sm font-semibold text-slate-400">체크포인트 위치 안내</label>
+            <label className="text-sm font-semibold text-slate-400">체크포인트 위치 안내 (플레이어용 상세 가이드)</label>
             <textarea name="checkpointInstruction" required className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white h-20 resize-none focus:border-primary focus:outline-none transition-colors" placeholder="예: 입구에 있는 커다란 나무 쪽으로 이동하세요..." />
           </div>
+
+          <div className="flex flex-col gap-2 sm:col-span-2">
+            <label className="text-sm font-semibold text-slate-400">미션 간단설명 (리스트 카드용)</label>
+            <textarea name="description" className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white h-20 resize-none focus:border-primary focus:outline-none transition-colors" placeholder="예: 동상의 비밀을 찾아라" />
+          </div>
+
+          <MissionImageEditor />
 
           <MissionContentEditor />
 

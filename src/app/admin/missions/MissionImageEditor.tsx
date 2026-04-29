@@ -77,8 +77,8 @@ export function MissionImageEditor({
 
       <div className="flex items-center justify-between gap-4">
         <div>
-          <h2 className="text-lg font-bold text-white">Mission Image</h2>
-          <p className="text-xs text-slate-400 mt-1">문제 화면에 함께 보여줄 참고 이미지를 연결합니다.</p>
+          <h2 className="text-lg font-bold text-white">미션 카드 이미지</h2>
+          <p className="text-xs text-slate-400 mt-1">미션 리스트 카드 및 문제 화면에 노출할 이미지를 설정합니다.</p>
         </div>
         <div className="flex items-center gap-2">
           <label className="bg-emerald-500 hover:bg-emerald-400 text-black px-4 py-2 rounded-lg text-sm font-bold cursor-pointer transition-colors flex items-center gap-2 shadow-lg shadow-emerald-500/20">

@@ -49,6 +49,7 @@ export const missions = sqliteTable("missions", {
   imageUrl: text("image_url"),
   imageAlt: text("image_alt"),
   imageCaption: text("image_caption"),
+  description: text("description"),
   closingInstruction: text("closing_instruction"),
   closingInstructionType: text("closing_instruction_type").default("text"), // 'text' | 'video' | 'slide'
   closingInstructionVideoUrl: text("closing_instruction_video_url"),

@@ -5,6 +5,10 @@ import {
   getCompletedMissionIds, 
   isPrologueCompleted 
 } from "@/lib/game-session";
+import { db } from "@/db";
+import { games } from "@/db/schema";
+import { eq } from "drizzle-orm";
+
 
 export async function GET() {
   try {
@@ -17,16 +21,21 @@ export async function GET() {
     const completedMissionIds = await getCompletedMissionIds(playSession.id, player.id);
     const prologueDone = await isPrologueCompleted(playSession.id);
 
+    // Fetch game for prologue info
+    const gameResult = await db.select().from(games).where(eq(games.id, player.gameId)).all();
+    const game = gameResult[0];
+
     const missions = [
       {
         id: "prologue",
         type: "prologue",
         title: "프롤로그",
+        description: game?.description || "게임의 시작을 알리는 이야기입니다.",
+        imageUrl: game?.prologueType === 'slide' ? JSON.parse(game.prologueSlidesJson || '[]')[0] : null,
         isCompleted: prologueDone,
-        isLocked: false, // Prologue is never locked once game starts
+        isLocked: false,
       },
       ...gameMissions.map((m, index) => {
-        // A mission is locked if the previous item (prologue or previous mission) is not completed
         let isLocked = false;
         if (index === 0) {
           isLocked = !prologueDone;
@@ -39,6 +48,8 @@ export async function GET() {
           id: m.id,
           type: "mission",
           title: m.title,
+          description: m.description || m.checkpointInstruction,
+          imageUrl: m.imageUrl,
           isCompleted: completedMissionIds.has(m.id),
           isLocked,
         };

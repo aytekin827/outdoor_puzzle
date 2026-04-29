@@ -13,6 +13,7 @@ import { Save, Trash2 } from "lucide-react";
 import { redirect } from "next/navigation";
 import { ClosingInstructionEditor } from "../../ClosingInstructionEditor";
 import { MissionContentEditor } from "../../MissionContentEditor";
+import { MissionImageEditor } from "../../MissionImageEditor";
 
 export const dynamic = 'force-dynamic';
 
@@ -47,6 +48,7 @@ export default async function MissionDetailPage({ params, searchParams }: { para
     const closingInstructionType = formData.get("closingInstructionType") as string;
     const closingInstructionVideoUrl = formData.get("closingInstructionVideoUrl") as string;
     const closingInstructionSlidesJson = formData.get("closingInstructionSlidesJson") as string;
+    const description = formData.get("description") as string;
     const returnUrl = formData.get("returnTo") as string;
 
     if (!gameId || !title || !riddleQuestion || !answer) {
@@ -68,6 +70,7 @@ export default async function MissionDetailPage({ params, searchParams }: { para
       imageUrl: imageUrl || null,
       imageAlt: imageAlt || null,
       imageCaption: imageCaption || null,
+      description: description || null,
       closingInstruction: closingInstruction || null,
       closingInstructionType: closingInstructionType || "text",
       closingInstructionVideoUrl: closingInstructionVideoUrl || null,
@@ -131,9 +134,21 @@ export default async function MissionDetailPage({ params, searchParams }: { para
           </div>
 
           <div className="flex flex-col gap-2 sm:col-span-2">
-            <label className="text-sm font-semibold text-slate-400">체크포인트 위치 안내</label>
+            <label className="text-sm font-semibold text-slate-400">체크포인트 위치 안내 (플레이어용 상세 가이드)</label>
             <textarea name="checkpointInstruction" defaultValue={mission.checkpointInstruction} required className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white h-20 resize-none flex-1 focus:border-primary focus:outline-none transition-colors" />
           </div>
+
+          <div className="flex flex-col gap-2 sm:col-span-2">
+            <label className="text-sm font-semibold text-slate-400">미션 간단설명 (리스트 카드용)</label>
+            <textarea name="description" defaultValue={mission.description || ""} className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white h-20 resize-none flex-1 focus:border-primary focus:outline-none transition-colors" placeholder="예: 동상의 비밀을 찾아라" />
+          </div>
+
+          <MissionImageEditor 
+            initialImageUrl={mission.imageUrl}
+            initialImageAssetKey={mission.imageAssetKey}
+            initialImageAlt={mission.imageAlt}
+            initialImageCaption={mission.imageCaption}
+          />
 
           <MissionContentEditor
             initialType={mission.missionType || "text"}
