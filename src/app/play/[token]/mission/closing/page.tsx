@@ -30,10 +30,21 @@ export default async function ClosingInstructionPage({
     redirect(`/play/${token}/mission`);
   }
 
+  const nextMission = await db
+    .select({ id: missions.id })
+    .from(missions)
+    .where(eq(missions.gameId, mission.gameId))
+    .orderBy(missions.orderIndex)
+    .all();
+
+  const currentIndex = nextMission.findIndex(m => m.id === missionId);
+  const nextMissionId = nextMission[currentIndex + 1]?.id || null;
+
   return (
     <ClosingInstructionClient 
       token={token} 
       mission={mission} 
+      nextMissionId={nextMissionId}
     />
   );
 }
