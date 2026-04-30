@@ -23,7 +23,7 @@ const groupOptionLabels: Record<string, string> = {
 };
 const genderOptions = ["남성", "여성", "기타", "응답 안 함"];
 
-type Stage = "summary" | "epilogue" | "survey";
+type Stage = "summary" | "epilogue" | "survey" | "thanks";
 
 type ResultMissionStat = {
   missionId: string;
@@ -208,7 +208,7 @@ export default function CompletePage() {
         body: JSON.stringify(form),
       });
       if (!response.ok) throw new Error("Save failed");
-      router.push(`/play/${token}/missions`);
+      setStage("thanks");
     } catch (error) {
       console.error(error);
       alert("저장에 실패했습니다.");
@@ -230,11 +230,14 @@ export default function CompletePage() {
   return (
     <div className="flex-1 flex flex-col relative overflow-hidden h-full bg-transparent">
       <header className="z-50 flex items-center justify-between h-16 px-6 border-b border-white/5 backdrop-blur-md bg-black/40">
-        <button onClick={() => router.push(`/play/${token}/missions`)} className="p-2 hover:bg-white/10 rounded-full transition-colors group">
+        <button 
+          onClick={() => stage === "thanks" ? router.push(`/play/${token}/missions`) : router.push(`/play/${token}/missions`)} 
+          className="p-2 hover:bg-white/10 rounded-full transition-colors group"
+        >
           <ArrowLeft className="w-6 h-6 text-slate-400 group-hover:text-white" />
         </button>
         <div className="glass-panel px-3 py-1.5 font-black text-[11px] tracking-[0.2em] text-slate-300 uppercase">
-          {stage === "epilogue" ? "Epilogue" : "Survey"}
+          {stage === "epilogue" ? "Epilogue" : stage === "thanks" ? "Thank You" : "Survey"}
         </div>
       </header>
 
@@ -264,6 +267,20 @@ export default function CompletePage() {
                   <span className="bg-black/60 text-white text-[10px] px-4 py-2 rounded-full border border-white/10 font-bold uppercase tracking-wider">탭하여 계속하기</span>
                 </div>
               )}
+            </div>
+          ) : stage === "thanks" ? (
+            <div className="w-full max-w-lg mx-auto flex flex-col items-center justify-center gap-8 py-20 text-center h-full animate-in fade-in zoom-in-95 duration-1000">
+              <div className="w-24 h-24 rounded-full bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20 shadow-2xl shadow-emerald-500/10">
+                <Send className="w-10 h-10 text-emerald-400" />
+              </div>
+              <div className="space-y-4">
+                <h1 className="text-3xl md:text-4xl font-black text-white tracking-tight">이용해주셔서 감사합니다</h1>
+                <p className="text-slate-400 text-lg font-medium leading-relaxed max-w-[280px] mx-auto">
+                  소중한 의견은 더 나은 서비스를 만드는 데 큰 힘이 됩니다.
+                </p>
+              </div>
+              <div className="h-px w-12 bg-white/10" />
+              <p className="text-slate-500 text-sm font-bold tracking-widest uppercase">Secret Trail</p>
             </div>
           ) : (
             <div className="w-full max-w-lg mx-auto flex flex-col gap-6 py-4 pb-20">
@@ -358,14 +375,14 @@ export default function CompletePage() {
         <div className="max-w-lg mx-auto w-full flex flex-col gap-4">
           <button
             type="button"
-            onClick={stage === "epilogue" ? handleNextFromEpilogue : () => formRef.current?.requestSubmit()}
+            onClick={stage === "thanks" ? () => router.push(`/play/${token}/missions`) : (stage === "epilogue" ? handleNextFromEpilogue : () => formRef.current?.requestSubmit())}
             disabled={stage === "survey" && (!isValidSurvey || saving)}
             className="w-full bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold py-4 rounded-xl flex items-center justify-center gap-2 active:scale-95 transition-all disabled:opacity-50"
           >
             {saving ? <Loader2 className="w-6 h-6 animate-spin" /> : (
               <>
-                <span>{stage === "epilogue" ? "설문으로 이동" : "설문 완료"}</span>
-                {stage === "epilogue" ? <ArrowRight className="w-5 h-5" /> : <Send className="w-5 h-5" />}
+                <span>{stage === "thanks" ? "목록으로 돌아가기" : (stage === "epilogue" ? "설문으로 이동" : "설문 완료")}</span>
+                {stage === "epilogue" || stage === "thanks" ? <ArrowRight className="w-5 h-5" /> : <Send className="w-5 h-5" />}
               </>
             )}
           </button>
