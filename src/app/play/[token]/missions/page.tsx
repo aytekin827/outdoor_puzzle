@@ -34,6 +34,24 @@ export default function MissionListPage() {
         if (!res.ok) throw new Error("Failed to fetch");
         const data = await res.json();
         setMissions(data.missions);
+
+        // Auto-scroll logic
+        const firstUncompletedIndex = data.missions.findIndex((m: MissionItem) => !m.isCompleted);
+        const isAllCompleted = firstUncompletedIndex === -1;
+        const targetIndex = isAllCompleted ? 0 : firstUncompletedIndex;
+
+        setTimeout(() => {
+          if (scrollRef.current) {
+            const cards = scrollRef.current.querySelectorAll('[data-mission-card]');
+            if (cards[targetIndex]) {
+              cards[targetIndex].scrollIntoView({
+                behavior: 'smooth',
+                block: 'nearest',
+                inline: 'center'
+              });
+            }
+          }
+        }, 300);
       } catch (err) {
         console.error(err);
       } finally {
@@ -126,6 +144,7 @@ export default function MissionListPage() {
         {missions.map((mission, index) => (
           <div
             key={mission.id}
+            data-mission-card
             className="snap-center shrink-0 w-[85vw] max-w-[340px] aspect-[3/4] relative pointer-events-auto"
           >
             <button

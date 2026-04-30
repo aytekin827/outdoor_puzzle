@@ -8,7 +8,7 @@ import { createPlaySessionForPlayer } from "@/lib/game-session";
 export async function POST(req: NextRequest) {
   try {
     let { token, nickname } = await req.json();
-    nickname = nickname?.trim() || "탐험가";
+    nickname = nickname?.trim() || "";
 
     if (!token) {
       return NextResponse.json({ error: "Missing token" }, { status: 400 });

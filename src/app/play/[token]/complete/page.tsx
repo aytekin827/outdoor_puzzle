@@ -11,7 +11,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 const ageOptions = ["10대", "20대", "30대", "40대", "50대", "60대+"];
-const groupOptions = ["교회", "학교", "단체", "친구", "가족", "커플", "other"];
+const groupOptions = ["친구", "가족", "커플", "교회", "학교", "단체", "other"];
 const groupOptionLabels: Record<string, string> = {
   church: "교회",
   school: "학교",
@@ -230,8 +230,8 @@ export default function CompletePage() {
   return (
     <div className="flex-1 flex flex-col relative overflow-hidden h-full bg-transparent">
       <header className="z-50 flex items-center justify-between h-16 px-6 border-b border-white/5 backdrop-blur-md bg-black/40">
-        <button 
-          onClick={() => stage === "thanks" ? router.push(`/play/${token}/missions`) : router.push(`/play/${token}/missions`)} 
+        <button
+          onClick={() => stage === "thanks" ? router.push(`/play/${token}/missions`) : router.push(`/play/${token}/missions`)}
           className="p-2 hover:bg-white/10 rounded-full transition-colors group"
         >
           <ArrowLeft className="w-6 h-6 text-slate-400 group-hover:text-white" />
@@ -276,17 +276,16 @@ export default function CompletePage() {
               <div className="space-y-4">
                 <h1 className="text-3xl md:text-4xl font-black text-white tracking-tight">이용해주셔서 감사합니다</h1>
                 <p className="text-slate-400 text-lg font-medium leading-relaxed max-w-[280px] mx-auto">
-                  소중한 의견은 더 나은 서비스를 만드는 데 큰 힘이 됩니다.
+                  소중한 의견은 더 나은 서비스를 <br />만드는 데 큰 힘이 됩니다.
                 </p>
               </div>
               <div className="h-px w-12 bg-white/10" />
-              <p className="text-slate-500 text-sm font-bold tracking-widest uppercase">Secret Trail</p>
             </div>
           ) : (
             <div className="w-full max-w-lg mx-auto flex flex-col gap-6 py-4 pb-20">
               <div className="glass-panel p-6 text-center">
                 <h1 className="text-2xl font-bold text-white mb-2">게임 종료 설문</h1>
-                <p className="text-sm text-slate-400">플레이해 주셔서 감사합니다! 더 나은 게임을 위해 소중한 의견을 부탁드립니다.</p>
+                <p className="text-sm text-slate-400">플레이해 주셔서 감사합니다! <br />더 나은 게임을 위해 <br />소중한 의견을 부탁드립니다.</p>
               </div>
               <form ref={formRef} onSubmit={handleSurveySubmit} className="glass-panel p-6 flex flex-col gap-6">
                 {/* 인구통계학 정보 */}
@@ -296,7 +295,7 @@ export default function CompletePage() {
                     <select
                       value={form.ageRange}
                       onChange={(e) => updateField("ageRange", e.target.value)}
-                      className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white focus:border-emerald-500/50 outline-none"
+                      className="bg-slate-950 border border-slate-800 p-3 pr-10 rounded-lg text-white focus:border-emerald-500/50 outline-none appearance-none bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2024%2024%20fill%3D%22none%22%20stroke%3D%22%2364748b%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m6%209%206%206%206-6%22%2F%3E%3C%2Fsvg%3E')] bg-[length:1.25rem] bg-[right_0.75rem_center] bg-no-repeat"
                     >
                       <option value="">선택해주세요</option>
                       {ageOptions.map((opt) => <option key={opt} value={opt}>{opt}</option>)}
@@ -307,7 +306,7 @@ export default function CompletePage() {
                     <select
                       value={form.gender}
                       onChange={(e) => updateField("gender", e.target.value)}
-                      className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white focus:border-emerald-500/50 outline-none"
+                      className="bg-slate-950 border border-slate-800 p-3 pr-10 rounded-lg text-white focus:border-emerald-500/50 outline-none appearance-none bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2024%2024%20fill%3D%22none%22%20stroke%3D%22%2364748b%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m6%209%206%206%206-6%22%2F%3E%3C%2Fsvg%3E')] bg-[length:1.25rem] bg-[right_0.75rem_center] bg-no-repeat"
                     >
                       <option value="">선택해주세요</option>
                       {genderOptions.map((opt) => <option key={opt} value={opt}>{opt}</option>)}
@@ -320,7 +319,7 @@ export default function CompletePage() {
                   <select
                     value={form.groupType}
                     onChange={(e) => updateField("groupType", e.target.value)}
-                    className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white focus:border-emerald-500/50 outline-none"
+                    className="bg-slate-950 border border-slate-800 p-3 pr-10 rounded-lg text-white focus:border-emerald-500/50 outline-none appearance-none bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2024%2024%20fill%3D%22none%22%20stroke%3D%22%2364748b%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m6%209%206%206%206-6%22%2F%3E%3C%2Fsvg%3E')] bg-[length:1.25rem] bg-[right_0.75rem_center] bg-no-repeat"
                   >
                     <option value="">선택해주세요</option>
                     {groupOptions.map((opt) => <option key={opt} value={opt}>{groupOptionLabels[opt] || opt}</option>)}
