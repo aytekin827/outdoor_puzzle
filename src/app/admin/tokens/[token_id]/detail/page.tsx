@@ -1,8 +1,20 @@
 import { db } from "@/db";
-import { games, qrTokens } from "@/db/schema";
-import { eq } from "drizzle-orm";
-import { Save, Trash2 } from "lucide-react";
+import { 
+  games, 
+  qrTokens, 
+  players, 
+  playSessions, 
+  eventLogs, 
+  locationLogs, 
+  postGameSurveys, 
+  completionPhotos, 
+  submissions, 
+  missionSessions 
+} from "@/db/schema";
+import { eq, inArray } from "drizzle-orm";
+import { Save } from "lucide-react";
 import { redirect } from "next/navigation";
+import { DeleteTokenButton } from "./DeleteTokenButton";
 
 export const dynamic = 'force-dynamic';
 
@@ -33,18 +45,43 @@ export default async function TokenDetailPage({ params }: { params: Promise<{ to
 
   async function handleDelete() {
     "use server";
-    await db.delete(qrTokens).where(eq(qrTokens.id, tokenRecord!.id)).run();
+    const tid = tokenRecord!.id;
+
+    // 1. Get player IDs and session IDs associated with this token
+    const playersList = await db.select({ id: players.id }).from(players).where(eq(players.qrTokenId, tid)).all();
+    const playerIds = playersList.map(p => p.id);
+    
+    const sessionsList = await db.select({ id: playSessions.id }).from(playSessions).where(eq(playSessions.qrTokenId, tid)).all();
+    const sessionIds = sessionsList.map(s => s.id);
+
+    if (sessionIds.length > 0) {
+      // 2. Delete logs and surveys
+      await db.delete(eventLogs).where(inArray(eventLogs.playSessionId, sessionIds)).run();
+      await db.delete(locationLogs).where(inArray(locationLogs.playSessionId, sessionIds)).run();
+      await db.delete(postGameSurveys).where(inArray(postGameSurveys.playSessionId, sessionIds)).run();
+      await db.delete(completionPhotos).where(inArray(completionPhotos.playSessionId, sessionIds)).run();
+      await db.delete(submissions).where(inArray(submissions.playSessionId, sessionIds)).run();
+      await db.delete(missionSessions).where(inArray(missionSessions.playSessionId, sessionIds)).run();
+      
+      // 3. Delete sessions
+      await db.delete(playSessions).where(inArray(playSessions.id, sessionIds)).run();
+    }
+
+    if (playerIds.length > 0) {
+      // 4. Delete players
+      await db.delete(players).where(inArray(players.id, playerIds)).run();
+    }
+
+    // 5. Finally delete the token
+    await db.delete(qrTokens).where(eq(qrTokens.id, tid)).run();
+
     redirect("/admin/tokens");
   }
 
   return (
     <div className="max-w-3xl mx-auto space-y-8 animate-in fade-in duration-500 pb-12">
       <div className="flex justify-end items-end">
-        <form action={handleDelete}>
-          <button type="submit" className="text-red-400 hover:text-red-300 hover:bg-red-500/10 px-3 py-1.5 rounded-lg flex items-center gap-2 text-sm font-bold transition-all">
-            <Trash2 className="w-4 h-4" /> 삭제
-          </button>
-        </form>
+        <DeleteTokenButton tokenId={tokenRecord.id} onDelete={handleDelete} />
       </div>
 
       <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl">
@@ -56,7 +93,7 @@ export default async function TokenDetailPage({ params }: { params: Promise<{ to
         <form action={handleUpdate} className="p-6 space-y-6">
           <div className="flex flex-col gap-2">
             <label className="text-sm font-semibold text-slate-400">연결된 게임</label>
-            <select name="gameId" defaultValue={tokenRecord.gameId} required className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white focus:border-primary focus:outline-none transition-colors">
+            <select name="gameId" defaultValue={tokenRecord.gameId} required className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-white focus:border-primary focus:outline-none transition-colors appearance-none bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2024%2024%20fill%3D%22none%22%20stroke%3D%22%2364748b%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m6%209%206%206%206-6%22%2F%3E%3C%2Fsvg%3E')] bg-[length:1.25rem] bg-[right_0.75rem_center] bg-no-repeat pr-10">
               {allGames.map(g => <option key={g.id} value={g.id}>{g.title}</option>)}
             </select>
           </div>
