@@ -123,7 +123,7 @@ export default function MissionListPage() {
   }
 
   return (
-    <div className="flex-1 flex flex-col animate-in fade-in duration-700 overflow-hidden bg-slate-950 select-none">
+    <div className="flex-1 flex flex-col animate-in fade-in duration-700 overflow-hidden bg-transparent select-none">
       <header className="p-6 pb-2">
         <div className="flex items-center gap-2 text-primary mb-1">
           <Map className="w-4 h-4" />

@@ -112,7 +112,7 @@ export default function ProloguePage() {
 
   if (loading) {
     return (
-      <div className="flex-1 flex items-center justify-center bg-black">
+      <div className="flex-1 flex items-center justify-center bg-transparent">
         <Loader2 className="w-10 h-10 animate-spin text-primary" />
       </div>
     );
@@ -121,7 +121,7 @@ export default function ProloguePage() {
   const currentSlide = slides[slideIndex];
 
   return (
-    <div className="flex flex-col flex-1 relative bg-black overflow-hidden h-full">
+    <div className="flex flex-col flex-1 relative bg-transparent overflow-hidden h-full">
       {/* Skip Button */}
       <div className="absolute top-4 right-4 z-[60]">
         <button onClick={handleSkip} className="bg-black/40 text-white/70 px-4 py-2 rounded-full text-xs font-semibold backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-colors">

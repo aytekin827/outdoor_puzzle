@@ -12,6 +12,8 @@ export const games = sqliteTable("games", {
   epilogueSlidesJson: text("epilogue_slides_json"), // JSON stringified array of URLs
   isActive: integer("is_active", { mode: 'boolean' }).default(true),
   createdAt: integer("created_at").notNull(),
+  themeImageUrl: text("theme_image_url"),
+  themeImageAssetKey: text("theme_image_asset_key"),
 });
 
 export const qrTokens = sqliteTable("qr_tokens", {

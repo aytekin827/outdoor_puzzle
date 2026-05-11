@@ -18,6 +18,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { PrologueEditor } from "../../PrologueEditor";
 import { EpilogueEditor } from "../../EpilogueEditor";
+import { GameThemeEditor } from "../../GameThemeEditor";
 
 export const dynamic = 'force-dynamic';
 
@@ -41,6 +42,8 @@ export default async function GameDetailPage({ params }: { params: Promise<{ gam
     const epilogueType = formData.get("epilogueType") as string;
     const epilogueContent = formData.get("epilogueContent") as string;
     const epilogueSlidesJson = formData.get("epilogueSlidesJson") as string;
+    const themeImageUrl = formData.get("themeImageUrl") as string;
+    const themeImageAssetKey = formData.get("themeImageAssetKey") as string;
     const isActive = formData.get("isActive") === "on";
 
     await db.update(games).set({
@@ -52,6 +55,8 @@ export default async function GameDetailPage({ params }: { params: Promise<{ gam
       epilogueType,
       epilogueContent,
       epilogueSlidesJson,
+      themeImageUrl,
+      themeImageAssetKey,
       isActive,
     }).where(eq(games.id, game_id)).run();
 
@@ -140,6 +145,11 @@ export default async function GameDetailPage({ params }: { params: Promise<{ gam
               initialType={game.epilogueType || "text"}
               initialContent={game.epilogueContent || ""}
               initialSlidesJson={game.epilogueSlidesJson || "[]"}
+            />
+
+            <GameThemeEditor 
+              initialThemeImageUrl={game.themeImageUrl}
+              initialThemeImageAssetKey={game.themeImageAssetKey}
             />
 
             <div className="pt-4 border-t border-slate-800">
