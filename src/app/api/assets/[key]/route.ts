@@ -11,7 +11,8 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ key:
     const ctx = getCloudflareContext();
     const env = ctx.env as any;
     if (env && env.STORAGE) {
-      const object = await env.STORAGE.get(key);
+      const decodedKey = decodeURIComponent(key);
+      const object = await env.STORAGE.get(decodedKey);
 
       if (!object) {
         return new NextResponse("Object Not Found", { status: 404 });
