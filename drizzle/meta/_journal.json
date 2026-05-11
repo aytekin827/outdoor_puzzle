@@ -8,6 +8,13 @@
       "when": 1774953713974,
       "tag": "0000_fresh_start_reset",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1778465683714,
+      "tag": "0001_add_theme_image_to_games",
+      "breakpoints": true
     }
   ]
 }

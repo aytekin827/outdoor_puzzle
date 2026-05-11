@@ -27,15 +27,16 @@ export function GameBackground() {
     }
   }, [token]);
 
-  if (!themeImageUrl) return null;
-
   return (
     <div 
-      className="absolute inset-0 z-[-1] pointer-events-none"
+      className="absolute inset-0 z-0 pointer-events-none bg-slate-950"
       style={{
-        backgroundImage: `linear-gradient(to bottom, rgba(11, 17, 32, 0.6), rgba(11, 17, 32, 0.9)), url(${themeImageUrl})`,
+        backgroundImage: themeImageUrl 
+          ? `linear-gradient(to bottom, rgba(11, 17, 32, 0.7), rgba(11, 17, 32, 0.95)), url(${themeImageUrl})`
+          : `radial-gradient(circle at 50% 0%, hsl(217, 91%, 30%) 0%, hsl(222, 47%, 11%) 50%, hsl(222, 47%, 11%) 100%)`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
       }}
     />
   );

@@ -109,7 +109,7 @@ export default function PlayLandingPage() {
   }
 
   return (
-    <div className="flex-1 flex flex-col p-6 animate-in fade-in duration-700 justify-center">
+    <div className="flex-1 flex flex-col p-6 animate-in fade-in duration-700 justify-center bg-transparent">
       <div className="glass-panel p-8 w-full max-w-sm md:max-w-lg lg:max-w-xl mx-auto flex flex-col">
         <div className="mb-8 text-center">
           <h2 className="text-primary font-bold tracking-widest text-sm mb-2 uppercase italic">secret trail</h2>
